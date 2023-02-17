@@ -1,0 +1,62 @@
+//*******************************************************************
+/*!
+\file   EmbSysLib.cpp
+\author Thomas Breuer (Bonn-Rhein-Sieg University of Applied Sciences)
+\date   23.03.2016
+
+License: See file "LICENSE"
+
+\brief Summary of complete library code
+*/
+
+//*******************************************************************
+#include "EmbSysLib.h"
+
+//*******************************************************************
+#include "System.cpp"
+
+//===================================================================
+// MCU
+//===================================================================
+#include "Mcu.cpp"
+
+//===================================================================
+// Std
+//===================================================================
+#include "Std/Std.cpp"
+#include "Std/DataPointer.cpp"
+#include "Std/Fifo.cpp"
+#include "Std/Sequence.cpp"
+#include "Std/Report.cpp"
+#include "Std/Flag.cpp"
+
+//===================================================================
+// Hardware/Common
+//===================================================================
+#include "Hardware/Common/Analog/Adc.cpp"
+#include "Hardware/Common/Analog/Dac.cpp"
+#include "Hardware/Common/Display/Type/Font.cpp"
+#include "Hardware/Common/Display/Type/Bitmap.cpp"
+#include "Hardware/Common/Display/DisplayChar.cpp"
+#include "Hardware/Common/Display/DisplayGraphic.cpp"
+#include "Hardware/Common/I2C/I2Cmaster.cpp"
+#include "Hardware/Common/I2C/I2Cmaster_Emul.cpp"
+#include "Hardware/Common/Memory/Memory.cpp"
+#include "Hardware/Common/Port/Port.cpp"
+#include "Hardware/Common/Rtc/Rtc.cpp"
+#include "Hardware/Common/Timer/Timer.cpp"
+#include "Hardware/Common/Display/Touch.cpp"
+#include "Hardware/Common/Uart/Uart.cpp"
+#include "Hardware/Common/USB/USBdevice.cpp"
+#include "Hardware/Common/USB/USBdevice/USBcontrol.cpp"
+#include "Hardware/Common/USB/USBdevice/USBdescriptor.cpp"
+#include "Hardware/Common/USB/USBdevice/USBendpoint.cpp"
+#include "Hardware/Common/USB/USBdevice/USBinterface.cpp"
+#include "Hardware/Common/USB/USBhost.cpp"
+
+//===================================================================
+// Device/Digital
+//===================================================================
+#include "Device/Digital/Digital.cpp"
+
+//===================================================================

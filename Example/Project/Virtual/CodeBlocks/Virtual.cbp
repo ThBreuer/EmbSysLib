@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="main" />
+		<Option makefile="makefile" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="default">
+				<Option output="main" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Bin/GCC/Virtual" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="0" />
+				<Compiler>
+					<Add option="-m64" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-m64" />
+					<Add option="-Wl,-gc-sections" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="main" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Bin/GCC/Virtual" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="0" />
+				<Compiler>
+					<Add option="-m64" />
+					<Add option="-ffunction-sections" />
+					<Add option="-fdata-sections" />
+				</Compiler>
+				<Linker>
+					<Add option="-m64" />
+					<Add option="-Wl,-gc-sections" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-m64" />
+			<Add option="-ffunction-sections" />
+			<Add option="-fdata-sections" />
+			<Add option="-DMCU_VIRTUAL" />
+			<Add option="-DLUA_C89_NUMBERS" />
+			<Add option="-DLUA_USE_LONGJMP" />
+			<Add directory="./../../../Src" />
+			<Add directory="./../../../Src/Board/Virtual" />
+			<Add directory="${EMBSYSLIB}/Src" />
+			<Add directory="${EMBSYSLIB}/Src/Hardware/MCU/Virtual" />
+		</Compiler>
+		<Linker>
+			<Add option="-static-libstdc++" />
+			<Add option="-static-libgcc" />
+			<Add option="-static" />
+			<Add option="-m64" />
+			<Add option="-Wl,-gc-sections" />
+			<Add option="-lws2_32" />
+			<Add library="${EMBSYSLIB}/Src/Hardware/MCU/Virtual/Sys/libusb-1.0.a" />
+		</Linker>
+		<Unit filename="../../../Src/Board/Virtual/ReportHandler.h" />
+		<Unit filename="../../../Src/lib.cpp" />
+		<Unit filename="../../../Src/main.cpp" />
+		<Extensions>
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

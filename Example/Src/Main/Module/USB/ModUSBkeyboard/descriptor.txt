@@ -1,0 +1,82 @@
+Version         = 0x0200
+MaxPacketSize   = 64
+VendorID        = 0x0025
+ProductID       = 0x1010
+Device          = 0x0100
+Class           = RESERVED_CLASS
+SubClass        = 0
+Protocol        = 0
+ManufacturerStr = 'H-BRS '
+ProductStr      = 'EmbSysLib'
+SerialNumberStr = 'SN0000'
+
+CONFIGURATION
+<BEGIN>
+    Name         = 'DEMO'
+    SelfPowered  = yes
+    RemoteWakeup = no
+    MaxPower     = 100
+
+    INTERFACE
+        <BEGIN>
+            Name     = 'Device 0'
+            Class    = HUMAN_INTERFACE_DEVICE
+            SubClass = 0
+            Protocol = 0
+
+            HID
+            <BEGIN>
+                Version = 0x0400
+                Country = INTERNATIONAL
+
+                REPORT
+                <BEGIN_ARRAY>
+                      UsagePage   = GenericDesktop
+                      Usage       = KEYBOARD
+                      Collection  = APPLICATION
+                        UsagePage   = KeyCodes
+                        UsageMin    = 224
+                        UsageMax    = 231
+                        LogicalMin  = 0
+                        LogicalMax  = 1
+                        ReportSize  = 1
+                        ReportCount = 8
+                        Input       = DATA,VARIABLE,ABSOLUTE // Modifier byte 02
+                        
+                        ReportCount = 1
+                        ReportSize  = 8
+                        Input       = CONSTANT // Reserved byte
+                        
+                        ReportCount = 5
+                        ReportSize  = 1
+                        UsagePage   = LED
+                        UsageMin    = 1
+                        UsageMax    = 5
+                        Output      = DATA, VARIABLE, ABSOLUTE // LED report
+                        
+                        ReportCount = 1
+                        ReportSize  = 3
+                        Output      = CONSTANT // LED report padding
+                        
+                        ReportCount = 6
+                        ReportSize  = 8
+                        LogicalMin  = 0
+                        LogicalMax = 101
+                        UsagePage  = KeyCodes
+                        UsageMin   = 0
+                        UsageMax   = 101
+                        Input      = DATA, ARRAY // Key arrays (6 bytes)
+                      EndCollection
+                <END_ARRAY>
+            <END> // HID
+
+            ENDPOINT
+            <BEGIN>
+                Address       = 1
+                Direction     = IN
+                Attributes    = INTERRUPT
+                MaxPacketSize = 64
+                Interval      = 10
+            <END> 
+    <END> // Interface
+<END> // Configuration
