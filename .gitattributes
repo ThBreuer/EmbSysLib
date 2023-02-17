@@ -10,6 +10,7 @@
 *.s text eol=crlf
 *.S text eol=crlf
 *.u* text eol=lf
+*.ebp text eol=lf
 
 # Declare files that will always have CRLF line endings on checkout.
 #* text eol=crlf
