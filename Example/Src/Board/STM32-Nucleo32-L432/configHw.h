@@ -2,7 +2,7 @@
 /*!
 \file   configHw.h
 \author Thomas Breuer
-\date   15.10.2022
+\date   23.02.2023
 \brief  Board specific configuration
 */
 
@@ -10,57 +10,23 @@
 /*
 Board:    STM32-Nucleo32-L432
 
-LED:      LD3 (green) - PB3 (TIM2_CH2)
-          LED (ext)   - PB1, connect LED to CN3.9
-
-Button:   BTN (ext)   - PB4, connect external button to CN3.15
-
-UART:     Virtual COM port, available via ST-Link/USB
-          Connect USB and start a terminal (e.g. Putty)
-          Configuration: 9600 baud,8 bit,1 stop bit, no parity, now flow control
-                         line editing: force off
-
-ADC:      Connect at least one voltage source (0,...,3V or potentiometer)
-            Channel  5  - PA0 (CN4.12)
-            Channel  6  - PA1 (CN4.11)
-            Channel  7  - not usable, occupied by USART2_TX
-            Channel  8  - PA3 (CN4.10)
-            Channel  9  - PA4 (CN4.9)
-            Channel 10  - PA5 (CN4.8)
-            Channel 11  - PA6 (CN4.7) (see note 1)
-            Channel 12  - PA7 (CN4.6)
-            Channel 15  - PB0 (CN3.6)
-            Channel 16  - PB1 (CN3.9)
-
-DAC:      Connect at least one port pin to a voltmeter
-            Channel 1 - PA4 (CN4.9) 
-            Channel 2 - PA5 (CN4.8) (see note 1)
-
-Display:  The UART terminal is used to emulate a display
-
-USB:      Connect USB to a PC
-            D- - PA11 (CN3.13 = white wire)
-            D+ - PA12 (CN3.5  = green wire)
-
-I2C:      Connect I2C devices to
-            SCL - PB6 (CN3.8) (see note 1)
-            SDA - PB7 (CN3.7) (see note 1)
-            All sub addresses of the devices must be set to 0 (Gnd)
-
-          - PCF8574 I/O expander, used as additional Hw::Port
-                    Connect 2 LEDs at Pin 0,1 and 1 Button at 7 of PCF8574
-          - PCF8583 Battery buffered real time clock, used as additonal Hw:Rtc
-          - PCF8583 Battery buffered RAM, used as additional Hw::Memory
-		  
-note 1: Jumper SB16 connects PB6 with PA6. 
-        Jumper SB18 connects PB7 with PA5. 		
+\see STM32-Nucleo32-L432/board_pinout.txt
 */
 
-//*******************************************************************
-#include "Hardware/Peripheral/Display/DisplayChar_Terminal.h"
-#include "Hardware/Peripheral/Rtc/Rtc_PCF8583.h"
-#include "Hardware/Peripheral/Memory/Memory_PCF8583.h"
-#include "Hardware/Peripheral/Port/Port_PCF8574.h"
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+//
+// SETUP:
+// ======
+
+/// Select I2C emulation (bit banging):
+///-----------------------------------
+#define USE_I2C_MASTER_EMUL  false
+
+/// Select a memory object:
+///------------------------
+#define USE_MEMORY_TYPE  'B' // use 'B': BKRAM or 'F': Flash
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 //*******************************************************************
 using namespace EmbSysLib::Hw;
@@ -125,11 +91,11 @@ BYTE timerPwmCh = Timer_Mcu::CH2; // LD3 (green)
 // I2C
 //-------------------------------------------------------------------
 #if USE_I2C_MASTER_EMUL == true
-Port::Pin pinSCL( portB, 6 );
-Port::Pin pinSDA( portB, 7 );
-I2Cmaster_Emul i2cBus( pinSCL, pinSDA, 10/*us*/ );
+  Port::Pin pinSCL( portB, 6 );
+  Port::Pin pinSDA( portB, 7 );
+  I2Cmaster_Emul i2cBus( pinSCL, pinSDA, 10/*us*/ );
 #else
-I2Cmaster_Mcu i2cBus( I2Cmaster_Mcu::I2C_1, 10/*kHz*/ );
+  I2Cmaster_Mcu i2cBus( I2Cmaster_Mcu::I2C_1, 10/*kHz*/ );
 #endif
 
 //-------------------------------------------------------------------
@@ -150,52 +116,30 @@ BYTE DacChannelList[] = {Dac_Mcu::CH1,Dac_Mcu::CH2};
 // Port::Pin
 //-------------------------------------------------------------------
 
-/// Select usage of I2C I/O expander:
-///----------------------------------
-#define USE_PORT_EXPANDER false
-///----------------------------------
-
-#if USE_PORT_EXPANDER == true
-Port_PCF8574 portExp( i2cBus,   // I2C I/O expander
-                           0 ); // sub address
-
-Port::Pin  ledA_Pin( portExp, 0, Port::Out ); //
-Port::Pin  ledB_Pin( portExp, 1, Port::Out ); //
-Port::Pin  btnA_Pin( portExp, 2, Port::In  ); //
-#else
 Port::Pin  ledA_Pin( portB, 3, Port::Out  ); // LD3 (green)
 Port::Pin  ledB_Pin( portB, 1, Port::Out  ); // LED (ext)
 Port::Pin  btnA_Pin( portB, 4, Port::InPU ); // BTN (ext)
-#endif
 
 //-------------------------------------------------------------------
 // Memory
 //-------------------------------------------------------------------
-Memory_BKRAM    memBKRAM;
+#if USE_MEMORY_TYPE == 'B'
+
+  Memory_BKRAM  mem;
+
+#elif USE_MEMORY_TYPE == 'F'
 
 Memory_Flash    memFlash( 0x3f800,   // Offset
                           0x800 ); // Size
 
-Memory_PCF8583  memPCF8583( i2cBus,   //
-                                 0 ); // sub address
-
-/// Select a memory object:
-///-----------------------
-Memory &mem = memBKRAM;
-///-----------------------
+#else
+  #error "Compiler flag 'USE_MEMORY_TYPE' not defined or wrong value"
+#endif
 
 //-------------------------------------------------------------------
 // RTC
 //-------------------------------------------------------------------
-Rtc_Mcu      rtcMcu( Rtc_Mcu::LSI );  // The RTC is NOT battery buffered on STM32-Nucleo!
-
-Rtc_PCF8583  rtcI2C( i2cBus,   //
-                          0 ); // sub address
-
-/// Select a RTC object:
-///---------------------
-Rtc &rtc = rtcMcu;
-///---------------------
+Rtc_Mcu      rtc( Rtc_Mcu::LSI );  // The RTC is NOT battery buffered on STM32-Nucleo!
 
 //-------------------------------------------------------------------
 // UART
@@ -208,11 +152,6 @@ Uart_Mcu   uart ( Uart_Mcu::USART_2,
 // USB
 //-------------------------------------------------------------------
 #ifdef USB_DEVICE_ENABLE
-USBdeviceDescriptor_0   desc;           // Project related descriptor
-USBdevice_Mcu           usb( desc );
+  USBdeviceDescriptor_0   desc;           // Project related descriptor
+  USBdevice_Mcu           usb( desc );
 #endif
-
-//-------------------------------------------------------------------
-// Display
-//-------------------------------------------------------------------
-DisplayChar_Terminal  disp( uart );

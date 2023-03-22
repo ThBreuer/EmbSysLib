@@ -88,7 +88,7 @@ class Digital
     //---------------------------------------------------------------
    /*! Set pin mode (input/output, pull-up/down, ...)
        \param mode Operating mode
-       \see cHwPort
+       \see Port
     */
     virtual void setMode( Mode mode );
 

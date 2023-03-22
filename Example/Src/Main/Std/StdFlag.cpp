@@ -31,7 +31,7 @@ Usage:    Send a character '0' to '9' via terminal to the µC.
 
 //-------------------------------------------------------------------
 #include "ReportHandler.h"
-#include "configStd.h"
+#include "config.h"
 
 //*******************************************************************
 class Test : public Timer::Task

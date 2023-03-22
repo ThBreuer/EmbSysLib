@@ -46,7 +46,7 @@ class I2Cmaster
 
   public:
     //---------------------------------------------------------------
-    /*! \class I2Cmaster::Device
+    /*! \class Device
 
         \brief This class represents a single device connected to 
                the I2C bus

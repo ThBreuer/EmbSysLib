@@ -31,7 +31,7 @@ class Adc_Mcu : public Adc
   public:
     //---------------------------------------------------------------
     /*! Initialize the ADC hardware
-        \param tPtr  Reference to a timer object for auto trigger conversion
+        \param timer  Reference to a timer object for auto trigger conversion
     */
     Adc_Mcu( Timer &timer );
 

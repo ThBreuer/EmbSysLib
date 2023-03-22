@@ -28,7 +28,7 @@ namespace Hw {
 
 \brief Abstract class supporting graphic displays
 
-This class is derived from \a cHwDisplayChar and adds some basic
+This class is derived from \a DisplayChar and adds some basic
 methods to draw graphic primitives. \n
 The position is given relative to the upper left
 corner with coordinates x (=colum) and y (=line).\n
@@ -65,7 +65,7 @@ class DisplayGraphic : public DisplayChar
   public:
     //---------------------------------------------------------------
     /*! Set a new font type and font zoom size
-        \param font Character font used in cHwDisplay::putChar()
+        \param font Character font used in putChar()
         \param zoom Zoom size of character
     */
     virtual void setFont( Font font, BYTE zoom = 1 );
@@ -90,7 +90,7 @@ class DisplayGraphic : public DisplayChar
     virtual void setPaintColor( WORD color );
 
     //---------------------------------------------------------------
-    /*! Set text color, which is used in cHwDisplay::putChar()
+    /*! Set text color, which is used in putChar()
         \param color Text color (RGB565)
     */
     virtual void setTextColor( WORD color );

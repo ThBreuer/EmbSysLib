@@ -28,11 +28,12 @@
 
 /**
 *******************************************************************************
-;
-; Modified by Thomas Breuer (Bonn-Rhein-Sieg University of Applied Sciences)
-; Date: 12.01.2023
-; -> IRQ handler renamed for compatibility
-;
+*
+* Modified by Thomas Breuer (Bonn-Rhein-Sieg University of Applied Sciences)
+* Date: 12.01.2023
+* -> IRQ handler renamed for compatibility
+* -> New functions 'save_conext' and load_context'
+*
 ;*******************************************************************************
 */
 
@@ -105,9 +106,9 @@ LoopFillZerobss:
 	bcc	FillZerobss
 
 /* Call static constructors */
-//    #ifdef _PROJECT_CPP
+    #ifdef _PROJECT_CPP
     bl  __libc_init_array
-//    #endif
+    #endif
 /* Call the application's entry point.*/
 	bl	main
 
@@ -509,5 +510,29 @@ g_pfnVectors:
 	.thumb_set I2C4_ER_IRQHandler,Default_Handler
 	
 	.weak	SystemInit
+
+//*******************************************************************************
+// Context switching
+//*******************************************************************************
+.text
+.thumb
+.syntax unified
+.global save_context
+.type    save_context, %function
+.global load_context
+.type    load_context, %function
+
+save_context:
+               MRS    r0, msp
+               STMDB  r0!, {r4-r11}
+               MSR    msp, r0
+               BX     lr
+
+load_context:
+               LDMFD  r0!, {r4-r11}
+               MSR    msp, r0
+               BX     lr
+
+//*******************************************************************************
 
 /************************ (C) COPYRIGHT STMicroelectonics *****END OF FILE****/

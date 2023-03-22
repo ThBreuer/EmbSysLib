@@ -35,6 +35,7 @@
 ; Modified by Thomas Breuer (Bonn-Rhein-Sieg University of Applied Sciences)
 ; Date: 12.08.2022
 ; -> External definition of Stack_Size and Heap_Size (see "Assembler Control String" in project configuration)
+; -> New functions 'save_conext' and load_context' 
 ;
 ;*******************************************************************************
 
@@ -341,6 +342,28 @@ __user_initial_stackheap
 
                  ENDIF
 
-                 END
+;*******************************************************************************
+; Context switching
+;*******************************************************************************
+                AREA    |.text|, CODE, READONLY
+                THUMB
+
+save_context FUNCTION
+                  EXPORT save_context
+                  MRS    r0, msp        ;Move to Register from Status
+                  STMDB  r0!, {r4-r11}
+                  MSR    msp, r0        ;Move to Status Register
+                  BX     lr
+                ENDP
+
+load_context FUNCTION
+                  EXPORT load_context
+                  LDMFD  r0!, {r4-r11} ; alias LDMIA ???
+                  MSR    msp, r0
+                  BX     lr
+                ENDP
+
+                END
+;*******************************************************************************
 
 ;************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE*****

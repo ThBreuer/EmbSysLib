@@ -42,8 +42,10 @@ License: See file "LICENSE"
 #include "Hardware/Common/I2C/I2Cmaster.cpp"
 #include "Hardware/Common/I2C/I2Cmaster_Emul.cpp"
 #include "Hardware/Common/Memory/Memory.cpp"
+#include "Hardware/Common/Memory/MemoryImage.cpp"
 #include "Hardware/Common/Port/Port.cpp"
 #include "Hardware/Common/Rtc/Rtc.cpp"
+#include "Hardware/Common/SPI/SPImaster.cpp"
 #include "Hardware/Common/Timer/Timer.cpp"
 #include "Hardware/Common/Display/Touch.cpp"
 #include "Hardware/Common/Uart/Uart.cpp"
@@ -58,5 +60,19 @@ License: See file "LICENSE"
 // Device/Digital
 //===================================================================
 #include "Device/Digital/Digital.cpp"
+#include "Device/Screen/ScreenChar.cpp"
+#include "Device/Screen/ScreenGraphic.cpp"
+#include "Device/Pointer/Pointer.cpp"
+#include "Device/Task/TaskManager.cpp"
+#include "Device/Terminal/Terminal.cpp"
+
+//===================================================================
+// Control
+//===================================================================
+#include "Control/DigitalButton.cpp"
+#include "Control/DigitalEncoder.cpp"
+#include "Control/DigitalEncoderJoystick.cpp"
+#include "Control/DigitalEncoderRotaryknob.cpp"
+#include "Control/DigitalIndicator.cpp"
 
 //===================================================================

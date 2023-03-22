@@ -32,6 +32,11 @@ namespace EmbSysLib {
     using namespace EmbSysLib::Hw;
   }
 
+  //! Controls
+  namespace Ctrl {
+    using namespace EmbSysLib::Dev;
+  }
+
   //! Modules
   namespace Mod {
     using namespace EmbSysLib::Std;
@@ -71,8 +76,10 @@ namespace EmbSysLib {
 #include "Hardware/Common/I2C/I2Cmaster.h"
 #include "Hardware/Common/I2C/I2Cmaster_Emul.h"
 #include "Hardware/Common/Memory/Memory.h"
+#include "Hardware/Common/Memory/MemoryImage.h"
 #include "Hardware/Common/Port/Port.h"
 #include "Hardware/Common/Rtc/Rtc.h"
+#include "Hardware/Common/SPI/SPImaster.h"
 #include "Hardware/Common/Timer/Timer.h"
 #include "Hardware/Common/Display/Touch.h"
 #include "Hardware/Common/Uart/Uart.h"
@@ -87,6 +94,20 @@ namespace EmbSysLib {
 // Device/Digital
 //===================================================================
 #include "Device/Digital/Digital.h"
+#include "Device/Screen/ScreenChar.h"
+#include "Device/Screen/ScreenGraphic.h"
+#include "Device/Pointer/Pointer.h"
+#include "Device/Task/TaskManager.h"
+#include "Device/Terminal/Terminal.h"
+
+//===================================================================
+// Control
+//===================================================================
+#include "Control/DigitalButton.h"
+#include "Control/DigitalEncoder.h"
+#include "Control/DigitalEncoderJoystick.h"
+#include "Control/DigitalEncoderRotaryknob.h"
+#include "Control/DigitalIndicator.h"
 
 //===================================================================
 #endif

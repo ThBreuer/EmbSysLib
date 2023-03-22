@@ -68,7 +68,7 @@ class Port_Mcu : public Port
     //---------------------------------------------------------------
     virtual MTYPE get( void );
 
-   private:
+  private:
     //---------------------------------------------------------------
     GPIO_TypeDef *gpio;
 

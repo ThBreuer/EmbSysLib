@@ -1,0 +1,53 @@
+//*******************************************************************
+/*!
+\file   board_pinout.txt
+\author Thomas Breuer
+\date   05.01.2023
+\brief  Board specific configuration
+*/
+
+Board:    STM32F769-Discovery
+
+LED:      LD1 (red)   - PJ13
+          LD2 (green) - PJ5
+          LED (ext)   - PA11 (TIM1_CH4), connect LED at CN9.3 (Arduino connector D10)
+
+Button:   B1 (user)   - PA0 (with pull down resistor)
+
+Joystick: Connect 3 Button (Encoder & Control)
+            Left      - PF8
+            Ctrl      - PF9
+            Right     - PA6
+
+UART:     Virtual COM port, available via ST-Link/USB
+          Connect USB and start a terminal (e.g. Putty)
+          Configuration: 9600 baud,8 bit,1 stop bit, no parity, now flow control
+                         line editing: force off
+
+ADC:      Connect at least one voltage source (0,...,3V or potentiometer)
+          ADC 1:
+            Channel  4  - PA4  (CN14.2, Arduino A1)
+            Channel  6  - PA6  (CN14.1, Arduino A0)
+            Channel 12  - PC2  (CN14.3, Arduino A2)
+          ADC 3:
+            Channel  6  - PF8  (CN14.5, Arduino A4)
+            Channel  7  - PF9  (CN14.6, Arduino A5)
+            Channel  8  - PF10 (CN14.4, Arduino A3)
+            Channel 12  - PC2  (CN14.3, Arduino A2)
+
+DAC:      Connect at least one port pin to a voltmeter
+            Channel 1 - PA4    (CN14.2, Arduino A1)
+
+USB:      Connect USB to a PC 
+            D- - PA11 (CN9.3 = white wire, Arduino D10)
+            D+ - PA12 (CN9.6 = green wire, Arduino D13)
+            
+I2C:      Connect I2C devices to
+            SCL - PB8  (CN9.10, Arduino D15)
+            SDA - PB9  (CN9.9,  Arduino D14)
+
+GND:      CN11.6, CN11.7
+
+Vcc,3.3V: CN11.4
+
+

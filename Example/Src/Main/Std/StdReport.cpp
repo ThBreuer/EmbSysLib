@@ -22,7 +22,7 @@ Usage:    Two instances of a Test class send some messages to their Report objec
 #include "EmbSysLib.h"
 
 //-------------------------------------------------------------------
-#include "configStd.h"
+#include "config.h"
 
 //*******************************************************************
 /*

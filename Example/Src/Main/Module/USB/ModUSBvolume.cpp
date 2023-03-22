@@ -10,11 +10,11 @@
 /*
 Usage:    Set volume control
           Connect to USB (output) and to a terminal (command input)
-          Send a command via terminal to the µC, this command is 
+          Send a command via terminal to the uC, this command is 
           redirected via USB to the Host:
             '+' - Increment volume
             '-' - Decrement volume
-            '-' - Toggle mute
+            ' ' - Toggle mute
 */
 
 //*******************************************************************
@@ -28,7 +28,7 @@ Usage:    Set volume control
 //-------------------------------------------------------------------
 #include "ReportHandler.h"
 #include "ModUSBvolume/descriptor.cpp"
-#include "configMod.h"
+#include "config.h"
 
 //-----------------------------------------------------------------
 class cMyInterf : public USBinterfClassHID

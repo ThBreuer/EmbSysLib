@@ -10,39 +10,28 @@
 /*
 Board:    Virtual
 
-          Start the Virtual Device Server (see "Example/Project/_VirtualServer.bat")
-
-          LED:      LED 0  - Port_Virtual, Bit 16
-                    LED 1  - Port Virtual, Bit 17
-
-          Button:    "A"   - Port_Virtual, Bit 5
-
-          ADC:      Use the slider to set analog values (channel 0,...,3)
-
-          DAC:      Observe the slider representing the analog values (channel 0,...,3)
-
-          Display:  Display area
-
-          Touch:    Move mouse over display area and press left mouse button
-
-          UART:     Terminal (Uart_Stdio)
-                  OR
-                    Serial IO via COM-Port (Uart_Serial)
-                    Connect a serial port (COMx) with another serial com port (COMy), 
-                    if necessary using USB to serial converter.
-                    Configure target with COMx (e.g. "Uart_Serial  uart( Uart_Serial::BR_9600, "COM1" );".
-                    Start a terminal (e.g. PuTTY) on port COMy
-                  OR
-                    File IO (Uart_File)
-                    Create a file (e.g. RxD.txt). This file is read as "serial input". 
-                    The serial output is redirected to another file ("TxD.txt").
-                    The file names must be defined during instantiation.
-                    Use an appropiate editor to edit/watch the files.
-                    
-          USB:      Connect a microcontroller running the software
-                    "Example\Board\...\Src\Hardware\HwUSBdevice.cpp"
-                    to the USB port
+\see Virtual/board_pinout.txt
 */
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+//
+// SETUP:
+// ======
+
+/// Select a UART type:
+///--------------------
+#define USE_UART_TYPE  'S'     // use 'S': Stdio, 'C': serial COM, 'F': File
+#define USE_COM_PORT   "COM1"
+
+/// Select font and bitmap sources:
+///----------------------------------
+#define USE_RESOURCE 'C'  // use 'C': Code, 'I': Image or 'F': File
+
+/// Select character display emulation:
+///------------------------------------
+#define USE_CHAR_DISP_EMUL  false
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 //*******************************************************************
 using namespace EmbSysLib::Hw;
@@ -89,16 +78,7 @@ BYTE DacChannelList[] = {0,1,2,3};
 //-------------------------------------------------------------------
 // Display
 //-------------------------------------------------------------------
-
-/// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-/// Select font and bitmap sources:
-///----------------------------------
-//
-#define GET_RESOURCE_FROM_CODE
-//#define GET_RESOURCE_FROM_FILE
-///>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-#if defined GET_RESOURCE_FROM_CODE
+#if USE_RESOURCE == 'C'
 
   #include "../../Resource/Font/Font_16x24.h"
   #include "../../Resource/Font/Font_10x20.h"
@@ -106,7 +86,16 @@ BYTE DacChannelList[] = {0,1,2,3};
   #include "../../Resource/Font/Font_8x8.h"
   #include "../../Resource/Bitmap/Bitmap_320x240.h"
 
-#elif defined GET_RESOURCE_FROM_FILE
+#elif USE_RESOURCE == 'I'
+
+  Memory_Mcu  image   ( "../image.bin" );
+  Font        fontFont_10x20      ( MemoryImage( image, "Font_10x20"     ).getPtr() );
+  Font        fontFont_16x24      ( MemoryImage( image, "Font_16x24"     ).getPtr() );
+  Font        fontFont_8x12       ( MemoryImage( image, "Font_8x12"      ).getPtr() );
+  Font        fontFont_8x8        ( MemoryImage( image, "Font_8x8"       ).getPtr() );
+  Bitmap      bitmapBitmap_320x240( MemoryImage( image, "Bitmap_320x240" ).getPtr() );
+
+#elif USE_RESOURCE == 'F'
 
   Font        fontFont_10x20      ( Memory_Mcu( "../../../Src/Resource/Font/font_10x20.bin"       ).getPtr() );
   Font        fontFont_16x24      ( Memory_Mcu( "../../../Src/Resource/Font/font_16x24.bin"       ).getPtr() );
@@ -115,7 +104,7 @@ BYTE DacChannelList[] = {0,1,2,3};
   Bitmap      bitmapBitmap_320x240( Memory_Mcu( "../../../Src/Resource/Bitmap/Bitmap_320x240.bin" ).getPtr() );
 
 #else
-  #error "Compiler flag 'GET_RESOURCE...' not defined"
+  #error "Compiler flag 'USE_RESOURCE' not defined"
 #endif
 
 DisplayGraphic_Virtual  dispGraphic( 320, 240,         // Size (w,h)
@@ -123,15 +112,11 @@ DisplayGraphic_Virtual  dispGraphic( 320, 240,         // Size (w,h)
                                      fontFont_8x12,   // actual font
                                      1 );              // actual zoom factor
 
-DisplayChar_Virtual     dispChar   ( 8, 20, "localhost:1000" );
-
-/// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-/// Select a char display:
-///-----------------------
-//
-DisplayChar &disp = dispChar;
-//DisplayChar &disp = dispGraphic;
-/// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+#if USE_CHAR_DISP_EMUL == true
+  DisplayChar         &disp = dispGraphic;
+#else
+  DisplayChar_Virtual  disp( 8, 20, "localhost:1000" );
+#endif
 
 //-------------------------------------------------------------------
 // Port::Pin
@@ -143,9 +128,7 @@ Port::Pin  btnA_Pin( port, 5, Port::In  ); // Button "A"
 //-------------------------------------------------------------------
 // Memory
 //-------------------------------------------------------------------
-Memory_Mcu  memFile( "mem.bin", 100 );
-
-Memory &mem = memFile;
+Memory_Mcu  mem( "mem.bin", 100 );
 
 //-------------------------------------------------------------------
 // RTC
@@ -160,13 +143,15 @@ Touch_Virtual  touch( "localhost:1000", 320, 240 );
 //-------------------------------------------------------------------
 // UART
 //-------------------------------------------------------------------
-/// Select an uart object:
-///-----------------------
-///
-Uart_Stdio   uart;
-///Uart_Serial  uart( Uart_Serial::BR_9600, "COM1" );
-///Uart_File    uart( "RxD.txt", "TxD.txt" );
-///-----------------------
+#if USE_UART_TYPE == 'S'
+  Uart_Stdio   uart;
+#elif USE_UART_TYPE == 'C'
+  Uart_Serial  uart( Uart_Serial::BR_9600, USE_COM_PORT );
+#elif USE_UART_TYPE == 'F'
+  Uart_File    uart( "RxD.txt", "TxD.txt" );
+#else
+  #error "Compiler flag 'USE_UART_TYPE' not defined or wrong value"
+#endif
 
 //-------------------------------------------------------------------
 // USB

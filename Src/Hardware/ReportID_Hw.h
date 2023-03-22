@@ -53,13 +53,18 @@ class ReportID_Hw
         static const WORD  MEMORY_EEPROM            = 0x0082; //!< Memory_EEPROM
         static const WORD  MEMORY_BKRAM             = 0x0083; //!< Memory_BKRAM
         static const WORD  MEMORY_PERIPHERAL        = 0x0084; //!< Memory_Peripheral
+        static const WORD  MEMORY_IMAGE             = 0x008F; //!< MemoryImage
         
         static const WORD  RTC_MCU                  = 0x0090; //!< Rtc_Mcu
         static const WORD  RTC_PERIPHERAL           = 0x0091; //!< Rtc_Peripheral
         static const WORD  DISPLAY_CHAR_VIRTUAL     = 0x00A0; //!< DisplayChar_Virtual
         static const WORD  DISPLAY_CHAR_TERMINAL    = 0x00A1; //!< DisplayChar_Terminal
         static const WORD  DISPLAY_GRAPHIC_VIRTUAL  = 0x00B0; //!< DisplayGraphic_Virtual
+        static const WORD  DISPLAY_GRAPHIC_SSD2119  = 0x00B1; //!< DisplayGraphic SSD2119
+        static const WORD  DISPLAY_GRAPHIC_OTM8009A = 0x00B2; //!< DisplayGraphic OTM8009A
         static const WORD  TOUCH_VIRTUAL            = 0x00C0; //!< Touch_Virtual
+        static const WORD  TOUCH_STMPE811           = 0x00C1; //!< Touch_STMPE811
+        static const WORD  TOUCH_FT6206             = 0x00C2; //!< Touch_FT6206    
         static const WORD  I2C_MASTER_MCU           = 0x00D0; //!< I2C_Mcu
         static const WORD  I2C_MASTER_EMUL          = 0x00D2; //!< I2C_Mcu
         static const WORD  SYSTEM_PIN_CONFIG        = 0x0F00; //!< PinConfig

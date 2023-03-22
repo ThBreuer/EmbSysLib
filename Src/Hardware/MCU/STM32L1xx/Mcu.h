@@ -36,6 +36,8 @@ All controller specific header files are included here.
 #include "Src/Memory_Flash.h"
 #include "Src/Port_Mcu.h"
 #include "Src/Rtc_Mcu.h"
+#include "Src/Rtos_Mcu.h"
+#include "Src/SPImaster_Mcu.h"
 #include "Src/Timer_Mcu.h"
 #include "Src/Uart_Mcu.h"
 #include "Src/USBdevice_Mcu.h"

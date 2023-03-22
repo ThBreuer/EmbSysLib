@@ -76,6 +76,7 @@ int main(void)
 
   dispGraphic.setTextColor( Color::White );
   dispGraphic.setBackColor( Color::DarkBlue );
+  dispGraphic.clear();
 
   dispGraphic.putString( "Press any key on terminal to start ..." );
   dispGraphic.refresh();

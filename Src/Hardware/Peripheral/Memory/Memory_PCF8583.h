@@ -46,6 +46,12 @@ class Memory_PCF8583 : public Memory
     //---------------------------------------------------------------
     virtual const BYTE *getPtr( void );
 
+    //---------------------------------------------------------------
+    bool isError( void )
+    {
+      return( i2c.isError() );
+    }
+
   private:
     //---------------------------------------------------------------
     virtual void writeByte( DWORD addr, BYTE  data );

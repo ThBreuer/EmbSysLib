@@ -78,13 +78,14 @@
 			<Add option="-eb_lib=n" />
 			<Add option="-eb_start_files" />
 		</Linker>
-		<Unit filename="startup.S">
-			<Option compilerVar="CC" />
-		</Unit>
+		<Unit filename="..\..\..\Src\Board\STM32L100-Discovery\board_pinout.txt" />
 		<Unit filename="..\..\..\Src\lib.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\..\Src\main.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="startup.S">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

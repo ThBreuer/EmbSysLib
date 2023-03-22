@@ -26,6 +26,8 @@ All controller specific source files are included here.
 #include "Src/Memory_Flash.cpp"
 #include "Src/Port_Mcu.cpp"
 #include "Src/Rtc_Mcu.cpp"
+#include "Src/Rtos_Mcu.cpp"
+#include "Src/SPImaster_Mcu.cpp"
 #include "Src/Timer_Mcu.cpp"
 #include "Src/Uart_Mcu.cpp"
 #include "Src/USBdevice_Mcu.cpp"

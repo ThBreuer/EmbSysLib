@@ -57,6 +57,13 @@ class Rtc_PCF8583 : public Rtc
     //---------------------------------------------------------------
     virtual BYTE get( Rtc::Properties &clock );
 
+    //---------------------------------------------------------------
+    bool isError( void )
+    {
+      
+      return( errorFlag.getEvent() || i2c.isError() );
+    }
+
   private:
     //---------------------------------------------------------------
     // Convert BCD coded number into dual coded number
@@ -68,6 +75,8 @@ class Rtc_PCF8583 : public Rtc
 
     //----------------------------------------
     I2Cmaster::Device i2c;
+  
+    Flag<bool> errorFlag;
 
     static const BYTE baseAdr = 0xA0;
     static const BYTE maskAdr = 0x01;

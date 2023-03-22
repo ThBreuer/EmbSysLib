@@ -1,0 +1,45 @@
+//*******************************************************************
+/*!
+\file   board_pinout.txt
+\author Thomas Breuer
+\date   05.01.2023
+\brief  Board specific configuration
+*/
+
+Board:    STM32F4-Discovery + Base-Board (STM32F4DIS-BB) + LCD-Board (STM32F4DIS-LCD)
+
+          Pin description: 
+            Pn.nn:   Discovery-Board
+            CONn.nn: Base-Board
+
+LED:      LD4 (green)  - PD12
+          LD3 (orange) - PD13 (also used as LCD backlight PWM)
+
+Button:   B1 (USER)    - PA0
+
+UART:     Connect UART to COM-Port and start a terminal (e.g. Putty)
+          Configuration: 9600 baud,8 bit,1 stop bit, no parity, now flow control
+                         line editing: force off
+            USART6.TxD - PC6 (P2.47 / CON4.1)
+            USART6.RxD - PC7 (P2.48 / CON4.3)
+          OR 
+            COM1 on Base-Board, use Jumper CON4.1-2 and CON4.3-4
+
+ADC:      Connect at least one voltage source (0,...,3V or potentiometer)
+            Channel  3  - PA3 (P1.13 / CON4.26)
+            Channel  8  - PB0 (P1.22 / CON4.35)
+            Channel  9  - PB1 (P1.21 / CON4.37)
+
+DAC:      Connect port pin to a voltmeter
+            Channel  2  - PA5 (P1.15 / CON4.28)
+
+Display:  Connect STM32F4DIS-LCD to CON3
+          Create and donwload an image with fonts and bitmaps to the target (see _downloadImage.bat)
+
+USB:      Connect USB to a PC
+            D- - PA11 (CN5)
+            D+ - PA12 (CN5)
+
+I2C:      Connect I2C device to
+            SCL - PB8  (P2.19 / CON4.21)
+            SDA - PB9  (P2.20 / CON4.23)

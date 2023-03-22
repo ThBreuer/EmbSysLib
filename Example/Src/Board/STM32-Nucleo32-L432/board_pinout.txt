@@ -25,3 +25,49 @@ Pinout:
           PA11 - 13    13 - AREF
           PB5  - 14    14 - +3V3
           PB4  - 15    15 - PB3/LD3
+
+
+LED:      LD3 (green) - PB3 (TIM2_CH2)
+          LED (ext)   - PB1, connect LED to CN3.9
+
+Button:   BTN (ext)   - PB4, connect external button to CN3.15
+
+UART:     Virtual COM port, available via ST-Link/USB
+          Connect USB and start a terminal (e.g. Putty)
+          Configuration: 9600 baud,8 bit,1 stop bit, no parity, now flow control
+                         line editing: force off
+
+ADC:      Connect at least one voltage source (0,...,3V or potentiometer)
+            Channel  5  - PA0 (CN4.12)
+            Channel  6  - PA1 (CN4.11)
+            Channel  7  - not usable, occupied by USART2_TX
+            Channel  8  - PA3 (CN4.10)
+            Channel  9  - PA4 (CN4.9)
+            Channel 10  - PA5 (CN4.8)
+            Channel 11  - PA6 (CN4.7) (see note 1)
+            Channel 12  - PA7 (CN4.6)
+            Channel 15  - PB0 (CN3.6)
+            Channel 16  - PB1 (CN3.9)
+
+DAC:      Connect at least one port pin to a voltmeter
+            Channel 1 - PA4 (CN4.9) 
+            Channel 2 - PA5 (CN4.8) (see note 1)
+
+Display:  The UART terminal is used to emulate a display
+
+USB:      Connect USB to a PC
+            D- - PA11 (CN3.13 = white wire)
+            D+ - PA12 (CN3.5  = green wire)
+
+I2C:      Connect I2C devices to
+            SCL - PB6 (CN3.8) (see note 1)
+            SDA - PB7 (CN3.7) (see note 1)
+            All sub addresses of the devices must be set to 0 (Gnd)
+
+          - PCF8574 I/O expander, used as additional Hw::Port
+                    Connect 2 LEDs at Pin 0,1 and 1 Button at 7 of PCF8574
+          - PCF8583 Battery buffered real time clock, used as additonal Hw:Rtc
+          - PCF8583 Battery buffered RAM, used as additional Hw::Memory
+
+note 1: Jumper SB16 connects PB6 with PA6. 
+        Jumper SB18 connects PB7 with PA5.

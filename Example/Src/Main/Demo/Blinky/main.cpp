@@ -77,7 +77,7 @@ class Test : public Timer::Task
 //*******************************************************************
 int main(void)
 {
-  uart.set( "\r\n\nDevDigital," __DATE__ "," __TIME__ "\r\n\n" );
+  uart.set( "\r\n\nDemo/Blinky," __DATE__ "," __TIME__ "\r\n\n" );
 
   Test test( timer, led_A );
 

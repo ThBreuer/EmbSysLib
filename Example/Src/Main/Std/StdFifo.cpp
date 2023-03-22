@@ -28,7 +28,7 @@ Usage:    A Data object is sent periodically from the main task to a timer task 
 
 //-------------------------------------------------------------------
 #include "ReportHandler.h"
-#include "configStd.h"
+#include "config.h"
 
 //*******************************************************************
 class Data

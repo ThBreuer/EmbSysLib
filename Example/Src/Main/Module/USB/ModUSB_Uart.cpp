@@ -25,7 +25,7 @@ Usage:    The USB device is connected as an virtual COM port (VCP, see Windows d
 //-------------------------------------------------------------------
 #include "ReportHandler.h"
 #include "ModUSB_Uart/descriptor.cpp"
-#include "configMod.h"
+#include "config.h"
 
 //*******************************************************************
 int main(void)

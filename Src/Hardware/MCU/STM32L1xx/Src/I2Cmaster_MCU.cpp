@@ -95,7 +95,7 @@ inline void I2Cmaster_Mcu::start( BYTE size )
 //-------------------------------------------------------------------
 inline void I2Cmaster_Mcu::stop( void )
 {
-  ptr->CR1 |= (I2C_CR1_STOP );
+  ptr->CR1 |= ( I2C_CR1_STOP );
 }
 
 //-------------------------------------------------------------------
@@ -103,8 +103,8 @@ inline void I2Cmaster_Mcu::sendAddr( BYTE addr )
 {
   if( isHardwareOK )
   {
-    BYTE tmp = ptr->SR1;
-    ptr->DR  = addr;   
+    volatile BYTE tmp = ptr->SR1;
+    ptr->DR = addr;   
     if( addr & 0x01 ) // master read
     {
       ptr->CR1 |= (I2C_CR1_ACK );
@@ -121,7 +121,7 @@ inline void I2Cmaster_Mcu::writeByte( BYTE byte )
   {
     ptr->DR = byte; 
     waitForAckn( I2C_SR1_TXE );
-    BYTE tmp = ptr->SR2;
+    volatile BYTE tmp = ptr->SR2;
   }
 }
 
@@ -152,7 +152,7 @@ inline BYTE I2Cmaster_Mcu::readByteNack( void )
 //-------------------------------------------------------------------
 inline void I2Cmaster_Mcu::waitForAckn( MTYPE state )
 {
-  WORD i= 0xFFFF;
+  WORD i = 0xFFFF;
 
   if( isHardwareOK )
   {

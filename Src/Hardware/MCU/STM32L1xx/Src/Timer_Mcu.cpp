@@ -131,8 +131,8 @@ Timer_Mcu::Timer_Mcu( TimerId timerIdIn,
   ptr->CR1  = TIM_CR1_CEN;  // counter enable
   ptr->DIER = TIM_DIER_UIE; // update interrupt enable
   ptr->EGR  = TIM_EGR_UG;   // re-initialize timer
-  ptr->PSC  = ps - 1;
-  ptr->ARR  = tics-1;
+  ptr->PSC  = ps   - 1;
+  ptr->ARR  = tics - 1;
 }
 
 //-------------------------------------------------------------------

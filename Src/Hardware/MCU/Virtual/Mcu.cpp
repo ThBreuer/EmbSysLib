@@ -28,6 +28,7 @@ All controller specific source files are included here.
 #include "Src/Memory_Mcu.cpp"
 #include "Src/Port_Virtual.cpp"
 #include "Src/Rtc_Mcu.cpp"
+#include "Src/Rtos_Mcu.cpp"
 #include "Src/Timer_Mcu.cpp"
 #include "Src/Touch_Virtual.cpp"
 #include "Src/Uart_File.cpp"

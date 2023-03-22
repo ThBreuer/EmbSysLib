@@ -1,3 +1,20 @@
+ver-1.01.00:
+============
+* New feasture: Context switching and a simple RTOS
+* New hardware support: 
+    - STM32F4xx
+    - STM32F7xx
+    - Display devices 
+* New classes: 
+    - 'Control' classes for user I/O
+    - More abstract handling of LCD output, touch event input, terminal input and task handling
+    - MemoryImage to handle independent objects within a flash sector
+    - SPImaster
+* Minor changes:
+   - Example/.../config*.h reorganized
+   - Improved Documentation 
+   - Some bugfixes
+  
 ver-1.00.00:
 ============
 initial version

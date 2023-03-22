@@ -27,7 +27,7 @@ Usage:    The USB device is connected as a keyboard (HID class).
 //-------------------------------------------------------------------
 #include "ReportHandler.h"
 #include "ModUSBkeyboard/descriptor.cpp"
-#include "configMod.h"
+#include "config.h"
 
 //*******************************************************************
 typedef enum

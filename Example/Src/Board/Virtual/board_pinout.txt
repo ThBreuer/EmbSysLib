@@ -1,0 +1,42 @@
+//*******************************************************************
+/*!
+\file   board_pinout.txt
+\author Thomas Breuer
+\date   05.01.2023
+\brief  Board specific configuration
+*/
+
+Board:    Virtual
+
+Start the Virtual Device Server (see "Example/Project/_VirtualServer.bat")
+
+          LED:      LED 0  - Port_Virtual, Bit 16
+                    LED 1  - Port Virtual, Bit 17
+
+          Button:    "A"   - Port_Virtual, Bit 16
+
+          ADC:      Use the slider to set analog values (channel 0,...,3)
+
+          DAC:      Observe the slider representing the analog values (channel 0,...,3)
+
+          Display:  Display area
+
+          Touch:    Move mouse over display area and press left mouse button
+
+          USB:      Connect a microcontroller running the software
+                    "Example\Board\...\Src\Hardware\HwUSBdevice.cpp"
+                    to the USB port
+
+UART:     Terminal (Uart_Stdio)
+        OR
+          Serial IO via COM-Port (Uart_Serial)
+          Connect a serial port (COMx) with another serial com port (COMy), 
+          if necessary using USB to serial converter.
+          Configure target with COMx (e.g. "Uart_Serial  uart( Uart_Serial::BR_9600, "COM1" );".
+          Start a terminal (e.g. PuTTY) on port COMy
+        OR
+          File IO (Uart_File)
+          Create a file (e.g. RxD.txt). This file is read as "serial input". 
+          The serial output is redirected to another file ("TxD.txt").
+          The file names must be defined during instantiation.
+          Use an appropiate editor to edit/watch the files.

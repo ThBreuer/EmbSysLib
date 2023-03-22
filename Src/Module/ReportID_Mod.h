@@ -43,7 +43,7 @@ class ReportID_Mod
     \class Event
     \brief Definition of event ID
     */
-    class EventID
+    class Event
     {
       public:
         //-----------------------------------------------------------

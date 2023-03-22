@@ -12,13 +12,7 @@ Usage:    I2C master
           Connect a I/O expander PCF8574 to I2C pins and connect up to 
           8 LEDs to the output of the I/O expander.
           A running light is shown.
-
-Code      Alternatively any two GPIO pins can be used as I2C bus interface
 */
-
-//*******************************************************************
-// Set this flag to use I2C master emulation (bit banging):
-#define USE_I2C_MASTER_EMUL false
 
 //*******************************************************************
 #include <stdio.h>

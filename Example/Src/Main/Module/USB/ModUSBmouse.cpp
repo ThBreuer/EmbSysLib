@@ -24,7 +24,7 @@ Usage:    The USB device is connected as a mouse (HID class).
 //-------------------------------------------------------------------
 #include "ReportHandler.h"
 #include "ModUSBmouse/descriptor.cpp"
-#include "configMod.h"
+#include "config.h"
 
 //-----------------------------------------------------------------
 class cMyInterf : public USBinterfClassHID

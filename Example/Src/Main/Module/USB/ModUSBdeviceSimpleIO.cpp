@@ -28,7 +28,7 @@ Usage:    USB device
 #include "ReportHandler.h"
 #include "Resource/USB/USB_data.h"
 #include "ModUSBdeviceSimpleIO/descriptor.cpp"
-#include "configMod.h"
+#include "config.h"
 
 //*******************************************************************
 int main(void)
@@ -45,7 +45,7 @@ int main(void)
   while( 1 )
   {
     // Get USb connection state and print
-    switch( interface.status.getEvent() )
+    switch((USBdeviceSimpleIO<>::Status) interface.status.getEvent() )
     {
       case USBdeviceSimpleIO<>::STARTED: uart.set( "\rUSB started  " ); break;
       case USBdeviceSimpleIO<>::STOPPED: uart.set( "\rUSB stopped  " ); break;

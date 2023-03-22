@@ -82,6 +82,7 @@
 		<Unit filename="startup.S">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\..\Src\Board\STM32-Nucleo32-L432\board_pinout.txt" />
 		<Unit filename="..\..\..\Src\Board\STM32-Nucleo32-L432\ReportHandler.h" />
 		<Unit filename="..\..\..\Src\lib.cpp">
 			<Option compilerVar="CC" />

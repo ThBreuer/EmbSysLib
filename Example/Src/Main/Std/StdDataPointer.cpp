@@ -24,7 +24,7 @@ Usage:    Test the DataPointer class
 
 //-------------------------------------------------------------------
 #include "ReportHandler.h"
-#include "configStd.h"
+#include "config.h"
 
 //*******************************************************************
 class Test

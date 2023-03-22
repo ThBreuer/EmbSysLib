@@ -16,8 +16,8 @@
         <TargetCommonOption>
           <Device>STM32L432KCUx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32L4xx_DFP.2.5.0</PackID>
-          <PackURL>https://www.keil.com/pack/</PackURL>
+          <PackID>Keil.STM32L4xx_DFP.2.4.0</PackID>
+          <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x0000C000) IRAM2(0x10000000,0x00004000) IROM(0x08000000,0x00040000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -409,6 +409,16 @@
               <FileName>startup.S</FileName>
               <FileType>2</FileType>
               <FilePath>.\startup.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Doc</GroupName>
+          <Files>
+            <File>
+              <FileName>board_pinout.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\Src\Board\STM32-Nucleo32-L432\board_pinout.txt</FilePath>
             </File>
           </Files>
         </Group>

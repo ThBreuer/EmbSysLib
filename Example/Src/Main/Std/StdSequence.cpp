@@ -25,7 +25,7 @@ Usage:    The class TestItem is instatiated 3 times.
 
 //-------------------------------------------------------------------
 #include "ReportHandler.h"
-#include "configStd.h"
+#include "config.h"
 
 //*******************************************************************
 class TestItem : public Sequence<TestItem>::Item

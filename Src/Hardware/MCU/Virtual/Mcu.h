@@ -35,6 +35,7 @@ All controller specific header files are included here.
 #include "Src/Memory_Mcu.h"
 #include "Src/Port_Virtual.h"
 #include "Src/Rtc_Mcu.h"
+#include "Src/Rtos_Mcu.h"
 #include "Src/Timer_Mcu.h"
 #include "Src/Touch_Virtual.h"
 #include "Src/Uart_File.h"

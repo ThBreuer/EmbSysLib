@@ -40,8 +40,7 @@ class Rtc_Mcu : public Rtc
     } RTC_ClockConfig_t;
 	
     //---------------------------------------------------------------
-    /*! Initialize the RTC hardware
-    
+    /*! Initialize the RTC hardware    
         \param config RTC configuration (clock source)
     */
     Rtc_Mcu( RTC_ClockConfig_t config );

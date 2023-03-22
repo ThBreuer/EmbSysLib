@@ -1,0 +1,7 @@
+/** @mainpage
+
+<p>This is the controller related part of the EmbSysLib documenation. You will find the relevant classes of the Namespace <a href="annotated.html">EmbSysLib::Hw</a>.
+
+</p>
+Go back to the controller independent classes: <a href="../Main/index.html">EmbSysLib Dokumentation</a>
+*/

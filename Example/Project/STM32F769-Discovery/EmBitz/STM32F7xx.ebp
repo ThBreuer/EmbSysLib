@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<EmBitz_project_file>
+	<EmBitzVersion release="2.50" revision="0" />
+	<FileVersion major="2" minor="0" />
+	<Project>
+		<Option title="STM32F7xx" />
+		<Option pch_mode="2" />
+		<Option compiler="armgcc_eb" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin\Debug\STM32F7xx.elf" />
+				<Option object_output="bin\Debug\" />
+				<Option type="0" />
+				<Option compiler="armgcc_eb" />
+				<Device>
+					<Add option="$device=cortex-m7" />
+					<Add option="$fpu=fpv5-d16" />
+					<Add option="$lscript=./STM32F769NIHX_FLASH.ld" />
+					<Add option="$stack=0x0400" />
+					<Add option="$heap=0x0400" />
+				</Device>
+				<Compiler>
+					<Add option="-mfloat-abi=hard" />
+					<Add option="-Wall" />
+					<Add option="-O0" />
+					<Add option="-g3" />
+					<Add symbol="DEBUG_TARGET" />
+				</Compiler>
+				<Cpp>
+					<Add option="-mfloat-abi=hard" />
+					<Add option="-Wall" />
+					<Add option="-fdata-sections" />
+					<Add option="-ffunction-sections" />
+					<Add option="-O0" />
+					<Add option="-g2" />
+				</Cpp>
+				<Assembler>
+					<Add option="-Wa,--gdwarf-2" />
+				</Assembler>
+				<Linker>
+					<Add option="-eb_lib=n" />
+					<Add option="-lstdc++" />
+					<Add option="-eb_start_files" />
+					<Add option="-Wl,--gc-sections" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-fdata-sections" />
+			<Add option="-ffunction-sections" />
+			<Add option="-O0" />
+			<Add option="-fno-strict-aliasing" />
+			<Add symbol="ARM_MATH_CM7" />
+			<Add symbol="STM32F769" />
+			<Add symbol="STM32F7xx" />
+			<Add symbol="STM32F769xx" />
+			<Add symbol="PROJECT_CPP" />
+			<Add symbol="_PROJECT_CPP" />
+			<Add symbol="DEBUG_TARGET" />
+			<Add symbol="COMPILER_GCC" />
+			<Add symbol="MCU_STM32F769x" />
+			<Add symbol="STM32F769_DISCOVERY" />
+			<Add symbol="OSCSRC=HSE" />
+			<Add symbol="OSCFREQ=25000" />
+			<Add directory=".\..\..\..\Src" />
+			<Add directory=".\..\..\..\Src\Board\STM32F769-Discovery" />
+			<Add directory="${EMBSYSLIB}\Src" />
+			<Add directory="${EMBSYSLIB}\Src\Hardware\MCU\STM32F7xx" />
+			<Add directory="${EMBSYSLIB}\Src\Hardware\MCU\STM32F7xx\Sys\GCC" />
+		</Compiler>
+		<Cpp>
+			<Add option="-fdata-sections" />
+			<Add option="-ffunction-sections" />
+			<Add option="-g3" />
+			<Add option="-fno-strict-aliasing" />
+		</Cpp>
+		<Assembler>
+			<Add option="-I ${EMBSYSLIB}\Src\Hardware\MCU\STM32F7xx\Sys\GCC" />
+		</Assembler>
+		<Unit filename="..\..\..\Src\Board\STM32F769-Discovery\board_pinout.txt" />
+		<Unit filename="startup.S">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\Src\Board\STM32F769-Discovery\ReportHandler.h" />
+		<Unit filename="..\..\..\Src\lib.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\Src\main.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<debugger>
+				<target_debugging_settings target="Debug">
+					<debug_interface description="STM32F7x9.svd" options="2" reg_filter="0" probe="STlink" device="stm32-auto" speed="" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="4" unwind="2" rstType="0" use_jtag="false" disable_cache="false" enable_semi="false" close_eblink="false" gdb_reset="" gdb_reset_remote="reset;" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="" ip_port="" path="" executable="" start_server="false" arguments="" flash_verify="false" flash_run="false" />
+				</target_debugging_settings>
+			</debugger>
+			<envvars />
+		</Extensions>
+	</Project>
+</EmBitz_project_file>

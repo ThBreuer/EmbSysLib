@@ -27,6 +27,7 @@ Rtc_PCF8583::Rtc_PCF8583( I2Cmaster &i2cIn, BYTE hwAddrIn )
 , i2c( i2cIn, baseAdr | ((hwAddrIn&maskAdr)<<1) )
 
 {
+  errorFlag = false;
 }
 
 //-------------------------------------------------------------------
@@ -77,7 +78,9 @@ BYTE Rtc_PCF8583::get( Rtc::Properties &clock )
   clock.month  = BCD_2_Dual( reg.weekday_month & 0x1F );
   clock.dow    = BCD_2_Dual( reg.weekday_month >> 5   )+1;
   
-  return( i2c.isError() ? false : true );
+  errorFlag = i2c.isError();
+  
+  return( errorFlag );
 }
 
 //-------------------------------------------------------------------
