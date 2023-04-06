@@ -1,6 +1,6 @@
 @echo off
 
-set pfad=%cd%
+set pfad="%cd%"
 
 echo cleaning all %pfad%
 echo.

@@ -2,11 +2,11 @@
 echo build (%cd%)
 echo -----
 
-set pfad=%cd%
+set pfad="%cd%"
 
-mkdir %EMBSYSLIB%\Doc\_Log 2>>nul
+mkdir "%EMBSYSLIB%\Doc\_Log" 2>>nul
 
-cd %EMBSYSLIB%\Doc\_Doxygen
+cd "%EMBSYSLIB%\Doc\_Doxygen"
 
 for %%f in (*.doxyfile) do @doxygen %%f
 
