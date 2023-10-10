@@ -219,7 +219,7 @@ int main(void)
 
     if( time >= timeout )
     {
-      sprintf( str, "time:%6u, main:%6u, task1:%6u, task2:%6u\r\n",
+      sprintf( str, "time:%6lu, main:%6lu, task1:%6lu, task2:%6lu\r\n",
                     time,
                     cnt++,
                     task1.cnt,

@@ -1,7 +1,7 @@
 Version         = 0x0200
 MaxPacketSize   = 64
 VendorID        = 0x0025
-ProductID       = 0x3006
+ProductID       = 0x3007
 Device          = 0x0100
 Class           = COMMUNICATIONS_CLASS
 SubClass        = 0
@@ -27,7 +27,7 @@ CONFIGURATION
 
             ENDPOINT
             <BEGIN>
-                Address       = 1
+                Address       = 4
                 Direction     = IN
                 Attributes    = INTERRUPT
                 MaxPacketSize = 8
@@ -48,7 +48,7 @@ CONFIGURATION
                 MaxPacketSize = Mod::USB_Uart::packetSize
                 Interval      = 10
             <NEXT>
-                Address       = 2
+                Address       = 3
                 Direction     = OUT
                 Attributes    = BULK
                 MaxPacketSize = Mod::USB_Uart::packetSize

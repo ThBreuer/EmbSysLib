@@ -26,9 +26,9 @@ class __attribute__ ((__packed__)) cData
       return( str );
     }
 
-    int      cnt;
-    unsigned onTransmit;
-    unsigned onTransmitCtrl;
-    unsigned onReceive;
-    unsigned onReceiveCtrl;
+    DWORD  cnt;
+    DWORD  onTransmit;
+    DWORD  onTransmitCtrl;
+    DWORD  onReceive;
+    DWORD  onReceiveCtrl;
 };

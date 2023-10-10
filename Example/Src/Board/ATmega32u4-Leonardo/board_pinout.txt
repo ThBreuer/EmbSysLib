@@ -1,0 +1,82 @@
+//*******************************************************************
+/*!
+\file   board_pinout.txt
+\author Thomas Breuer
+\date   05.01.2023
+\brief  Board specific configuration
+
+
+Board:    ...
+
+JTAG:     JTAG-Adapter	Target
+           1 TCK        PF4/A3
+           2 Gnd        GND J3.6 oder ICSP.6
+           3 TDO        PF6/A1
+           4 VCC        +5V J3.5 oder ICSP.2
+           5 TMS        PF5/A2
+           6 Reset      Reset J3.3 oder ICSP.5
+           7 nc
+           8 nc
+           9 TDI        PF7/A0
+          10 Gnd        GND J3.7
+
+LED:      TX (yellow) - PD5
+          RX (yellow) - PB0
+
+Button:   B1 (user)   - PE6 (Arduino Port D7)
+
+UART:     Connect UART to COM-Port and start a terminal (e.g. Putty)
+          Configuration: 9600 baud,8 bit,1 stop bit, no parity, now flow control
+                         line editing: force off
+            TxD - PD3 (D1)
+            RxD - PD2 (D0)
+
+
+PWM:    
+           OC0A     PB7  IO11
+           OC0B     PD0  D3 (used as  SCL )
+      
+           OC1A     PB5  IO9
+           OC1B     PB6  IO10
+           OC1C     PB7  IO11
+     
+           OC3A     PC6  D5
+         
+           OC4A     PC7  IO13
+           OC4B     PB6  IO10
+           OC4D     PD7  D6
+          #OC4B     PB5  IO9
+          #OC4A     PC6  D5
+          #OC4D     PD6  IO12
+      
+ADC:      Connect at least one voltage source (0,...,5V or potentiometer)
+            Channel  0 - PF0 (A5)
+            Channel  1 - PF1 (A4)
+            Channel  2 - nc
+            Channel  3 - nc
+            Channel  4 - PF4 (A3) occupited by JTAG
+            Channel  5 - PF5 (A2) occupited by JTAG
+            Channel  6 - PF6 (A1) occupited by JTAG
+            Channel  7 - PF7 (A0) occupited by JTAG
+            Channel  8 - PD4
+            Channel  9 - PD6
+            Channel 10 - PD7
+            Channel 11 - PB4
+            Channel 12 - PB5
+            Channel 13 - PB6
+
+Display:  The UART terminal is used to emulate a display
+
+USB:      Connect USB to a PC
+            USB micro on board
+
+I2C:      Connect I2C devices to
+            SCL - PD0 (D3)
+            SDA - PD1 (D2)
+
+SPI:      Connect SPI devices to
+            MOSI - P...
+            MISO - P...
+            SCK  - P...
+            CS   - P...
+*/

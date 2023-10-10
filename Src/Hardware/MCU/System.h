@@ -57,6 +57,18 @@ class System
     static void enableInterrupt( void );
 
     //---------------------------------------------------------------
+    /*! \todo add comment
+        
+    */
+    static void enterISR( void );
+
+    //---------------------------------------------------------------
+    /*! \todo add comment
+       
+    */
+    static void leaveISR( void );
+
+    //---------------------------------------------------------------
     /*! Enable system's watchdog
         \param resetTime (ms)
     */

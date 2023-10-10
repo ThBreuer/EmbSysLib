@@ -89,9 +89,9 @@ class Test : public Timer::Task
 
     long long    expectedValue;
 
-    int          ok;
-    int          err;
-    int          empty;
+    DWORD        ok;
+    DWORD        err;
+    DWORD        empty;
 };
 
 //*******************************************************************
@@ -103,8 +103,8 @@ int main(void)
   Data X;
 
   X.dataA  = 0;
-  int cnt  = 0;
-  int full = 0;
+  DWORD cnt  = 0;
+  DWORD full = 0;
 
   Test test( timer ); // start timer task
 
@@ -128,7 +128,7 @@ int main(void)
     if( ((cnt++)%1000) == 0 )
     {
       char str[80];
-      sprintf( str, "err:%d ok:%d empty:%d full:%d \r", test.err, test.ok, test.empty, full );
+      sprintf( str, "err:%lu ok:%lu empty:%lu full:%lu \r", test.err, test.ok, test.empty, full );
       uart.set( str );
     }
   }

@@ -32,17 +32,17 @@ CONFIGURATION
         
         ENDPOINT
         <BEGIN>
-            Address       = 1
-            Direction     = IN
+            Address       = 2
+            Direction     = OUT
             Attributes    = INTERRUPT
             MaxPacketSize = 64
             Interval      = 1
 
         <NEXT>
             Address       = 1
-            Direction     = OUT
+            Direction     = IN
             Attributes    = INTERRUPT
-            MaxPacketSize = 64
+            MaxPacketSize = 32
             Interval      = 1
         <END> // Endpoint
     <END> // Interface

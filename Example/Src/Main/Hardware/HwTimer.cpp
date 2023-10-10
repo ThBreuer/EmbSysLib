@@ -66,7 +66,7 @@ int main(void)
 
   while( 1 )
   {
-    sprintf( str, "fast: %5u,  slow: %5u,  pwm: %5u\r",
+    sprintf( str, "fast: %5lu,  slow: %5lu,  pwm: %5u\r",
                   testFast.cnt,
                   testSlow.cnt,
                   value );

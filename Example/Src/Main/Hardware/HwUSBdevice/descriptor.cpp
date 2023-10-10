@@ -87,8 +87,8 @@ class USBdeviceDescriptor_0 : public USBdeviceDescriptor
     {
       switch( epId )
       {
-        case 0x81: epList[0] = ep; break;
-        case 0x01: epList[1] = ep; break;
+        case 0x02: epList[0] = ep; break;
+        case 0x81: epList[1] = ep; break;
         default: break;
       }
     }
@@ -98,8 +98,8 @@ class USBdeviceDescriptor_0 : public USBdeviceDescriptor
     {
       switch( epId )
       {
-       case 0x81: return( epList[0] );
-       case 0x01: return( epList[1] );
+       case 0x02: return( epList[0] );
+       case 0x81: return( epList[1] );
         default: break;
       }
       return( NULL );
@@ -176,7 +176,7 @@ const BYTE USBdeviceDescriptor_0::descriptor[187] =
   // ENDPOINT */ 
     /* bLength          */ 7,
     /* bDescriptorType  */ 0x05,
-    /* bEndpointAddress */ 0x81,
+    /* bEndpointAddress */ 0x02,
     /* bmAttributes     */ Endpoint::INTERRUPT,
     /* wMaxPacketSize   */ (64)&0xFF, (64)>>8,
     /* bInterval        */ 1,
@@ -184,9 +184,9 @@ const BYTE USBdeviceDescriptor_0::descriptor[187] =
   // ENDPOINT */ 
     /* bLength          */ 7,
     /* bDescriptorType  */ 0x05,
-    /* bEndpointAddress */ 0x01,
+    /* bEndpointAddress */ 0x81,
     /* bmAttributes     */ Endpoint::INTERRUPT,
-    /* wMaxPacketSize   */ (64)&0xFF, (64)>>8,
+    /* wMaxPacketSize   */ (32)&0xFF, (32)>>8,
     /* bInterval        */ 1,
 
   // STRING 0x00
