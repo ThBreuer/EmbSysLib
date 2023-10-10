@@ -75,6 +75,7 @@ namespace EmbSysLib {
 #include "Hardware/Common/Display/DisplayGraphic.h"
 #include "Hardware/Common/I2C/I2Cmaster.h"
 #include "Hardware/Common/I2C/I2Cmaster_Emul.h"
+#include "Hardware/Common/I2C/I2Cslave.h"
 #include "Hardware/Common/Memory/Memory.h"
 #include "Hardware/Common/Memory/MemoryImage.h"
 #include "Hardware/Common/Port/Port.h"
