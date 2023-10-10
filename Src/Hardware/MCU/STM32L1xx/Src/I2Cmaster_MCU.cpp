@@ -164,6 +164,8 @@ inline void I2Cmaster_Mcu::waitForAckn( MTYPE state )
     isHardwareOK = false; 
     stop();
   }
+  //!< \todo : else isHardwareOK = true; ???
+
 }
 
 }  } //namespace
