@@ -6,6 +6,7 @@
 *.cpp text eol=crlf
 *.h text eol=crlf
 *.bat text eol=crlf
+*.ld text eol=crlf
 *.txt text eol=crlf
 *.s text eol=crlf
 *.S text eol=crlf
