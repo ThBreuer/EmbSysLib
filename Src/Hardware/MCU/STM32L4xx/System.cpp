@@ -369,10 +369,12 @@ void SystemInit_48MHzClock( void )
 {
   // Switch the voltage reference for the HSI48 oscillator on
   RCC->APB2ENR  |= RCC_APB2ENR_SYSCFGEN;
+  RCC->APB1ENR1  |= RCC_APB1ENR1_CRSEN;
   
   // configure CRS
   // RELOAD: use reset value (f_TARGET=48MHz, f_SYNC = 1 kHz, SOF signal from USB)
   // FELIM: use reset value
+  CRS->CFGR |= (2<<28);
   CRS->CR |=   CRS_CR_CEN 
              | CRS_CR_AUTOTRIMEN;
 
