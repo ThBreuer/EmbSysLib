@@ -27,6 +27,7 @@ namespace Hw {
 #endif
 
 //-------------------------------------------------------------------
+Timer_Mcu *Timer_Mcu::timerPtr_1  = 0;
 Timer_Mcu *Timer_Mcu::timerPtr_2  = 0;
 Timer_Mcu *Timer_Mcu::timerPtr_6  = 0;
 Timer_Mcu *Timer_Mcu::timerPtr_7  = 0;
@@ -40,8 +41,15 @@ Timer_Mcu::Timer_Mcu( TimerId timerIdIn,
 {
   timerId = timerIdIn;
 
-  switch( timerId )
-  {
+    switch( timerId )
+    {
+      case TIM_1:
+      ptr           = (TIM_TypeDef*)TIM1_BASE;
+      timerPtr_1    = this;
+      RCC->APB2ENR |= RCC_APB2ENR_TIM1EN;
+      NVIC_EnableIRQ( TIM1_CC_IRQn );
+      break;
+
     case TIM_2:
       ptr           = (TIM_TypeDef*)TIM2_BASE;
       timerPtr_2    = this;
@@ -92,6 +100,19 @@ void Timer_Mcu::enablePWM( BYTE channel, Mode polarity )
 {
   switch( timerId )
   {
+    case TIM_1:
+      switch( channel )
+      {
+        case 0: PinConfig::set( PinConfig::TIM1_CH1 ); break;
+        case 1: PinConfig::set( PinConfig::TIM1_CH2 ); break;
+        case 2: PinConfig::set( PinConfig::TIM1_CH3 ); break;
+        case 3: PinConfig::set( PinConfig::TIM1_CH4 ); break;
+        default:report.error( ReportID_Hw::Event::WRONG_CHANNEL );
+      }
+      //TIM_1 is an advaned Timer
+      ptr->BDTR |= TIM_BDTR_MOE; //Main Output Enable
+      break;
+
     case TIM_2:
       switch( channel )
       {
@@ -117,14 +138,13 @@ void Timer_Mcu::enablePWM( BYTE channel, Mode polarity )
   }
 
   WORD ccmr =  (7<<4)  // OCxM: PWM-mode 2
-              |(0<<3); // OCxPE: preload enable
+              |(1<<3); // OCxPE: preload enable
 
   WORD ccer =  (1<<0)             // CCxE: enable
               |(((polarity==NORMAL)?1:0)<<1);
                                   // CCxP: polarity
                                   //       invers: active high
                                   //       normal: active low
-
   switch( channel )
   {
     case 0:
@@ -173,6 +193,14 @@ void Timer_Mcu::isr(void)
 {
   ptr->SR = !TIM_SR_TIF;
   isrHandler();
+}
+
+//-------------------------------------------------------------------
+extern "C" {
+  void TIM1_IRQHandler(void)
+  {
+    Timer_Mcu::timerPtr_1->isr();
+  }
 }
 
 //-------------------------------------------------------------------

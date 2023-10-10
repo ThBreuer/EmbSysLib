@@ -35,6 +35,7 @@ class Timer_Mcu : public Timer
     */
     typedef enum
     {
+      TIM_1,   //!< Timer 1
       TIM_2,   //!< Timer 2
       TIM_6,   //!< Timer 6
       TIM_7,   //!< Timer 7
@@ -74,6 +75,7 @@ class Timer_Mcu : public Timer
 
   public:
     //---------------------------------------------------------------
+    static Timer_Mcu *timerPtr_1;
     static Timer_Mcu *timerPtr_2;
     static Timer_Mcu *timerPtr_6;
     static Timer_Mcu *timerPtr_7;
