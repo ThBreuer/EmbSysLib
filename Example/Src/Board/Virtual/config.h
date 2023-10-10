@@ -55,7 +55,7 @@ Font        fontFont_8x8        ( Memory_Mcu( "../../../Src/Resource/Font/font_8
 Bitmap      bitmapBitmap_320x240( Memory_Mcu( "../../../Src/Resource/Bitmap/Bitmap_320x240.bin" ).getPtr() );
 Bitmap      bitmapBitmap_32x32  ( Memory_Mcu( "../../../Src/Resource/Bitmap/Bitmap_32x32.bin"   ).getPtr() );
 
-DisplayGraphic_Virtual  dispGraphic( 320, 240, "localhost:1000", fontFont_8x12, 1 );
+DisplayGraphic_Virtual  dispGraphic( 800, 480, "localhost:1000", fontFont_8x12, 1 );
 
 DisplayChar_Virtual  disp( 8, 20, "localhost:1000" );
 

@@ -22,7 +22,7 @@ namespace Hw {
 /*!
 \class Memory_EEPROM
 
-\brief Implementation of the EEPROM as a HwMemory class
+\brief Implementation of the EEPROM as a Memory class
 
 Run time write/erase per byte: 4-8ms approx.
 

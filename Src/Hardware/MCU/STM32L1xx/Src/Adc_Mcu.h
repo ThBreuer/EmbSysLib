@@ -22,7 +22,7 @@ namespace Hw {
 /*!
 \class Adc_Mcu
 
-\brief Implementation of the analg to digital converter (ADC)
+\brief Implementation of the analog to digital converter (ADC)
 
 \example HwAdc.cpp
 */
