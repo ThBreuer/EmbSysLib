@@ -48,8 +48,9 @@ class USB_Uart : public Hw::USBdeviceInterface, public Hw::Uart
     {
       DEFAULT            = 0,
       DISCONNECTED       = 1, //!< \n No USB host connected
-      USB_READY          = 2, //!< \n USB is ready to use
-      TERMINAL_CONNECTED = 3  //!< \n Interface is connected to a terminal
+      CONNECTED          = 2, //!< \n Interface is connected to a terminal
+      USB_READY          = 3, //!< \n USB is ready to use
+      USB_DISCONNECTED   = 4  //!< \n USB suspend
     } connectionState_enum;
 
   private:
@@ -63,6 +64,12 @@ class USB_Uart : public Hw::USBdeviceInterface, public Hw::Uart
                        Std::Flag<connectionState_enum> &connection );
 
       private:
+        //---------------------------------------------------------------
+        virtual void onStart( void );
+
+        //---------------------------------------------------------------
+        virtual void onStop( void );
+   
         //---------------------------------------------------------------
         virtual bool onRequestCtrl_IN( DataPointer &dataPtr, 
                                        BYTE         request,
@@ -100,12 +107,6 @@ class USB_Uart : public Hw::USBdeviceInterface, public Hw::Uart
 
   private:
     //---------------------------------------------------------------
-    virtual void onStart( void );
-
-    //---------------------------------------------------------------
-    virtual void onStop( void );
-   
-    //---------------------------------------------------------------
     virtual void onConfigEndpoint( BYTE         epId, 
                                    DataPointer &data, 
                                    WORD         maxPacketSize );
@@ -130,7 +131,7 @@ class USB_Uart : public Hw::USBdeviceInterface, public Hw::Uart
 
   public:
     //---------------------------------------------------------------
-    static const WORD packetSize = 64; //!< \n
+    static const WORD packetSize = 32; //!< \n
 
   public:
     //---------------------------------------------------------------

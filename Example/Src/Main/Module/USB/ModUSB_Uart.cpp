@@ -32,7 +32,7 @@ int main(void)
 {
   USB_Uart  interfaceCDC( usb,   1,   // configId
                                  0,   // interfId
-                               255 ); // uart fifo buffer size 
+                               64 ); // uart fifo buffer size 
 
   usb.start();
 
@@ -42,9 +42,10 @@ int main(void)
   {
     switch( interfaceCDC.connection.getUnique() )
     {
-      case USB_Uart::DISCONNECTED:       uart.set("\r\n<disconnected>\r\n");        break;
+      case USB_Uart::DISCONNECTED:     uart.set("\r\n<Terminal disconnected>\r\n"); break;
+      case USB_Uart::CONNECTED:        uart.set("\r\n<Terminal connected>\r\n");    break;
       case USB_Uart::USB_READY:          uart.set("\r\n<USB ready>\r\n");           break;
-      case USB_Uart::TERMINAL_CONNECTED: uart.set("\r\n<Terminal connected>\r\n");  break;
+      case USB_Uart::USB_DISCONNECTED: uart.set("\r\n<USB disconnected>\r\n");      break;
       default:                                                                      break;
     }
 

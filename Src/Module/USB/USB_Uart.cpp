@@ -33,6 +33,18 @@ USB_Uart::CtrlInterface::CtrlInterface( Hw::USBdevice   &usb,
 {
 }
 
+//-------------------------------------------------------------------
+void USB_Uart::CtrlInterface::onStart( void )
+{
+  connection = USB_READY; // USB just started, but Terminal not connected
+}
+
+//-------------------------------------------------------------------
+void USB_Uart::CtrlInterface::onStop( void )
+{
+  connection = USB_DISCONNECTED;
+}
+
 //---------------------------------------------------------------
 bool USB_Uart::CtrlInterface::onRequestCtrl_IN( DataPointer &dataPtr, 
                                                 BYTE         request,
@@ -48,7 +60,8 @@ bool USB_Uart::CtrlInterface::onRequestCtrl_IN( DataPointer &dataPtr,
 bool USB_Uart::CtrlInterface::onTransmit( BYTE         epId,
                                           DataPointer &epdata )
 {
-  connection = TERMINAL_CONNECTED;
+  connection = CONNECTED;
+  epdata = DataPointer();
   return( true );
 }
 
@@ -61,10 +74,18 @@ bool USB_Uart::CtrlInterface::onRequestCtrl_OUT( DataPointer &dataPtr,
   // Ignore incomming requests:
   //   0x20: "set line coding"
   //   0x22: "set control line state"
-  if( request == 0x22 && value == 0x02 )
+  if( request == 0x22 )
   {
-    connection = USB_READY;
+    if( value & 0x01 )
+    {
+       connection = CONNECTED;
+    }
+    else
+    {
+       connection = DISCONNECTED;
+    }
   }
+  
   dataPtr = DataPointer();
   return( true );
 }
@@ -85,18 +106,6 @@ USB_Uart::USB_Uart( Hw::USBdevice &usb,
     {
     }
 
-//-------------------------------------------------------------------
-void USB_Uart::onStart( void )
-{
-  connection = USB_READY; // USB just started, but Terminal not connected
-}
-
-//-------------------------------------------------------------------
-void USB_Uart::onStop( void )
-{
-  connection = DISCONNECTED;
-}
-   
 //-------------------------------------------------------------------
 void USB_Uart::onConfigEndpoint( BYTE         epId, 
                                  DataPointer &data, 
