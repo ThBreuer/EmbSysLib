@@ -32,7 +32,7 @@ class USBdeviceEndpoint;
 #pragma pack(1)
 class USBdeviceDescriptor
 {
-  protected:
+  public:
     //---------------------------------------------------------------
     // ID of requested descriptor type
     enum
@@ -50,7 +50,7 @@ class USBdeviceDescriptor
       INTERFACE_ASSOCIATION_DESCRIPTOR   = 11
     };
 
-  protected:
+  public:
     //---------------------------------------------------------------
     // Device descriptor
     //
@@ -101,7 +101,7 @@ class USBdeviceDescriptor
         BYTE  bNumConfigurations;
     };
 
-  protected:
+  public:
     //---------------------------------------------------------------
     // Configuration descriptor
     //
@@ -129,7 +129,7 @@ class USBdeviceDescriptor
         BYTE  bMaxPower;
     };
 
-  protected:
+  public:
     //---------------------------------------------------------------
     // Interface descriptor
     //
@@ -147,7 +147,7 @@ class USBdeviceDescriptor
           VENDOR_SPECIFIC_CLASS       = 0xFF
         };
 
-      public:
+      protected:
         BYTE  bLength;
         BYTE  bDescriptorType;
         BYTE  bInterfaceNumber;
@@ -159,7 +159,7 @@ class USBdeviceDescriptor
         BYTE  iInterface;
     };
 
-  protected:
+  public:
     //---------------------------------------------------------------
     // Endpoint descriptor
     //
@@ -186,7 +186,7 @@ class USBdeviceDescriptor
         BYTE  bInterval;
     };
 
-  protected:
+  public:
     //---------------------------------------------------------------
     // HID descriptor
     //
@@ -210,7 +210,7 @@ class USBdeviceDescriptor
             };
         };
 
-      public:
+      protected:
         BYTE  bLength;
         BYTE  bDescriptorType;
         BYTE  bcdHID;
@@ -219,7 +219,7 @@ class USBdeviceDescriptor
     };
 
 
-  protected:
+  public:
     //---------------------------------------------------------------
     // Report descriptor
     // \see "Universal Serial Bus HID Usage Tables",
