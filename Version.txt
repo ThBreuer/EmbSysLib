@@ -1,8 +1,25 @@
-ver-1.01.01:
+ver-01.02.00
 ============
-* Support path names with spaces
+* Bug fix: 
+    - STM32L4: TIM1 added
+    - STM32L4: SystemInit_48MHzClock, enable CRS
+    - STM32L4: startup_stm32l432xx.S, no compiler flag '_PROJECT_CPP'
+    - enums in USBdescriptor public
+    - Module USB_Uart, connection detection
+    - typo corrected
+    - uVision project file STM32L4xx: reset after flash, optimization
+    
+* New feature:
+    - I2Cslave
+    
+* New hardware support
+    - ATmega32u4
 
-ver-1.01.00:
+ver-01.01.01
+============
+* Bug fix: Support path names with white spaces
+
+ver-01.01.00
 ============
 * New feasture: Context switching and a simple RTOS
 * New hardware support: 
@@ -19,6 +36,6 @@ ver-1.01.00:
    - Improved Documentation 
    - Some bugfixes
   
-ver-1.00.00:
+ver-01.00.00
 ============
 initial version
