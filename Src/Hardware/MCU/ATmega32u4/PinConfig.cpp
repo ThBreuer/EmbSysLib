@@ -42,19 +42,22 @@ Output push pull      1      data
 void PinConfig::set( volatile uint8_t *port, BYTE pinId, DWORD mode, BYTE af )
 {
   Hw::System::disableInterrupt();
+
+  BYTE mask = 1<<pinId;
+
   switch( mode )
   {
     case OUTPUT:
-      *(port+1) = 1<<pinId;// DDR
-      *(port+2) = 0<<pinId;// PORT
+      *(port+1) |=  mask;// set DDR
+      *(port+2) &= ~mask;// clr PORT
     break;
     case INPUT:
-      *(port+1) = 0<<pinId;// DDR
-      *(port+2) = 0<<pinId;// PORT
+      *(port+1) &= ~mask;// clr DDR
+      *(port+2) &= ~mask;// clr PORT
       break;
     case INPUT_PULLUP:
-      *(port+1) = 0<<pinId;// DDR
-      *(port+2) = 1<<pinId;// PORT
+      *(port+1) &= ~mask;// clr DDR
+      *(port+2) |=  mask;// set PORT
     break;
   }
   Hw::System::enableInterrupt();
