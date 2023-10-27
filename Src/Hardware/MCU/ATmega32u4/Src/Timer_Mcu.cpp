@@ -435,8 +435,8 @@ ISR(TIMER1_CAPT_vect)
 // Timer_3
 //
 //*******************************************************************
-#ifdef _USE_RTOS && _USE_RTOS==true
-#pragma warning "Timer 3 not available"
+#if defined _USE_RTOS && _USE_RTOS==true
+  #pragma warning "Timer 3 not available"
 #else
 //-------------------------------------------------------------------
 Timer_Mcu *Timer_3::hwTimerPtr = 0;

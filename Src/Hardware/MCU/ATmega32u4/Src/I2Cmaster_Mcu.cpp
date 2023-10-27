@@ -60,7 +60,7 @@ I2Cmaster_Mcu::I2Cmaster_Mcu( WORD fclk )
   //  |  1000     0   |   1 |   1 |   2 |
   //  +---------------+-----+-----+-----+
   //
-  int rate = (OSC_FREQ/fclk - 16)/2;
+  int rate = (OSC_FREQ/fclk/1000 - 16)/2;
  
   if( rate <= 0 )
   {
