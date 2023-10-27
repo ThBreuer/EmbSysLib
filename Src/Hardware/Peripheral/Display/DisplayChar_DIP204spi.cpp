@@ -22,7 +22,7 @@ namespace Hw {
 //-------------------------------------------------------------------
 DisplayChar_DIP204spi::DisplayChar_DIP204spi( SPImaster::Device &spiIn )
 
-: DisplayChar( 0 /* todo ... */, NUM_OF_LINE, NUM_OF_COLUMN ), 
+: DisplayChar( 0 /* todo ... */, NUM_OF_LINE, NUM_OF_COLUMN ),
   spi( spiIn )
 
 {
@@ -44,8 +44,7 @@ void DisplayChar_DIP204spi::gotoTextPos( BYTE lineIn, BYTE columnIn )
   // Startadresse fuer Display-Speicher schreiben
   if( line < NUM_OF_LINE && column < NUM_OF_COLUMN )
   {
-    // gotoPos, Format: rrrccccc
-    writeCmd( 0x80 | ((line<<5)+(column&0x1F)) ); 
+    writeCmd( 0x80 | ((line&0x07)<<5) | (column&0x1F) );
   }
 }
 
@@ -104,23 +103,26 @@ void DisplayChar_DIP204spi::waitBusy( void )
               | (1<<5); // RW
     data[1] = 0;
     spi.transceive( data, 2);
-  } while( i-- && data[1] & 0x80);
-  
-  //!< \todo i==0 is an Error -> report!
+  } while( --i && data[1] & 0x80);
+
+  if( i == 0 )
+  {
+    report.alert(0);//!< \todo i==0 is an Error -> report!
+  }
 }
 
 //-------------------------------------------------------------------
 void DisplayChar_DIP204spi::writeCmd( BYTE cmd )
 {
   BYTE data[3];
-  
+
   data[0] =   (0x1F)  // START
             | (0<<6)  // RS
             | (0<<5); // RW
   data[1] = (cmd   ) & 0x0F;
   data[2] = (cmd>>4) & 0x0F;
   spi.transceive( data, 3);
-  
+
   waitBusy();
 }
 
@@ -128,7 +130,7 @@ void DisplayChar_DIP204spi::writeCmd( BYTE cmd )
 void DisplayChar_DIP204spi::writeDat( BYTE dat )
 {
   BYTE data[3];
-  
+
   data[0] =   (0x1F)  // START
             | (1<<6)  // RS
             | (0<<5); // RW
