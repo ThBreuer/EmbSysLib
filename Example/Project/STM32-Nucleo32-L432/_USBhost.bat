@@ -1,1 +1,2 @@
-start "%EMBSYSLIB%\Tools\USBhost.exe"
+rem start 
+"%EMBSYSLIB%\Tools\USBhost.exe"
