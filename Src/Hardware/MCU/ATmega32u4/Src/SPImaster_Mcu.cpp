@@ -54,24 +54,16 @@ SPImaster_0::SPImaster_0( SPI_Baudrate  baud,
     case CR_8000kHz: spr = 0x00; break;
   }
 
-  #if defined (_MCU_DEV_AT90USB1287)
-    // Port B Data Direction Register
-    DDRB |= (1<<PB0)  // #SS:  output
-           |(1<<PB2)  // MOSI: output
+    DDRB |= (1<<PB2)  // MOSI: output
            |(1<<PB1); // SCK:  output         
-  #else
-    // Port B Data Direction Register
-    DDRB |= (1<<PB4)  // #SS:  output
-           |(1<<PB5)  // MOSI: output
-           |(1<<PB7); // SCK:  output
-  #endif
+
   // SPI Status Register
   SPSR = (1<<SPI2X); // Double SPI Speed Bit:ON (see above)
 
   // SPI Control Register
   SPCR =  (0<<SPIE)  // Interrupt enable:    OFF
          |(1<<SPE )  // SPI enable:          ON
-         |(0<<DORD)  // Data Order:          MSB first
+         |(1<<DORD)  // Data Order:          MSB first
          |(1<<MSTR)  // Master/Slave Select: Master
          |(((clockPolPhaIn&0x10)?1:0)<<CPOL) // Clock Polarity
          |(((clockPolPhaIn&0x01)?1:0)<<CPHA) // Clock Phase

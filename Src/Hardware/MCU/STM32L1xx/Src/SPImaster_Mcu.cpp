@@ -43,7 +43,7 @@ SPImaster_Mcu::SPImaster_Mcu( SPI_ID         id,
     case SPI_1:
       ptr           = SPI1;
       RCC->APB2ENR |= RCC_APB2ENR_SPI1EN;
-      PinConfig::set( PinConfig::SPI1_SCK  );
+      PinConfig::set( PinConfig::SPI1_SCK,  PinConfig::MEDIUM_SPEED );
       PinConfig::set( PinConfig::SPI1_MISO );
       PinConfig::set( PinConfig::SPI1_MOSI );
       PinConfig::set( PinConfig::SPI1_NSS  );
@@ -52,7 +52,7 @@ SPImaster_Mcu::SPImaster_Mcu( SPI_ID         id,
     case SPI_2:
       ptr           = SPI2;
       RCC->APB1ENR |= RCC_APB1ENR_SPI2EN;
-      PinConfig::set( PinConfig::SPI2_SCK  );
+      PinConfig::set( PinConfig::SPI2_SCK,  PinConfig::MEDIUM_SPEED  );
       PinConfig::set( PinConfig::SPI2_MISO );
       PinConfig::set( PinConfig::SPI2_MOSI );
       PinConfig::set( PinConfig::SPI2_NSS  );
@@ -61,7 +61,7 @@ SPImaster_Mcu::SPImaster_Mcu( SPI_ID         id,
     case SPI_3:
       ptr           = SPI3;
       RCC->APB1ENR |= RCC_APB1ENR_SPI3EN;
-      PinConfig::set( PinConfig::SPI3_SCK  );
+      PinConfig::set( PinConfig::SPI3_SCK,  PinConfig::MEDIUM_SPEED  );
       PinConfig::set( PinConfig::SPI3_MISO );
       PinConfig::set( PinConfig::SPI3_MOSI );
       PinConfig::set( PinConfig::SPI3_NSS  );
@@ -87,10 +87,10 @@ SPImaster_Mcu::SPImaster_Mcu( SPI_ID         id,
              |  SPI_CR2_SSOE;     // Slave Select output enable
 
   ptr->CR1  =  !SPI_CR1_DFF       // Data frame format: 8-bit
-             |  SPI_CR1_SSM       // Slave management: SW
+             | !SPI_CR1_SSM       // Slave management: SW
              |  SPI_CR1_SSI       //
              |  SPI_CR1_LSBFIRST  // LSB first: disable
-             | !SPI_CR1_SPE       // SPI enable
+             | !SPI_CR1_SPE       // SPI disable
              |  (br<<3)           // Baud rate
              |  SPI_CR1_MSTR      // Master mode
              |  ((clockPolPha & 0x01)?SPI_CR1_CPOL:0)
@@ -105,28 +105,32 @@ SPImaster_Mcu::SPImaster_Mcu( SPI_ID         id,
 //-------------------------------------------------------------------
 BYTE SPImaster_Mcu::transceiveByte( BYTE data )
 {
-  BYTE x=0;
+  volatile BYTE x=0;
+  volatile BYTE ret=0;
 
   // wait until transmission buffer empty
-  while( !(ptr->SR & SPI_SR_TXE) ){
-		asm("");
-	};
+  while( !(ptr->SR & SPI_SR_TXE) )
+  {
+    asm("NOP");
+  };
 
   // start transmission
   ptr->DR = data;
 
   // wait until transmission completed
-  while( (ptr->SR & SPI_SR_BSY) ){
-		asm("");
-	};
+  while( !(ptr->SR & SPI_SR_RXNE))
+  {
+    asm("NOP");
+  };
 
+  ret = ptr->DR;
   // wait until data received
   while( (ptr->SR & SPI_SR_RXNE) )
   {
-     x = ptr->DR;
+     x = ptr->DR; // dummy read
   }
 
-  return( x );
+  return( ret );
 }
 
 }  } //namespace

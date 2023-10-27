@@ -146,6 +146,7 @@ SPImaster_Mcu     spi2      ( SPImaster_Mcu::SPI_2,
                               SPImaster_Mcu::CR_1000kHz,
                               SPImaster_Mcu::CPOL_H_CPHA_H );
 SPImaster::Device spiDisplay( spi2, portB, 12 );
+SPImaster::Device spiMaster ( spi2, portB, 12 );
 
 //-------------------------------------------------------------------
 // Memory

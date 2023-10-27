@@ -81,6 +81,7 @@ namespace EmbSysLib {
 #include "Hardware/Common/Port/Port.h"
 #include "Hardware/Common/Rtc/Rtc.h"
 #include "Hardware/Common/SPI/SPImaster.h"
+#include "Hardware/Common/SPI/SPIslave.h"
 #include "Hardware/Common/Timer/Timer.h"
 #include "Hardware/Common/Display/Touch.h"
 #include "Hardware/Common/Uart/Uart.h"
