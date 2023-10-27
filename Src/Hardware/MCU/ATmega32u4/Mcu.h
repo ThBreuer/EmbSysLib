@@ -53,13 +53,14 @@ inline void  operator delete   ( void         *x ) { if(x) free(x);    }
 #include "Hardware/ReportID_Hw.h"
 
 //*******************************************************************
-#include "Src/ADC_Mcu.h"
+#include "Src/Adc_Mcu.h"
 #include "Src/I2Cmaster_Mcu.h"
-#include "Src/I2Cslave_MCU.h"
+#include "Src/I2Cslave_Mcu.h"
 #include "Src/Memory_EEPROM.h"
 #include "Src/Port_Mcu.h"
-#include "Src/RTOS_MCU.h"
-#include "Src/SPImaster_MCU.h"
+#include "Src/Rtos_Mcu.h"
+#include "Src/SPImaster_Mcu.h"
+#include "Src/SPIslave_Mcu.h"
 #include "Src/Timer_Mcu.h"
 #include "Src/Uart_Mcu.h"
 #include "Src/USBdevice_Mcu.h"

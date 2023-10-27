@@ -1,6 +1,6 @@
 //*******************************************************************
 /*!
-\file   cHwI2Cslave.cpp
+\file   HwI2Cslave.cpp
 \author Thomas Breuer
 \date   31.01.2013
 \brief  Sample of using hardware related classes
@@ -62,5 +62,3 @@ int main( void )
   {
   }
 }
-
-

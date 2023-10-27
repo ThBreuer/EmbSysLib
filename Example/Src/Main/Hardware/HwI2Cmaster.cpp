@@ -8,10 +8,7 @@
 
 //*******************************************************************
 /*
-Usage:    I2C master
-          Connect a I/O expander PCF8574 to I2C pins and connect up to 
-          8 LEDs to the output of the I/O expander.
-          A running light is shown.
+Usage:    \todo
 */
 
 //*******************************************************************
@@ -27,13 +24,22 @@ int main( void )
 {
   uart.set( "\r\n\nHwI2Cmaster," __DATE__ "," __TIME__ "\r\n\n" );
 
-  I2Cmaster::Device i2cDevice( i2cBus, 0x40 /* PCF8574 device address */ );
+  I2Cmaster::Device i2cDevice( i2cBus, 0xB0 /* I2Sslave device address */ );
+
+  DWORD w = 0;
+  DWORD r = 0;
+  DWORD err = 0;
+  char str[256];
 
   while( 1 )
   {
-    BYTE value = i2cDevice.read();
-    i2cDevice.write( (BYTE)(value ? value<<1 : 1) );
+    w = w ? w<<1 : 1;
+    i2cDevice.write( (BYTE)0xff, w );
+    i2cDevice.read( (BYTE)0xff, &r );
+    if( w != r )
+      err++;
     
-    System::delayMilliSec( 100 );
+    sprintf(str,"w:%08x  r:%08x (%d)\r\n", w,r, err );
+    uart.set( str );
   }
 }
