@@ -21,10 +21,20 @@ Board:    ...
 /// Select I2C emulation (bit banging):
 ///-----------------------------------
 #define USE_I2C_MASTER_EMUL  false
+//<! \todo
+/**
+ I2C emul is not running. OutOD has to been implemented:
+  config, state=(1):
+    DDR = 0
+    PORT = 0
+    (same as INPUT)
 
-/// select a memory object:
-///------------------------
-#define USE_MEMORY_TYPE  'E' // use 'E': EEPROM or 'F': Flash
+  set pin, state=(1):
+    DDR  = 0 (input)
+
+  clr pin, state=0 
+    DDR  = 1 (output)
+**/
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -44,15 +54,16 @@ Port_Mcu   &ledPort = portD;
 MTYPE      btnPinMask = (1<<6); // ...
 MTYPE      ledPinMask = (1<<5); // RX (yellow)
 
-////-------------------------------------------------------------------
-//// Timer
-////-------------------------------------------------------------------
+//-------------------------------------------------------------------
+// Timer
+//-------------------------------------------------------------------
 Timer_4  timerFast(     1000L/*us*/ );
 Timer_1  timerSlow(    10000L/*us*/ );
-Timer_0  timerPWM (    512/*us*/, Timer_Mcu::PWM );
+Timer_0  timerPWM (       1024/*us*/, Timer_Mcu::PWM );
 //
 BYTE timerPwmCh = timerPWM.OC0A; // ...
 //
+
 //-------------------------------------------------------------------
 // I2C
 //-------------------------------------------------------------------
@@ -61,7 +72,7 @@ BYTE timerPwmCh = timerPWM.OC0A; // ...
   Port::Pin pinSDA( portD, 1 );
   I2Cmaster_Emul i2cBus( pinSCL, pinSDA, 100 /*us*/ );
 #else
-  I2Cmaster_Mcu i2cBus(  100000 /*kHz*/ );
+  I2Cmaster_Mcu i2cBus(  100 /*kHz*/ );
 #endif
 
 //-------------------------------------------------------------------
@@ -70,13 +81,6 @@ BYTE timerPwmCh = timerPWM.OC0A; // ...
 Adc_Mcu  adc( timerFast );
 
 BYTE AdcChannelList[] = {0,1};
-
-////-------------------------------------------------------------------
-//// DAC
-////-------------------------------------------------------------------
-//Dac_Mcu  dac;
-//
-//BYTE DacChannelList[] = {Dac_Mcu::CH1,Dac_Mcu::CH2};
 
 //---------------------------------------------------------------------
 // Port::Pin
@@ -93,32 +97,17 @@ Port::Pin  btnA_Pin( portE, 6, Port::In  ); // ...
 
 SPImaster_0     spi2      ( SPImaster_0::CR_1000kHz,
                             SPImaster_0::CPOL_H_CPHA_H );
-SPImaster::Device spiDisplay( spi2, portB, 12 );
+SPImaster::Device spiDisplay( spi2, portD, 4 );
+SPImaster::Device spiMaster ( spi2, portD, 4 );
 
 //-------------------------------------------------------------------
 // memory
 //-------------------------------------------------------------------
-#if USE_MEMORY_TYPE == 'E'
+Memory_EEPROM  mem;
 
-  Memory_EEPROM  mem;
-
-//#elif USE_MEMORY_TYPE == 'F'
-//
-  //Memory_Flash  mem( 0x20000,   // offset
-                       //0x400 ); // size
-//
-#else
-  #error "compiler flag 'use_memory_type' not defined or wrong value"
-#endif
-
-////-------------------------------------------------------------------
-//// RTC
-////-------------------------------------------------------------------
-//Rtc_Mcu      rtc; // The RTC is NOT battery buffered on STM32L100-Discovery!
-//
-////-------------------------------------------------------------------
-//// UART
-////-------------------------------------------------------------------
+//-------------------------------------------------------------------
+// UART
+//-------------------------------------------------------------------
 Uart_1  uart( 
                 9600,       // Baud rate
                 100, 100 ); // RX and TX buffer size

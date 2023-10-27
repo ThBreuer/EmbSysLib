@@ -13,7 +13,7 @@ Configuration:
           Timer
 
 Usage:    Send a character '0' to '9' via terminal to the µC.
-          The flags A is set to the corresponding value and flag B is set to 'true'.
+          The flag A is set to the corresponding value and flag B is set to 'true'.
 
           Output:
             - "event", if flag B is set ( the current value is not 0 ) since last call

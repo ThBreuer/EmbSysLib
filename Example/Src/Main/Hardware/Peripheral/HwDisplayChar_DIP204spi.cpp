@@ -9,7 +9,8 @@
 
 //*******************************************************************
 /*
-Usage:    ...
+Usage:    Connect a EA DIP204 display module to SPI
+
           Board sends characters to the display, a consecutive number
           will be printed at the bottom.
 */
