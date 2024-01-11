@@ -24,7 +24,7 @@ Usage:    Connect board with a terminal.
 #include "config.h"
 
 //*******************************************************************
-int main(void)
+int main( void )
 {
   terminal.printf( "\r\n\nDevDigital," __DATE__ "," __TIME__ "\r\n\n" );
 

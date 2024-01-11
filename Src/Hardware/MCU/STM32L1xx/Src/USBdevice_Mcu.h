@@ -87,16 +87,16 @@ class USBdevice_Mcu : public USBdevice
         void setSTAT_TX(DWORD stat );
 
         //-----------------------------------------------------------
-        DWORD  config;
-        DWORD *regPtr;
-        DWORD  addr;
-        WORD   rxSize;
-        WORD   txSize;
-        WORD  *txPtr;
-        WORD  *rxPtr;
+        volatile DWORD  config;
+        volatile DWORD *regPtr;
+        volatile DWORD  addr;
+        volatile WORD   rxSize;
+        volatile WORD   txSize;
+        volatile WORD  *txPtr;
+        volatile WORD  *rxPtr;
 
         //------------------------------------------------------------
-        static WORD offset;
+        volatile static WORD offset;
 
     };  //class EPconfig
     //***************************************************************

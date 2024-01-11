@@ -88,7 +88,6 @@ void DigitalIndicator::blink( WORD time, WORD duty )
   repeat    = true;
   maximum   = ((DWORD)time*1000)/cycleTime;
   limit     = ((DWORD)MIN(duty,(WORD)100))*maximum/100;
-  t         = 0;
   runUpdate = true;
 }
 

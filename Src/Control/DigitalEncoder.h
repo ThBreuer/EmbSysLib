@@ -33,7 +33,7 @@ The FIFO can be read out asynchronously.
 
 \example CtrlDigitalEncoder.cpp
 */
-class DigitalEncoder : public TaskManager::Task
+class DigitalEncoder : protected TaskManager::Task
 {
   public:
     //---------------------------------------------------------------
@@ -80,15 +80,15 @@ class DigitalEncoder : public TaskManager::Task
     //
     //---------------------------------------------------------------
     // Checks Ctrl-Button.
-    // The default implementation returns the event CTRL_DWN or 
-    // CTRL_UP if the button was pressed/released, otherwise NONE. 
+    // The default implementation returns the event CTRL_DWN or
+    // CTRL_UP if the button was pressed/released, otherwise NONE.
     // The method can be overridden.
     //
     virtual Event getCtrl( void );
 
     //---------------------------------------------------------------
     // Checks Increment (Right/Left).
-    // Returns LEFT, RIGHT, NONE depending on the event. 
+    // Returns LEFT, RIGHT, NONE depending on the event.
     // Abstract method that must be implemented by derived class.
     virtual Event getIncrement( void ) = 0;
 

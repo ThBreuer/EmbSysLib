@@ -8,8 +8,8 @@ License: See file "LICENSE"
 */
 
 //*******************************************************************
-#ifndef _HW_USB_DEVICE_SIMPLE_IO_H
-#define _HW_USB_DEVICE_SIMPLE_IO_H
+#ifndef _MOD_USB_DEVICE_SIMPLE_IO_H
+#define _MOD_USB_DEVICE_SIMPLE_IO_H
 
 //*******************************************************************
 namespace EmbSysLib {

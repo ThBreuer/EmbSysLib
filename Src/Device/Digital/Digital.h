@@ -22,7 +22,7 @@ namespace Dev {
 /*!
 \class   Digital
 
-\brief   Access to a digital GPIO port pin
+\brief   Access to a digital port pin
 
 This class is an interface to digital I/O devices.
 

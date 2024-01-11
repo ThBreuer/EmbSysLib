@@ -61,6 +61,7 @@
 			<Add library="${EMBSYSLIB}/Src/Hardware/MCU/Virtual/Sys/libusb-1.0.a" />
 		</Linker>
 		<Unit filename="../../../Src/Board/Virtual/ReportHandler.h" />
+		<Unit filename="../../../Src/Board/Virtual/board_pinout.txt" />
 		<Unit filename="../../../Src/lib.cpp" />
 		<Unit filename="../../../Src/main.cpp" />
 		<Extensions>

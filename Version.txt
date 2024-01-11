@@ -1,3 +1,13 @@
+ver-01.02.01
+============
+* Bug fix: 
+    - Additional "" in batch files starting an app
+    - typo corrected
+    - #defines corrected (name missmatch)
+    - DisplayGraphic default black background
+    - STM32L1xx: asm("NOP") and "volatile" added to avoid compiler optimization
+    - Missing ATmega Documentation
+    
 ver-01.02.00
 ============
 * Bug fix: 

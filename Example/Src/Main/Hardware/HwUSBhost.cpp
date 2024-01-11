@@ -18,12 +18,15 @@ Code:     Select control or interrupt transfer with
 */
 
 //*******************************************************************
-#define CTRL          1
-#define INTER         2
+#define USB_CTRL          1
+#define USB_INTER         2
+
+#define USB_DEVICE_ENABLE
+
 
 ///------------------------------------------------------------------
 /// Select an USB transfer type (CTRL|INTER):
-#define TRANSFER_TYPE INTER
+#define TRANSFER_TYPE USB_INTER
 
 //*******************************************************************
 #include <stdio.h>
@@ -49,7 +52,7 @@ int main(int argc, char** argv)
   {
     bool err = true;
 
-    #if TRANSFER_TYPE == INTER
+    #if TRANSFER_TYPE == USB_INTER
     //------------------------
     if( usb.writeInterrupt( writeBuffer ) )
     {
@@ -61,7 +64,7 @@ int main(int argc, char** argv)
       }
     }
 
-    #elif TRANSFER_TYPE == CTRL
+    #elif TRANSFER_TYPE == USB_CTRL
     //------------------------
     if( usb.writeCtrl( writeBuffer ) )
     {

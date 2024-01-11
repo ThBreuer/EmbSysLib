@@ -34,9 +34,9 @@ DisplayGraphic::DisplayGraphic( WORD moduleId,
 , report( moduleId )
 {
   Hsize = width;
-	Vsize = height;
+  Vsize = height;
 
-  BackColor  = RGB2color(  0,  0,255);  // Blue
+  BackColor  = RGB2color(  0,  0,  0);  // Black
   PaintColor = RGB2color(128,128,128);  // Gray
   TextColor  = RGB2color(255,255,255);  // White
 

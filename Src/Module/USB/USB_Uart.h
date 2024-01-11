@@ -8,8 +8,8 @@ License: See file "LICENSE"
 */
 
 //*******************************************************************
-#ifndef _HW_USB_Uart_H
-#define _HW_USB_Uart_H
+#ifndef _MOD_USB_Uart_H
+#define _MOD_USB_Uart_H
 
 //*******************************************************************
 #include "Mcu_Types.h"

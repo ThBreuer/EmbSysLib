@@ -42,10 +42,10 @@ typedef struct
 {
     struct
     {
-      WORD addr;
-      WORD reserved2;
-      WORD count;
-      WORD reserved1;
+      volatile WORD addr;
+      volatile WORD reserved2;
+      volatile WORD count;
+      volatile WORD reserved1;
     } bufDesc[16];
 
 } USB_BufferDescriptionTable;
@@ -66,7 +66,7 @@ typedef struct
 //*******************************************************************
 //-------------------------------------------------------------------
 USBdevice_Mcu *USBdevice_Mcu::usbPtr = 0;
-WORD           USBdevice_Mcu::EPconfig::offset = sizeof(USB_BufferDescriptionTable);
+volatile WORD           USBdevice_Mcu::EPconfig::offset = sizeof(USB_BufferDescriptionTable);
 
 //-------------------------------------------------------------------
 USBdevice_Mcu::USBdevice_Mcu( USBdeviceDescriptor &desc )
@@ -79,7 +79,7 @@ USBdevice_Mcu::USBdevice_Mcu( USBdeviceDescriptor &desc )
 //-------------------------------------------------------------------
 inline void USBdevice_Mcu::isr(void)
 {
-  DWORD istr = USB->ISTR;
+  volatile DWORD istr = USB->ISTR;
 
   if( istr & USB_ISTR_RESET )
   {
@@ -257,7 +257,7 @@ WORD USBdevice_Mcu::readEP( BYTE  epAddr,
                             WORD  len )
 {
   BYTE  num = epAddr & 0x07;
-  WORD *ptr = EP[num].rxPtr;
+  volatile WORD *ptr = EP[num].rxPtr;
 
   if( !(epAddr & 0x80) && ptr )
   {
@@ -284,7 +284,7 @@ WORD USBdevice_Mcu::writeEP( BYTE  epAddr,
                              WORD  cnt )
 {
   BYTE  num = epAddr & 0x07;
-  WORD *ptr = EP[num].txPtr;
+  volatile WORD *ptr = EP[num].txPtr;
 
   if( (epAddr & 0x80) && ptr)
   {

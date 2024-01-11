@@ -180,7 +180,10 @@ void SystemInit( void )
 
   // Power Control Register
   PWR->CR = PWR_CR_VOS_0;             // Voltage scaling range selection: range 1 (1.8 V)
-  while( PWR->CSR & PWR_CSR_VOSF );   // Wait until voltage regulator is ready
+  while( PWR->CSR & PWR_CSR_VOSF )    // Wait until voltage regulator is ready
+  {
+    asm volatile("nop");
+  }
 
   // Clock Configuration Register
   RCC->CFGR |= RCC_CFGR_HPRE_DIV1;    // AHB prescaler:                   HCLK  = SYSCLK
@@ -256,14 +259,21 @@ void SystemInit( void )
         RCC->CR |= (RCC_CR_HSEON | RCC_CR_HSEBYP);
       #endif
       const DWORD pll_Src = RCC_CFGR_PLLSRC_HSE;
-      while( !(RCC->CR & RCC_CR_HSERDY) ); // wait for HSE ready
-  
+      while( !(RCC->CR & RCC_CR_HSERDY) ) // wait for HSE ready
+      {
+        asm volatile("nop");
+      }
+
   //--- HSI --------------------------------------------------------
   #elif OSCSRC == HSI
 
       RCC->CR |= RCC_CR_HSION;
       const DWORD pll_Src = RCC_CFGR_PLLSRC_HSI;
-      while( !(RCC->CR & RCC_CR_HSIRDY) ); // wait for HSI ready
+      while( !(RCC->CR & RCC_CR_HSIRDY) ) // wait for HSI ready
+      {
+        asm volatile("nop");
+      }
+
       #undef  OSCFREQ
       #define OSCFREQ 16000
 
@@ -304,13 +314,20 @@ void SystemInit( void )
 
   // Clock control register
   RCC->CR |= RCC_CR_PLLON;            // PLL enable: ON
-  while( !(RCC->CR & RCC_CR_PLLRDY) );// Wait until PLL is ready
+  while( !(RCC->CR & RCC_CR_PLLRDY) )// Wait until PLL is ready
+  {
+    asm volatile("nop");
+  }
 
   // Clock Configuration Register
   RCC->CFGR |= RCC_CFGR_SW_PLL;       // System clock switch: PLL used as system clock
 
   // Wait for system clock switch is ready
-  while( (RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_PLL );
+  while( (RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_PLL )
+  {
+    asm volatile("nop");
+  }
+
 
   //<<< Enable HSE or clock, set PLL <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 

@@ -8,8 +8,8 @@ License: See file "LICENSE"
 */
 
 //*******************************************************************
-#ifndef _HW_USB_INTERF_CLASS_HID_H
-#define _HW_USB_INTERF_CLASS_HID_H
+#ifndef _MOD_USB_INTERF_CLASS_HID_H
+#define _MOD_USB_INTERF_CLASS_HID_H
 
 //*******************************************************************
 namespace EmbSysLib {
