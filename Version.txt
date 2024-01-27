@@ -1,3 +1,25 @@
+ver-01.03.00
+============
+* Bug fix:
+    - Reference to ATmega documentation
+    - Architecture-depend 16/32 bit missmatch in printf formats 
+    - Minor changes / documentation
+    - STM32L4xx/UART: Interrupt error
+
+* New feature:
+    - Inter system communication (ISC): Unified transceiving of data packages via UART or USB    
+    - Device/Analog: More generic support of analog interfaces like ADC,DAC, PWM
+    - Std/Clock: Support of time measurement / timeout 
+    - Std/SharedMem: Support of concurrent memory access 
+    - Std/Fifo: New method: getFree() to get free memory size
+    - Std/Sequence: New index operator[]
+    - Std/Crc: CRC calculation 
+
+* New hardware support
+    - Hardware/Encoder: HW based quadrature encode (STM32)
+    - Display SSD1306 with I2C interface
+    - STM32L4xx/SPImaster
+
 ver-01.02.01
 ============
 * Bug fix: 
