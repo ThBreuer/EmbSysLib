@@ -87,6 +87,11 @@ class Uart
     virtual bool isTxBufferFull( void );
 
     //---------------------------------------------------------------
+    /*! todo ...
+    */
+    virtual WORD getFifoRemainingSize( void );
+
+    //---------------------------------------------------------------
     /*! Checks, if a data byte has been received. In this case, the
         data byte is read from hardware and written to \a *data
         \param data Reference, returns the data byte

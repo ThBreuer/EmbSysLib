@@ -109,10 +109,17 @@ void Uart::set( const char *str )
     transmitByte( *(str++ ) ); // put a character and set pointer to next
   }
 }
+
 //-------------------------------------------------------------------
 inline bool Uart::isTxBufferFull( void )
 {
   return( dataTxBuf.isFull() );
+}
+
+//-------------------------------------------------------------------
+inline WORD Uart::getFifoRemainingSize( void )
+{
+  return( dataTxBuf.getFree() );
 }
 
 //-------------------------------------------------------------------

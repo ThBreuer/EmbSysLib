@@ -101,6 +101,21 @@ template <class T> class Fifo
     }
 
     //---------------------------------------------------------------
+    /*! Get number of remaining free buffers in the FIFO
+        \return Number of objects
+    */
+    WORD getFree( void )
+    {
+      WORD ret;
+
+      Hw::System::disableInterrupt();
+      ret = (size<=anz)?0:size - anz;
+      Hw::System::enableInterrupt();
+
+      return( ret );
+    }
+
+    //---------------------------------------------------------------
     /*! Get FIFO size
         \return FIFO size
     */
