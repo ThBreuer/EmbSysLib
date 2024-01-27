@@ -5,6 +5,8 @@
 <A HREF="../EmbSysLib-Manual.pdf">EmbSysLib-Manual</A> 
 
 <h2>Controller related part:</h2>
+<h3>AVR-Devices</h3>
+<a href="../ATmega32u4/annotated.html">ATmega32u4</a>
 <h3>STM32-Devices</h3>
 <a href="../STM32L1xx/annotated.html">STM32L1xx</a>,
 <a href="../STM32L4xx/annotated.html">STM32L4xx</a>,
