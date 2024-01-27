@@ -133,6 +133,21 @@ template <class T> class Sequence
       return( PtrFirst );
     }
 
+    //---------------------------------------------------------------
+    /*! Get the pointer to an indexed item in the list
+        \return Pointer to the item\n
+                Zero, if list is empty or index exeeds size of list
+    */
+    T* operator[](WORD index)
+    {
+      T* ptr = PtrFirst;
+      while( ptr && index-- )
+      {
+        ptr = ptr->PtrNext;
+      }
+      return( ptr );
+    }
+
   private:
     //---------------------------------------------------------------
     T *PtrFirst; // Pointer to first entry
