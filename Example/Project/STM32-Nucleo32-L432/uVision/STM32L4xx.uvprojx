@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>STM32L432KCUx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32L4xx_DFP.2.6.2</PackID>
+          <PackID>Keil.STM32L4xx_DFP.2.5.0</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x0000C000) IRAM2(0x10000000,0x00004000) IROM(0x08000000,0x00040000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -314,7 +314,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -337,7 +337,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-ffunction-sections -fdata-sections -fno-exceptions</MiscControls>
+              <MiscControls>-ffunction-sections -fdata-sections -fno-exceptions -Wno-multichar</MiscControls>
               <Define>COMPILER_KEIL, MCU_STM32L432xC, OSCSRC=HSI, OSCFREQ = 4000</Define>
               <Undefine></Undefine>
               <IncludePath>.\..\..\..\Src;.\..\..\..\Src\Board\STM32-Nucleo32-L432;{EMBSYSLIB}\Src;{EMBSYSLIB}\Src\Hardware\MCU\STM32L4xx;{EMBSYSLIB}\Src\Hardware\MCU\STM32L4xx\Sys\Keil</IncludePath>
