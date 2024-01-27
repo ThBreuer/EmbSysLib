@@ -24,6 +24,34 @@ namespace Dev {
 // nothing to do ...
 //
 
+//*******************************************************************
+//
+// TaskManager::Clock
+//
+//*******************************************************************
+//-------------------------------------------------------------------
+TaskManager::Clock::Clock( TaskManager &taskManager,
+                           DWORD       timeToWait_msec,
+                           WORD        timeToWait_usec )
+
+: taskManager( taskManager )
+
+{
+  start( timeToWait_msec, timeToWait_usec ); // Don't use cTimer constructor
+}
+
+//-------------------------------------------------------------------
+LWORD TaskManager::Clock::getTics( void )
+{
+  return( taskManager.getTics() );
+}
+
+//-------------------------------------------------------------------
+DWORD TaskManager::Clock::getTimeOfTic( void )
+{
+  return( taskManager.getCycleTime() );
+}
+
 } } //namespace
 
 //EOF

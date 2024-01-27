@@ -30,7 +30,7 @@ added objects are successively called by each timer interrupt.
 
 \example DevTaskManager.cpp
 */
-class TaskManager
+class TaskManager : public Timer::Task
 {
   public:
     //*******************************************************************
@@ -51,6 +51,45 @@ class TaskManager
     //*******************************************************************
 
   public:
+    //*******************************************************************
+    /*!
+    \class Clock
+
+    \brief Timing features within a task
+
+    The Clock uses the timer tics, which are provided by a task object.
+    */
+    class Clock : public Std::Clock
+    {
+      public:
+        //---------------------------------------------------------------
+        /*! Instantiate a Clock
+            The runtime will be stored in the object. Further calls to
+            \a start() or \a timeout() without parameter will use this stored runtime.
+            \param taskHandler Reference to a task handler, which
+                               provides the timer tics
+            \param timeToWait_msec Runtime in miliseconds (ms)
+            \param timeToWait_usec Runtime in microseconds (us)
+        */
+        Clock( TaskManager &taskHandler,
+               DWORD        timeToWait_msec = 0,
+               WORD         timeToWait_usec = 0 );
+
+      private:
+        //---------------------------------------------------------------
+        virtual LWORD getTics( void );
+
+        //---------------------------------------------------------------
+        virtual DWORD getTimeOfTic( void );
+
+      private:
+        //---------------------------------------------------------------
+        TaskManager &taskManager;
+
+    }; //class TaskManager::Clock
+    //*******************************************************************
+
+  public:
     //---------------------------------------------------------------
     /*! Initialize a TaskManager
         \param timer Timer object
@@ -58,14 +97,17 @@ class TaskManager
     TaskManager( Timer &timer )
     : timer( timer )
     {
+      cycleTime = timer.getCycleTime();
+      tics      = 0;
+      timer.add( this );
     }
 
   public:
     //---------------------------------------------------------------
     /*! Add a new object to the task list.
-        The objects update()-method will be called periodically by 
+        The objects update()-method will be called periodically by
         a timer interrupt.
-        \remark The update()-method of the TaskManager::Task may be 
+        \remark The update()-method of the TaskManager::Task may be
         called immediately, so call this add()-method only when the constructor of the Task-object is completed.
         \param ptr Pointer to the TaskManager::Task object
     */
@@ -76,16 +118,35 @@ class TaskManager
 
     //---------------------------------------------------------------
     /*! Get cycle time of update() calls
-        \return Cyycle in micro seconds (us)
+        \return Cycle time in mikroseconds (us)
     */
     virtual DWORD getCycleTime( void )
     {
-      return( timer.getCycleTime() );
+      return( cycleTime );
+    }
+
+    //---------------------------------------------------------------
+    /*! Returns the number of tics resp. number of cycles, the task
+        handler is called
+        \return Number of tics
+    */
+    virtual LWORD getTics( void )
+    {
+      return( tics );
+    }
+
+  private:
+    //---------------------------------------------------------------
+    virtual void update( void )
+    {
+      tics++;
     }
 
   private:
     //---------------------------------------------------------------
     Timer &timer;
+    LWORD  tics;
+    DWORD  cycleTime;
 
 }; //class TaskManager
 
