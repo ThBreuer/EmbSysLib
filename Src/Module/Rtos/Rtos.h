@@ -52,7 +52,7 @@ class Rtos
         //-----------------------------------------------------------
         TCB()
         {
-          stackPointer = NULL;
+          stackPointer = 0;
           stack        = NULL;
           stackSize    = 0;
           state        = NO_TASK;
@@ -189,7 +189,7 @@ class Rtos
         {
           Rtos_Mcu::stop( tcb[task.id].stackPointer);
           tcb[task.id].state        = TCB::READY;
-          tcb[task.id].stackPointer = NULL;
+          tcb[task.id].stackPointer = 0;
         }
       }
     }
@@ -224,7 +224,7 @@ class Rtos
         {
           tcb[i].stackSize    = stackSize;
           tcb[i].stack        = new BYTE[stackSize];
-          tcb[i].stackPointer = NULL;
+          tcb[i].stackPointer = 0;
           tcb[i].state        = TCB::READY;
           return( i );
         }
@@ -238,7 +238,7 @@ class Rtos
       if( task.id != (BYTE)(-1) )
       {
         tcb[task.id].state        = TCB::NO_TASK;
-        tcb[task.id].stackPointer = NULL;
+        tcb[task.id].stackPointer = 0;
         delete tcb[task.id].stack;
       }
     }

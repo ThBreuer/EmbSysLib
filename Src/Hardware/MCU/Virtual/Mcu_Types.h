@@ -23,6 +23,7 @@ All controller specific header files are included here.
 typedef uint8_t             BYTE;
 typedef uint16_t            WORD;
 typedef long unsigned int   DWORD;
+typedef uint64_t            LWORD;
 typedef uint32_t            MTYPE;
 
 //*******************************************************************

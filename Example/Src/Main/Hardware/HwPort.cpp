@@ -43,8 +43,8 @@ int main(void)
 
     // Debug:
     char str[80];
-    sprintf( str, "Input: %08lX  Output: %08lX\r", btnPort.get() & btnPinMask,
-                                                   ledPort.get() & ledPinMask );
+    sprintf( str, "Input: %08lX  Output: %08lX\r", (unsigned long)btnPort.get() & btnPinMask,
+                                                   (unsigned long)ledPort.get() & ledPinMask );
     uart.set( str );
   }
 }

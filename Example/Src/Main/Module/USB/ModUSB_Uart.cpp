@@ -15,7 +15,7 @@ Usage:    The USB device is connected as an virtual COM port (VCP, see Windows d
 */
 
 //*******************************************************************
-#define USB_DEVICE_ENABLE
+#define USE_USB
 
 //*******************************************************************
 #include <stdio.h>

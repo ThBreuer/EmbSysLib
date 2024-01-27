@@ -128,7 +128,11 @@ int main(void)
     if( ((cnt++)%1000) == 0 )
     {
       char str[80];
-      sprintf( str, "err:%lu ok:%lu empty:%lu full:%lu \r", test.err, test.ok, test.empty, full );
+      sprintf( str, "err:%lu ok:%lu empty:%lu full:%lu \r", 
+                    (unsigned long)test.err, 
+                    (unsigned long)test.ok, 
+                    (unsigned long)test.empty, 
+                    (unsigned long)full );
       uart.set( str );
     }
   }

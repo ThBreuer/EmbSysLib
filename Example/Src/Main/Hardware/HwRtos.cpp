@@ -78,7 +78,7 @@ class myRTOS
 
       for( BYTE i = 1; i < NUM_OF_TASKS; i++ )
       {
-        stackPointer[i] = NULL;
+        stackPointer[i] = 0;
       }
 
       Rtos_Mcu::init( us, schedule );
@@ -98,7 +98,7 @@ class myRTOS
     {
       for( BYTE i = 1; i < NUM_OF_TASKS; i++ )
       {
-        if( stackPointer[i] == NULL )
+        if( stackPointer[i] == 0 )
         {
            task.id = i;
            break;
@@ -114,7 +114,7 @@ class myRTOS
     void stop( Task &task )
     {
        Rtos_Mcu::stop(stackPointer[task.id]);
-       stackPointer[task.id] = NULL;
+       stackPointer[task.id] = 0;
     }
 
     //---------------------------------------------------------------
@@ -126,7 +126,7 @@ class myRTOS
     //---------------------------------------------------------------
     BYTE isRunning( Task &task )
     {
-      return( stackPointer[task.id] != NULL );
+      return( stackPointer[task.id] != 0 );
     }
 
   private:
@@ -220,10 +220,10 @@ int main(void)
     if( time >= timeout )
     {
       sprintf( str, "time:%6lu, main:%6lu, task1:%6lu, task2:%6lu\r\n",
-                    time,
-                    cnt++,
-                    task1.cnt,
-                    task2.cnt);
+                    (unsigned long)time,
+                    (unsigned long)cnt++,
+                    (unsigned long)task1.cnt,
+                    (unsigned long)task2.cnt);
       uart.set( str );
 
       timeout += 1000;

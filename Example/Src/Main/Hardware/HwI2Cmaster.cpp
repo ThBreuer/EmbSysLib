@@ -39,7 +39,10 @@ int main( void )
     if( w != r )
       err++;
     
-    sprintf(str,"w:%08x  r:%08x (%d)\r\n", w,r, err );
+    sprintf(str,"w:%08lx  r:%08lx (%ld)\r\n", 
+                (unsigned long)w,
+                (unsigned long)r, 
+                (unsigned long)err );
     uart.set( str );
   }
 }

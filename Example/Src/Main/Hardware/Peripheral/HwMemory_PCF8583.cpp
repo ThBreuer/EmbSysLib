@@ -40,8 +40,7 @@ int main( void )
   terminal.printf( "\r\n\nHwMemory_PCF8583," __DATE__ "," __TIME__ "\r\n\n" );
 
   BYTE data = 0;
-  char str[40];
-
+  
   while( 1 )
   {
     switch( terminal.get() )

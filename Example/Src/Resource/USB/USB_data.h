@@ -17,12 +17,12 @@ class __attribute__ ((__packed__)) cData
     char *toString()
     {
       static char str[255];
-      sprintf(str, "cnt=%d | interrupt: IN=%u OUT=%u | ctrl: IN=%u OUT=%u",
-                  cnt,
-                  onTransmit,
-                  onReceive,
-                  onTransmitCtrl,
-                  onReceiveCtrl );
+      sprintf(str, "cnt=%ld | interrupt: IN=%lu OUT=%lu | ctrl: IN=%lu OUT=%lu",
+                  (unsigned long)cnt,
+                  (unsigned long)onTransmit,
+                  (unsigned long)onReceive,
+                  (unsigned long)onTransmitCtrl,
+                  (unsigned long)onReceiveCtrl );
       return( str );
     }
 

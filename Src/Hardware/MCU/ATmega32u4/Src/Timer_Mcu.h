@@ -210,7 +210,7 @@ class Timer_1 : public Timer_Mcu
 \example Timer.cpp
 */
 #if defined _USE_RTOS && _USE_RTOS==true
-  #pragma warning "Timer 3 not available"
+//  #pragma warning "Timer 3 not available"
 #else
 class Timer_3 : public Timer_Mcu
 {

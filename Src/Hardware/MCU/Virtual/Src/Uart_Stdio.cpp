@@ -26,7 +26,7 @@ namespace Hw {
 //-------------------------------------------------------------------
 Uart_Stdio::Uart_Stdio( bool echoIn )
 
-: Uart( ReportID_Hw::Module::UART_STDIO, 1 , 1 ) // FIFO not used
+: Uart( ReportID_Hw::Module::UART_STDIO, 4096 , 4096 ) // FIFO not used
 {
   echo      = echoIn;
   ctrlState = 0;

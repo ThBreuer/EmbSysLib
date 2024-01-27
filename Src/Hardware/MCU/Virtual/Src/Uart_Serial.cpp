@@ -26,7 +26,7 @@ namespace Hw {
 //*******************************************************************
 //-------------------------------------------------------------------
 Uart_Serial::Uart_Serial( Baudrate baud, const char *portName )
-: Uart( ReportID_Hw::Module::UART_SERIAL, 1, 1 ) // FIFO not used
+: Uart( ReportID_Hw::Module::UART_SERIAL, 4096, 4096 ) // FIFO not used
 {
   this->baud = baud;
   isOpenFlag = false;

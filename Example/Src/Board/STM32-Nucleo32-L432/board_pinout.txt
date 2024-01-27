@@ -30,7 +30,12 @@ Pinout:
 LED:      LD3 (green) - PB3 (TIM2_CH2)
           LED (ext)   - PB1, connect LED to CN3.9
 
-Button:   BTN (ext)   - PB4, connect external button to CN3.15
+Button:   BTN (ext)   - PA9 , connect external button to CN3.2
+
+SPI:      MOSI - PB5
+          MISO - PB4
+          SCK  - PA1
+          CS   - PA4
 
 UART:     Virtual COM port, available via ST-Link/USB
           Connect USB and start a terminal (e.g. Putty)

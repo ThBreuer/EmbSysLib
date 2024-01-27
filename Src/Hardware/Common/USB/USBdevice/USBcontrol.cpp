@@ -80,7 +80,7 @@ void USBdeviceControl::out( void )
 // Handle requests
 //*******************************************************************
 //-------------------------------------------------------------------
-__inline void USBdeviceControl::ReqDevice( void )
+void USBdeviceControl::ReqDevice( void )
 {
   switch( setupData.reqType() )
   {
@@ -113,7 +113,7 @@ __inline void USBdeviceControl::ReqDevice( void )
 }
 
 //-------------------------------------------------------------------
-__inline void USBdeviceControl::ReqInterface( void )
+void USBdeviceControl::ReqInterface( void )
 {
   switch( setupData.reqType() )
   {
@@ -146,7 +146,7 @@ __inline void USBdeviceControl::ReqInterface( void )
 }
 
 //-------------------------------------------------------------------
-__inline void USBdeviceControl::ReqEndpoint()
+void USBdeviceControl::ReqEndpoint()
 {
   switch( setupData.reqType() )
   {
@@ -182,19 +182,19 @@ __inline void USBdeviceControl::ReqEndpoint()
 // Methods, called in ReqDevice
 //*******************************************************************
 //-------------------------------------------------------------------
-__inline void USBdeviceControl::ReqDeviceStd_GetStatus( void )
+void USBdeviceControl::ReqDeviceStd_GetStatus( void )
 {
   epIN.writeData( DataPointer( (BYTE*)&DeviceStatus, setupData.length()) );
 }
 
 //-------------------------------------------------------------------
-__inline void USBdeviceControl::ReqDeviceStd_SetAddress( void )
+void USBdeviceControl::ReqDeviceStd_SetAddress( void )
 {
   usb.setAddress( setupData.valueLow() );
 }
 
 //-------------------------------------------------------------------
-__inline void USBdeviceControl::ReqDeviceStd_GetDescriptor( void )
+void USBdeviceControl::ReqDeviceStd_GetDescriptor( void )
 {
   switch( setupData.valueHigh() )
   {
@@ -223,14 +223,14 @@ __inline void USBdeviceControl::ReqDeviceStd_GetDescriptor( void )
 }
 
 //-------------------------------------------------------------------
-__inline void USBdeviceControl::ReqDeviceStd_GetConfiguration( void )
+void USBdeviceControl::ReqDeviceStd_GetConfiguration( void )
 {
   epIN.writeData( DataPointer( (BYTE*)&Configuration,
                                setupData.length()) );
 }
 
 //-------------------------------------------------------------------
- __inline void USBdeviceControl::ReqDeviceStd_SetConfiguration( void )
+ void USBdeviceControl::ReqDeviceStd_SetConfiguration( void )
 {
   USBdeviceDescriptor::Endpoint *epDesc   = NULL;
   USBdeviceEndpoint             *ep       = NULL;
@@ -268,8 +268,7 @@ __inline void USBdeviceControl::ReqDeviceStd_GetConfiguration( void )
   }
 }
 
-//-------------------------------------------------------------------
-__inline void USBdeviceControl::ReqDeviceVendor( void )
+void USBdeviceControl::ReqDeviceVendor( void )
 {
   switch( setupData.index() )
   {
@@ -283,14 +282,14 @@ __inline void USBdeviceControl::ReqDeviceVendor( void )
 // Methods, called in ReqInterface
 //*******************************************************************
 //-------------------------------------------------------------------
- __inline void USBdeviceControl::ReqInterfaceStd_GetStatus( void )
+ void USBdeviceControl::ReqInterfaceStd_GetStatus( void )
 {
   // not supported
   stall();
 }
 
 //-------------------------------------------------------------------
- __inline void USBdeviceControl::ReqInterfaceStd_GetDescriptor( void )
+ void USBdeviceControl::ReqInterfaceStd_GetDescriptor( void )
 {
 
   USBdeviceInterface *interf
@@ -306,21 +305,21 @@ __inline void USBdeviceControl::ReqDeviceVendor( void )
 }
 
 //-------------------------------------------------------------------
- __inline void USBdeviceControl::ReqInterfaceStd_GetInterface( void )
+ void USBdeviceControl::ReqInterfaceStd_GetInterface( void )
 {
   // not supported
   stall();
 }
 
 //-------------------------------------------------------------------
- __inline void USBdeviceControl::ReqInterfaceStd_SetInterface( void )
+ void USBdeviceControl::ReqInterfaceStd_SetInterface( void )
 {
   // not supported
   stall();
 }
 
 //-------------------------------------------------------------------
- __inline void USBdeviceControl::ReqInterfaceClass( void )
+ void USBdeviceControl::ReqInterfaceClass( void )
 {
   DataPointer tmp;
 
@@ -365,7 +364,7 @@ __inline void USBdeviceControl::ReqDeviceVendor( void )
 // Methods, called in ReqEndpoint
 //*******************************************************************
 //-------------------------------------------------------------------
-__inline void USBdeviceControl::ReqEndpointStd_ClrFeature ( void )
+void USBdeviceControl::ReqEndpointStd_ClrFeature ( void )
 {
   USBdeviceEndpoint *ep = usb.desc.getEndpoint( setupData.indexLow() );
 
@@ -383,7 +382,7 @@ __inline void USBdeviceControl::ReqEndpointStd_ClrFeature ( void )
 }
 
 //-------------------------------------------------------------------
-__inline void USBdeviceControl::ReqEndpointStd_SetFeature ( void )
+void USBdeviceControl::ReqEndpointStd_SetFeature ( void )
 {
   USBdeviceEndpoint *ep = usb.desc.getEndpoint( setupData.indexLow() );
 
@@ -404,7 +403,7 @@ __inline void USBdeviceControl::ReqEndpointStd_SetFeature ( void )
 // Other needfull methods
 //*******************************************************************
 //-------------------------------------------------------------------
-__inline void USBdeviceControl::stall( void )
+void USBdeviceControl::stall( void )
 {
   epIN.stall();
 }

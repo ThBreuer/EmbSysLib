@@ -8,8 +8,8 @@ License: See file "LICENSE"
 */
 
 //*******************************************************************
-#ifndef _HW_REPORT_ID_MOD_H
-#define _HW_REPORT_ID_MOD_H
+#ifndef _MOD_REPORT_ID_H
+#define _MOD_REPORT_ID_H
 
 //*******************************************************************
 namespace EmbSysLib {
@@ -17,7 +17,7 @@ namespace Mod {
 
 //*******************************************************************
 /*!
-\class _ReportID_Mod
+\class ReportID_Mod
 \brief Definition of Module IDs and Error-Codes used in "Module"
 
 \see Std::Report

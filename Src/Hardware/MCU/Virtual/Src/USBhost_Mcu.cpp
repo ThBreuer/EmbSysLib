@@ -186,6 +186,7 @@ bool USBhost_Mcu::readInterrupt_private( BYTE *data, WORD size )
 
  if( success == false )
   {
+    close();
     report.alert( ReportID_Hw::Event::READ_ERROR );
     return( false );
   }
@@ -216,6 +217,7 @@ bool USBhost_Mcu::readCtrl_private( BYTE *data, WORD size )
 
   if( success == false )
   {
+    close();
     report.alert( ReportID_Hw::Event::READ_ERROR );
     return( false );
   }
@@ -252,6 +254,7 @@ bool USBhost_Mcu::writeInterrupt_private( BYTE *data, WORD size )
 
   if( success == false )
   {
+    close();
     report.alert( ReportID_Hw::Event::WRITE_ERROR );
     return( false );
   }
@@ -280,6 +283,7 @@ bool USBhost_Mcu::writeCtrl_private( BYTE *data, WORD size )
 
   if( success == false )
   {
+    close();
     report.alert( ReportID_Hw::Event::WRITE_ERROR );
     return( false );
   }

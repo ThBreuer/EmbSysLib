@@ -79,6 +79,7 @@ class SPImaster
 
         //-----------------------------------------------------------
         /*! \todo comment missing ...
+            \todo make virtual, so that SPImaster_Mcu can overload this
         */
         void start()
         {
@@ -87,6 +88,7 @@ class SPImaster
 
         //-----------------------------------------------------------
         /*! \todo comment missing ...
+            \todo make virtual, so that SPImaster_Mcu can overload this
         */
         void stop()
         {

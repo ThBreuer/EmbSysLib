@@ -17,7 +17,7 @@ Usage:    The USB device is connected as a keyboard (HID class).
 */
 
 //*******************************************************************
-#define USB_DEVICE_ENABLE
+#define USE_USB
 
 //*******************************************************************
 #include <stdio.h>

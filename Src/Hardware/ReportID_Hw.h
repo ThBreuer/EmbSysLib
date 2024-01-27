@@ -8,8 +8,8 @@ License: See file "LICENSE"
 */
 
 //*******************************************************************
-#ifndef _HW_REPORT_ID_HW_H
-#define _HW_REPORT_ID_HW_H
+#ifndef _HW_REPORT_ID_H
+#define _HW_REPORT_ID_H
 
 //*******************************************************************
 namespace EmbSysLib {

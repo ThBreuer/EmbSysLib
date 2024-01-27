@@ -30,7 +30,7 @@ namespace Hw {
 //-------------------------------------------------------------------
 Uart_File::Uart_File( const char *fileNameRxD, const char *fileNameTxD )
 
-: Uart( ReportID_Hw::Module::UART_FILE, 1, 1 ) // FIFO not used
+: Uart( ReportID_Hw::Module::UART_FILE, 4096, 4096 ) // FIFO not used
 , report( ReportID_Hw::Module::UART_FILE )
 {
   //
@@ -38,9 +38,11 @@ Uart_File::Uart_File( const char *fileNameRxD, const char *fileNameTxD )
   //
   if( fileNameRxD && strlen(fileNameRxD) > 0 )
   {
-    fhRxD = open( fileNameRxD, O_RDONLY );
+    fhRxD = open( fileNameRxD, O_RDONLY|O_BINARY );
     if( fhRxD <= 0)
       report.alert( ReportID_Hw::Event::OPEN_ERROR );
+    else
+      lseek( fhRxD, 0, SEEK_END );
   }
   else
   {
@@ -57,9 +59,11 @@ Uart_File::Uart_File( const char *fileNameRxD, const char *fileNameTxD )
   //
   if( fileNameTxD && strlen(fileNameTxD) > 0 )
   {
-    fhTxD = open( fileNameTxD, O_WRONLY|O_CREAT|O_TRUNC, S_IREAD|S_IWRITE );
+    fhTxD = open( fileNameTxD, O_WRONLY|O_CREAT/*|O_TRUNC*/|O_BINARY, S_IREAD|S_IWRITE );
     if( fhTxD <= 0)
       report.alert( ReportID_Hw::Event::OPEN_ERROR );
+    else
+      lseek( fhTxD, 0, SEEK_END );
   }
   else
   {

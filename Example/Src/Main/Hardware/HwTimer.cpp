@@ -67,8 +67,8 @@ int main(void)
   while( 1 )
   {
     sprintf( str, "fast: %5lu,  slow: %5lu,  pwm: %5u\r",
-                  testFast.cnt,
-                  testSlow.cnt,
+                  (unsigned long)testFast.cnt,
+                  (unsigned long)testSlow.cnt,
                   value );
     uart.set( str );
 
