@@ -124,6 +124,10 @@ void Uart_Mcu::setBaudrate( DWORD baud )
 //-------------------------------------------------------------------
 void Uart_Mcu::isr( void )
 {
+  if( ptr->ISR & USART_ISR_ORE ) // ...
+  {
+    ptr->ICR |= USART_ICR_ORECF;
+  }
   if( ptr->ISR & USART_ISR_RXNE ) // Receive data register not empty?
   {
     isrRx();
