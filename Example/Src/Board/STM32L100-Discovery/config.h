@@ -22,6 +22,13 @@ Board:    STM32L100-Discovery
 ///---------------------
 #define USE_ROTARY_KNOB  false
 
+/// Select:
+///-----------------------------------
+#define USB_DEVICE 'D'
+#define UART       'U'
+
+#define ISC_INTERFACE  UART
+
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 //*******************************************************************
@@ -67,7 +74,7 @@ Terminal   terminal( uart, 255,255,"erw" );
 //-------------------------------------------------------------------
 // USB
 //-------------------------------------------------------------------
-#ifdef USB_DEVICE_ENABLE
+#ifdef USE_USB
   USBdeviceDescriptor_0  desc;            // Project related descriptor
   USBdevice_Mcu          usb( desc );
 #endif
@@ -98,4 +105,14 @@ DigitalButton    button   ( btn_A, taskManager, 40, 1000 );
   DigitalEncoderRotaryknob  encoder( &rotA, &rotB, &rotCtrl, taskManager );
 #else
   DigitalEncoderJoystick    encoder( &btnLeft, &btnRight, &btnCtrl, taskManager, 150 );
+#endif
+
+//-------------------------------------------------------------------
+// Modul/Isc
+//-------------------------------------------------------------------
+#if ISC_INTERFACE  == UART
+  const bool enableTerminal = false;
+  Uart   &uartIsc = uart;
+#elif ISC_INTERFACE  == USB_DEVICE
+  const bool enableTerminal = true;
 #endif

@@ -13,6 +13,20 @@ Board:    STM32F4-Discovery + Base-Board (STM32F4DIS-BB) + LCD-Board (STM32F4DIS
 \see STM32F4-Discovery/board_pinout.txt
 */
 
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+//
+// SETUP:
+// ======
+
+/// Select:
+///-----------------------------------
+#define USB_DEVICE 'D'
+#define UART       'U'
+
+#define ISC_INTERFACE  UART
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 //*******************************************************************
 #include "Hardware/Peripheral/Display/DisplayGraphic_SSD2119.cpp"
 #include "Hardware/Peripheral/Display/Touch_STMPE811i2c.cpp"
@@ -124,7 +138,7 @@ Terminal   terminal( uart, 255,255,"# +" );
 //-------------------------------------------------------------------
 // USB
 //-------------------------------------------------------------------
-#ifdef USB_DEVICE_ENABLE
+#ifdef USE_USB
   USBdeviceDescriptor_0  desc;            // Project related descriptor
   USBdevice_Mcu          usb( desc );
 #endif
@@ -147,3 +161,13 @@ Digital    btn_A( portA,  0, Digital::In,  0 ); // B1  (USER)
 //-------------------------------------------------------------------
 DigitalIndicator indicator( led_A, taskManager );
 DigitalButton    button   ( btn_A, taskManager, 40, 1000 );
+
+//-------------------------------------------------------------------
+// Modul/Isc
+//-------------------------------------------------------------------
+#if ISC_INTERFACE  == UART
+  const bool enableTerminal = false;
+  Uart   &uartIsc = uart;
+#elif ISC_INTERFACE  == USB_DEVICE
+  const bool enableTerminal = true;
+#endif

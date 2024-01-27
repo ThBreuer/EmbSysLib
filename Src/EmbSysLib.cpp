@@ -24,11 +24,15 @@ License: See file "LICENSE"
 // Std
 //===================================================================
 #include "Std/Std.cpp"
+
+#include "Std/Clock.cpp"
+#include "Std/Crc.cpp"
 #include "Std/DataPointer.cpp"
 #include "Std/Fifo.cpp"
 #include "Std/Sequence.cpp"
 #include "Std/Report.cpp"
 #include "Std/Flag.cpp"
+#include "Std/SharedMem.cpp"
 
 //===================================================================
 // Hardware/Common
@@ -39,6 +43,8 @@ License: See file "LICENSE"
 #include "Hardware/Common/Display/Type/Bitmap.cpp"
 #include "Hardware/Common/Display/DisplayChar.cpp"
 #include "Hardware/Common/Display/DisplayGraphic.cpp"
+#include "Hardware/Common/Encoder/Encoder.cpp"
+#include "Hardware/Common/Encoder/Encoder_Emul.cpp"
 #include "Hardware/Common/I2C/I2Cmaster.cpp"
 #include "Hardware/Common/I2C/I2Cmaster_Emul.cpp"
 #include "Hardware/Common/I2C/I2Cslave.cpp"
@@ -59,8 +65,14 @@ License: See file "LICENSE"
 #include "Hardware/Common/USB/USBhost.cpp"
 
 //===================================================================
-// Device/Digital
+// Device
 //===================================================================
+#include "Device/Analog/Analog.cpp"
+#include "Device/Analog/AnalogIn.cpp"
+#include "Device/Analog/AnalogInAdc.cpp"
+#include "Device/Analog/AnalogOut.cpp"
+#include "Device/Analog/AnalogOutDac.cpp"
+#include "Device/Analog/AnalogOutPWM.cpp"
 #include "Device/Digital/Digital.cpp"
 #include "Device/Screen/ScreenChar.cpp"
 #include "Device/Screen/ScreenGraphic.cpp"

@@ -1,0 +1,49 @@
+Version         = 0x0200
+MaxPacketSize   = 64
+VendorID        = vid // see file "Example\Src\Resource\USB\USB_data.h"
+ProductID       = pid // ...
+Device          = 0x0100
+Class           = RESERVED_CLASS
+SubClass        = 0
+Protocol        = 0
+ManufacturerStr = 'H-BRS'
+ProductStr      = 'EmbSysLib'
+SerialNumberStr = 'SN0000'
+
+CONFIGURATION
+<BEGIN>
+    Name         = 'DEMO'
+    SelfPowered  = yes
+    RemoteWakeup = no
+    MaxPower     = 100
+
+    INTERFACE
+    <BEGIN>
+        Name     = 'Device I'
+        Class    = VENDOR_SPECIFIC_CLASS
+        SubClass = 0
+        Protocol = 0
+
+        COMPAT
+        <BEGIN>
+          ID    = 'WINUSB'
+          SubID = ''
+        <END>
+        
+        ENDPOINT
+        <BEGIN>
+            Address       = 2
+            Direction     = OUT
+            Attributes    = INTERRUPT
+            MaxPacketSize = 64
+            Interval      = 1
+
+        <NEXT>
+            Address       = 1
+            Direction     = IN
+            Attributes    = INTERRUPT
+            MaxPacketSize = 32
+            Interval      = 1
+        <END> // Endpoint
+    <END> // Interface
+<END> // Configuration

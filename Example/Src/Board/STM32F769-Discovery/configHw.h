@@ -291,7 +291,7 @@ Touch_FT6206 touch( i2cBusTouch, 800, 480 );
 //-------------------------------------------------------------------
 // USB
 //-------------------------------------------------------------------
-#ifdef USB_DEVICE_ENABLE
+#ifdef USE_USB
   USBdeviceDescriptor_0   desc;           // Project related descriptor
   USBdevice_Mcu           usb( desc );
 #endif

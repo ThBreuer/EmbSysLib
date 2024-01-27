@@ -22,7 +22,16 @@ Board:    Virtual
 ///---------------------
 #define USE_ROTARY_KNOB  false
 
+/// Select:
+///-----------------------------------
+#define USB_HOST   'H'
+#define UART       'U'
+
+#define ISC_INTERFACE       UART
+#define ISC_INTERFACE_PORT  "COM31"
+
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 
 //*******************************************************************
 using namespace EmbSysLib::Hw;
@@ -35,7 +44,6 @@ using namespace EmbSysLib::Mod;
 //-------------------------------------------------------------------
 Port_Virtual port( "localhost:1000" );
 
-//-------------------------------------------------------------------
 // Timer
 //-------------------------------------------------------------------
 Timer_Mcu   timer( 1000L/*us*/ );
@@ -78,6 +86,23 @@ Touch_Virtual  touch( "localhost:1000", 320, 240 );
 Pointer        pointer( touch );
 
 //-------------------------------------------------------------------
+// ADC
+//-------------------------------------------------------------------
+Adc_Virtual  adc( "localhost:1000", timer );
+
+//-------------------------------------------------------------------
+// DAC
+//-------------------------------------------------------------------
+Dac_Virtual  dac( "localhost:1000" );
+
+//-------------------------------------------------------------------
+// AnalogIn/Out
+//-------------------------------------------------------------------
+AnalogInAdc   analogIn   ( adc, 0 );
+AnalogOutDac  analogOut_A( dac, 2 );
+AnalogOutDac  analogOut_B( dac, 3 );
+
+//-------------------------------------------------------------------
 // Digital
 //-------------------------------------------------------------------
 Digital       led_A( port,16, Digital::Out , 0 ); // LED 0
@@ -98,3 +123,13 @@ DigitalButton    button   ( btn_A, taskManager, 40, 1000 );
 #else
   DigitalEncoderJoystick    encoder( &btnLeft, &btnRight, &btnCtrl, taskManager, 150 );
 #endif
+
+//-------------------------------------------------------------------
+// Modul/Isc
+//-------------------------------------------------------------------
+USBhost_Mcu usb;
+Uart_Serial uartIsc( Uart_Serial::BR_9600, ISC_INTERFACE_PORT );
+
+const bool enableTerminal = true;
+
+

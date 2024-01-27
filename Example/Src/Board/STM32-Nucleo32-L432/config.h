@@ -13,6 +13,20 @@ Board:    STM32-Nucleo32-L432
 \see STM32-Nucleo32-L432/board_pinout.txt
 */
 
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+//
+// SETUP:
+// ======
+
+/// Select:
+///-----------------------------------
+#define USB_DEVICE 'D'
+#define UART       'U'
+
+#define ISC_INTERFACE  UART
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 //*******************************************************************
 using namespace EmbSysLib::Hw;
 using namespace EmbSysLib::Dev;
@@ -46,19 +60,37 @@ Timer_Mcu  timer( Timer_Mcu::TIM_2, 100L/*us*/ );
 TaskManager taskManager( timer );
 
 //-------------------------------------------------------------------
+// ADC
+//-------------------------------------------------------------------
+Adc_Mcu  adc( timer );
+
+//-------------------------------------------------------------------
+// DAC
+//-------------------------------------------------------------------
+Dac_Mcu  dac;
+
+//-------------------------------------------------------------------
 // UART
 //-------------------------------------------------------------------
-Uart_Mcu   uart ( Uart_Mcu::USART_2, 9600, 100, 100 );
+Uart_Mcu   uart ( Uart_Mcu::USART_2, 9600, 255, 255 );
 
 Terminal   terminal( uart, 255,255,"# +" );
+
 
 //-------------------------------------------------------------------
 // USB
 //-------------------------------------------------------------------
-#ifdef USB_DEVICE_ENABLE
+#ifdef USE_USB
   USBdeviceDescriptor_0  desc;            // Project related descriptor
   USBdevice_Mcu          usb( desc );
 #endif
+
+//-------------------------------------------------------------------
+// AnalogIn/Out
+//-------------------------------------------------------------------
+AnalogInAdc   analogIn   ( adc, 5 );
+AnalogOutDac  analogOut_A( dac, Dac_Mcu::CH1 );
+AnalogOutDac  analogOut_B( dac, Dac_Mcu::CH2 );
 
 //-------------------------------------------------------------------
 // Digital
@@ -71,3 +103,13 @@ Digital    btn_A( portB, 4, Digital::InPU, 1 ); // BTN (ext)
 //-------------------------------------------------------------------
 DigitalIndicator indicator( led_A, taskManager );
 DigitalButton    button   ( btn_A, taskManager, 40, 1000 );
+
+//-------------------------------------------------------------------
+// Modul/Isc
+//-------------------------------------------------------------------
+#if ISC_INTERFACE  == UART
+  const bool enableTerminal = false;
+  Uart   &uartIsc = uart;
+#elif ISC_INTERFACE  == USB_DEVICE
+  const bool enableTerminal = true;
+#endif

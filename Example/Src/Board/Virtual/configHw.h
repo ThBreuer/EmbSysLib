@@ -124,6 +124,13 @@ DisplayGraphic_Virtual  dispGraphic( 320, 240,         // Size (w,h)
 Port::Pin  ledA_Pin( port,16, Port::Out ); // LED 0
 Port::Pin  ledB_Pin( port,17, Port::Out ); // LED 1
 Port::Pin  btnA_Pin( port, 5, Port::In  ); // Button "A"
+Port::Pin  sw0_Pin ( port,10, Port::In  ); //
+Port::Pin  sw1_Pin ( port,11, Port::In  ); //
+
+//-------------------------------------------------------------------
+// Encoder
+//-------------------------------------------------------------------
+Encoder_Emul enc( sw0_Pin, sw1_Pin, timerSlow );
 
 //-------------------------------------------------------------------
 // Memory

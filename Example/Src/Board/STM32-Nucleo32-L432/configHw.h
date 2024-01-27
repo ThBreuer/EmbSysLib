@@ -36,7 +36,7 @@ PinConfig::MAP PinConfig::table[] =
 {
   // ADC
   ADC1_IN5_PA0,
-  ADC1_IN6_PA1,
+  //ADC1_IN6_PA1,
   ADC1_IN8_PA3,
   ADC1_IN9_PA4,
   ADC1_IN10_PA5,
@@ -46,8 +46,12 @@ PinConfig::MAP PinConfig::table[] =
   ADC1_IN16_PB1,
 
   // DAC
-  DAC1_OUT1_PA4,
+  //DAC1_OUT1_PA4,
   DAC1_OUT2_PA5,
+
+  // Encoder
+  TIM2_CH1_PA0,
+  TIM2_CH2_PA1,
 
   // I2C
   I2C1_SCL_PB6,
@@ -55,6 +59,12 @@ PinConfig::MAP PinConfig::table[] =
 
   // PWM
   TIM2_CH2_PB3,
+
+  // SPI
+  SPI1_MOSI_PB5,
+  SPI1_MISO_PB4,
+  SPI1_SCK_PA1,
+  SPI1_NSS_PA4,
 
   // UART
   USART2_TX_PA2,
@@ -70,12 +80,13 @@ PinConfig::MAP PinConfig::table[] =
 //-------------------------------------------------------------------
 // Port
 //-------------------------------------------------------------------
+Port_Mcu   portA( Port_Mcu::PA );
 Port_Mcu   portB( Port_Mcu::PB );
 
-Port_Mcu  &btnPort = portB;
+Port_Mcu  &btnPort = portA;
 Port_Mcu  &ledPort = portB;
 
-MTYPE      btnPinMask = (1<<4); // BTN (ext)
+MTYPE      btnPinMask = (1<<9); // BTN (ext)
 MTYPE      ledPinMask = (1<<3); // LD3 (green)
 
 //-------------------------------------------------------------------
@@ -88,6 +99,11 @@ Timer_Mcu timerPWM ( Timer_Mcu::TIM_2,    512L/*us*/ );
 BYTE timerPwmCh = Timer_Mcu::CH2; // LD3 (green)
 
 //-------------------------------------------------------------------
+// Encoder
+//-------------------------------------------------------------------
+Encoder_Mcu enc( Encoder_Mcu::TIM_2, Encoder_Mcu::NORMAL );
+
+//-------------------------------------------------------------------
 // I2C
 //-------------------------------------------------------------------
 #if USE_I2C_MASTER_EMUL == true
@@ -95,7 +111,7 @@ BYTE timerPwmCh = Timer_Mcu::CH2; // LD3 (green)
   Port::Pin pinSDA( portB, 7 );
   I2Cmaster_Emul i2cBus( pinSCL, pinSDA, 10/*us*/ );
 #else
-  I2Cmaster_Mcu i2cBus( I2Cmaster_Mcu::I2C_1, 10/*kHz*/ );
+  I2Cmaster_Mcu i2cBus( I2Cmaster_Mcu::I2C_1, 400/*kHz*/ );
 #endif
 
 //-------------------------------------------------------------------
@@ -118,7 +134,17 @@ BYTE DacChannelList[] = {Dac_Mcu::CH1,Dac_Mcu::CH2};
 
 Port::Pin  ledA_Pin( portB, 3, Port::Out  ); // LD3 (green)
 Port::Pin  ledB_Pin( portB, 1, Port::Out  ); // LED (ext)
-Port::Pin  btnA_Pin( portB, 4, Port::InPU ); // BTN (ext)
+Port::Pin  btnA_Pin( portA, 9, Port::InPU ); // BTN (ext)
+
+//-------------------------------------------------------------------
+// SPI
+//-------------------------------------------------------------------
+
+SPImaster_Mcu     spi2      ( SPImaster_Mcu::SPI_1,
+                              SPImaster_Mcu::CR_312kHz,
+                              SPImaster_Mcu::CPOL_H_CPHA_H );
+SPImaster::Device spiDisplay( spi2, portA, 4 );
+SPImaster::Device spiMaster ( spi2, portA, 4 );
 
 //-------------------------------------------------------------------
 // Memory
@@ -151,7 +177,7 @@ Uart_Mcu   uart ( Uart_Mcu::USART_2,
 //-------------------------------------------------------------------
 // USB
 //-------------------------------------------------------------------
-#ifdef USB_DEVICE_ENABLE
+#ifdef USE_USB
   USBdeviceDescriptor_0   desc;           // Project related descriptor
   USBdevice_Mcu           usb( desc );
 #endif

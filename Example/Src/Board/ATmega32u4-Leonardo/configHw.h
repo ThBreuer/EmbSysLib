@@ -115,7 +115,7 @@ Uart_1  uart(
 //-------------------------------------------------------------------
 // USB
 //-------------------------------------------------------------------
-#ifdef USB_DEVICE_ENABLE
+#ifdef USE_USB
   USBdeviceDescriptor_0   desc;           // Project related descriptor
   USBdevice_Mcu           usb( desc );
 #endif

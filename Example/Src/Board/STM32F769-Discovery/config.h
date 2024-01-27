@@ -22,6 +22,13 @@ Board:    STM32F769-Discovery
 ///---------------------
 #define USE_ROTARY_KNOB  false
 
+/// Select:
+///-----------------------------------
+#define USB_DEVICE 'D'
+#define UART       'U'
+
+#define ISC_INTERFACE  UART
+
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 //*******************************************************************
@@ -171,7 +178,7 @@ ScreenGraphic screenGraphic( dispGraphic );
 //-------------------------------------------------------------------
 // USB
 //-------------------------------------------------------------------
-#ifdef USB_DEVICE_ENABLE
+#ifdef USE_USB
   USBdeviceDescriptor_0  desc;            // Project related descriptor
   USBdevice_Mcu          usb( desc );
 #endif
@@ -204,3 +211,14 @@ DigitalButton    button   ( btn_A, taskManager, 40, 1000 );
 #else
   DigitalEncoderJoystick    encoder( &btnLeft, &btnRight, &btnCtrl, taskManager, 150 );
 #endif
+
+//-------------------------------------------------------------------
+// Modul/Isc
+//-------------------------------------------------------------------
+#if ISC_INTERFACE  == UART
+  const bool enableTerminal = false;
+  Uart   &uartIsc = uart;
+#elif ISC_INTERFACE  == USB_DEVICE
+  const bool enableTerminal = true;
+#endif
+

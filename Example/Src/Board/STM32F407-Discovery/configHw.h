@@ -57,6 +57,10 @@ PinConfig::MAP PinConfig::table[] =
   // DAC
   DAC2_OUT_PA5,
 
+  // Encoder
+  TIM2_CH1_PA0,
+  TIM2_CH2_PA1,
+
   // I2C
   I2C1_SCL_PB8,
   I2C1_SDA_PB9,
@@ -119,6 +123,11 @@ Timer_Mcu timerSlow( Timer_Mcu::TIM_3,  10000L/*us*/ );
 Timer_Mcu timerPWM ( Timer_Mcu::TIM_4,    512L/*us*/ );
 
 BYTE timerPwmCh = Timer_Mcu::CH2; /////////// LD6 (blue)
+
+//-------------------------------------------------------------------
+// Encoder
+//-------------------------------------------------------------------
+Encoder_Mcu enc( Encoder_Mcu::TIM_2, Encoder_Mcu::NORMAL );
 
 //-------------------------------------------------------------------
 // I2C
@@ -247,7 +256,7 @@ Touch_STMPE811i2c touch( i2cBus, 0, 320, 240);
 //-------------------------------------------------------------------
 // USB
 //-------------------------------------------------------------------
-#ifdef USB_DEVICE_ENABLE
+#ifdef USE_USB
   USBdeviceDescriptor_0   desc;           // Project related descriptor
   USBdevice_Mcu           usb( desc );
 #endif

@@ -58,11 +58,15 @@ namespace EmbSysLib {
 // Std
 //===================================================================
 #include "Std/Std.h"
+
+#include "Std/Clock.h"
+#include "Std/Crc.h"
 #include "Std/DataPointer.h"
 #include "Std/Fifo.h"
 #include "Std/Sequence.h"
 #include "Std/Report.h"
 #include "Std/Flag.h"
+#include "Std/SharedMem.h"
 
 //===================================================================
 // Hardware/Common
@@ -73,6 +77,8 @@ namespace EmbSysLib {
 #include "Hardware/Common/Display/Type/Bitmap.h"
 #include "Hardware/Common/Display/DisplayChar.h"
 #include "Hardware/Common/Display/DisplayGraphic.h"
+#include "Hardware/Common/Encoder/Encoder.h"
+#include "Hardware/Common/Encoder/Encoder_Emul.h"
 #include "Hardware/Common/I2C/I2Cmaster.h"
 #include "Hardware/Common/I2C/I2Cmaster_Emul.h"
 #include "Hardware/Common/I2C/I2Cslave.h"
@@ -93,8 +99,14 @@ namespace EmbSysLib {
 #include "Hardware/Common/USB/USBhost.h"
 
 //===================================================================
-// Device/Digital
+// Device
 //===================================================================
+#include "Device/Analog/Analog.h"
+#include "Device/Analog/AnalogIn.h"
+#include "Device/Analog/AnalogInAdc.h"
+#include "Device/Analog/AnalogOut.h"
+#include "Device/Analog/AnalogOutDac.h"
+#include "Device/Analog/AnalogOutPWM.h"
 #include "Device/Digital/Digital.h"
 #include "Device/Screen/ScreenChar.h"
 #include "Device/Screen/ScreenGraphic.h"
