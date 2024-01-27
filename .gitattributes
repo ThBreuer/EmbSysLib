@@ -34,3 +34,5 @@
 *.lib binary
 *.atsln binary
 
+*.h linguist-language=C++
+
