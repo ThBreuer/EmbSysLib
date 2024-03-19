@@ -27,6 +27,14 @@ typedef uint64_t   LWORD;
 typedef uint32_t   MTYPE;
 
 //*******************************************************************
+// todo
+WORD  hton( const WORD  in );
+DWORD hton( const DWORD in );
+
+WORD  ntoh( const WORD  in );
+DWORD ntoh( const DWORD in );
+
+//*******************************************************************
 #define PROGMEM // nothing to do
 #define GET_BYTE_PROGMEM(varName)       (varName)
 #define GET_BYTE_PROGMEM_PTR(ptrName)   (*(ptrName))
