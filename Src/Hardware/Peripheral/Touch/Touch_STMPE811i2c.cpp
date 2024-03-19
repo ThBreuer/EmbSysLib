@@ -22,12 +22,13 @@ namespace Hw {
 //
 //*******************************************************************
 //-------------------------------------------------------------------
-Touch_STMPE811i2c::Touch_STMPE811i2c( I2Cmaster &i2cIn,
-                                      BYTE       addrIn,
-                                      WORD       widthIn,
-                                      WORD       heightIn )
+Touch_STMPE811i2c::Touch_STMPE811i2c( I2Cmaster  &i2cIn,
+                                      BYTE        addrIn,
+                                      WORD        widthIn,
+                                      WORD        heightIn,
+                                      Orientation orientation )
 
-: Touch( ReportID_Hw::Module::TOUCH_STMPE811, widthIn, heightIn ),
+: Touch( ReportID_Hw::Module::TOUCH_STMPE811, widthIn, heightIn, orientation ),
   i2c( i2cIn, (addrIn ? 0x88 : 0x82) )
 {
   // Check ChipD
@@ -141,7 +142,7 @@ void Touch_STMPE811i2c::update( void )
     {
       if( dat.Z > 10 )
       {
-        xPos = RANGE( (int)(width -  width  * x/0x1000), 0, (int)width  - 1 );
+        xPos = RANGE( (int)( width - width  * x/0x1000), 0, (int)width  - 1 );
         yPos = RANGE( (int)(         height * y/0x1000), 0, (int)height - 1 );
         isTouchedFlag = true;
       }

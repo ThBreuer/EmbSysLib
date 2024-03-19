@@ -12,7 +12,7 @@ License: See file "LICENSE"
 #define _DEV_POINTER_H
 
 //*******************************************************************
-#include "Hardware/Common/Display/Touch.h"
+#include "Hardware/Common/Touch/Touch.h"
 
 //*******************************************************************
 namespace EmbSysLib {

@@ -20,11 +20,15 @@ namespace Hw {
 //
 //*******************************************************************
 //-------------------------------------------------------------------
-Touch_FT6206::Touch_FT6206( I2Cmaster &i2c,
-                            WORD       width,
-                            WORD       height )
+Touch_FT6206::Touch_FT6206( I2Cmaster  &i2c,
+                            WORD        width,
+                            WORD        height,
+                            Orientation orientation )
 
-: Touch( ReportID_Hw::Module::TOUCH_FT6206, width, height ),
+: Touch( ReportID_Hw::Module::TOUCH_FT6206, 
+         width, 
+         height,
+         orientation ),
 
   i2c( i2c, hwAddr )
 {
