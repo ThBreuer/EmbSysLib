@@ -59,7 +59,7 @@ template <class T> class Flag
     }
 
     //---------------------------------------------------------------
-    /*! Get and reset the Flag: Indicating a single event
+    /*! Get and \b reset the Flag: Indicating a single event
         \return Last value of Flag
     */
     T getEvent( void )

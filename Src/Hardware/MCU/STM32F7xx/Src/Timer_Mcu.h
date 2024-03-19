@@ -94,7 +94,7 @@ class Timer_Mcu : public Timer
     static Timer_Mcu *timerPtr_11;
     static Timer_Mcu *timerPtr_14;
   
-  private:
+  protected:
     //---------------------------------------------------------------
     DWORD        tics;
     TimerId      timerId;

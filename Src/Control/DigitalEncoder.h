@@ -40,7 +40,7 @@ class DigitalEncoder : protected TaskManager::Task
     /*! \enum Event
         \brief Encoder event
     */
-	  typedef enum
+    typedef enum
     {
       NONE = 0, //!< No event
       LEFT,     //!< Left oriented operation

@@ -8,8 +8,8 @@ License: See file "LICENSE"
 */
 
 //*******************************************************************
-#ifndef _HW_Port_MCU_H
-#define _HW_Port_MCU_H
+#ifndef _HW_PORT_MCU_H
+#define _HW_PORT_MCU_H
 
 //*******************************************************************
 #include "Hardware/Common/Port/Port.h"

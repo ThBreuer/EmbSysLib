@@ -50,7 +50,7 @@ Terminal::Terminal( Uart       &uart,
 //-------------------------------------------------------------------
 char* Terminal::getString( void )
 {
-	WORD c        = 0;
+  WORD c        = 0;
   BYTE complete = false;
 
   // new string, if ESC sequence pending
@@ -105,7 +105,7 @@ char* Terminal::getString( void )
 //-------------------------------------------------------------------
 WORD Terminal::get()
 {
-	BYTE c = 0;
+  BYTE c = 0;
 
   while( uart.get( c ) )
   {
