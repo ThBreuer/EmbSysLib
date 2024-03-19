@@ -31,6 +31,7 @@ All controller specific header files are included here.
 #include "Src/Adc_Mcu.h"
 #include "Src/Dac_Mcu.h"
 #include "Src/Encoder_Mcu.h"
+#include "Src/ExtInt_Mcu.h"
 #include "Src/I2Cmaster_Mcu.h"
 #include "Src/Memory_BKRAM.h"
 #include "Src/Memory_Flash.h"

@@ -38,7 +38,7 @@ Board:    STM32F4-Discovery + Base-Board (STM32F4DIS-BB) + LCD-Board (STM32F4DIS
 
 //*******************************************************************
 #include "Hardware/Peripheral/Display/DisplayGraphic_SSD2119.cpp"
-#include "Hardware/Peripheral/Display/Touch_STMPE811i2c.cpp"
+#include "Hardware/Peripheral/Touch/Touch_STMPE811i2c.cpp"
 
 //*******************************************************************
 #include "../../Resource/Color/Color.h"
@@ -107,6 +107,7 @@ PinConfig::MAP PinConfig::table[] =
 Port_Mcu   portA( Port_Mcu::PA );
 Port_Mcu   portB( Port_Mcu::PB );
 Port_Mcu   portD( Port_Mcu::PD );
+Port_Mcu   portE( Port_Mcu::PE );
 
 Port_Mcu  &btnPort = portA;
 Port_Mcu  &ledPort = portD;
@@ -175,6 +176,11 @@ BYTE DacChannelList[] = {Dac_Mcu::CH2};
 Port::Pin  ledA_Pin( portD, 12, Port::Out ); // LD4 (green)
 Port::Pin  ledB_Pin( portD, 13, Port::Out ); // LD3 (orange)
 Port::Pin  btnA_Pin( portA,  0, Port::In  ); // B1  (USER)
+
+//-------------------------------------------------------------------
+// ExtInt
+//-------------------------------------------------------------------
+ExtInt_Mcu extInt( Port_Mcu::PA, 0 ); // External Interrupt on btnA_Pin
 
 //-------------------------------------------------------------------
 // Memory
@@ -251,7 +257,7 @@ DisplayChar &disp = dispGraphic; // reuse as character display if needed
 //-------------------------------------------------------------------
 // Touch
 //-------------------------------------------------------------------
-Touch_STMPE811i2c touch( i2cBus, 0, 320, 240);
+Touch_STMPE811i2c touch( i2cBus, 0, 320, 240, Touch::ROTATION_0 );
 
 //-------------------------------------------------------------------
 // USB

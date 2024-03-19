@@ -21,6 +21,7 @@ All controller specific source files are included here.
 #include "Src/Adc_Mcu.cpp"
 #include "Src/Dac_Mcu.cpp"
 #include "Src/Encoder_Mcu.cpp"
+#include "Src/ExtInt_Mcu.cpp"
 #include "Src/I2Cmaster_Mcu.cpp"
 #include "Src/Memory_BKRAM.cpp"
 #include "Src/Memory_Flash.cpp"
