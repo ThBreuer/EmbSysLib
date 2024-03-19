@@ -23,7 +23,7 @@ namespace Hw {
 Touch_Virtual::Touch_Virtual( const char *server,
                               WORD        width,
                               WORD        height )
-: Touch( ReportID_Hw::Module::TOUCH_VIRTUAL, width, height )
+: Touch( ReportID_Hw::Module::TOUCH_VIRTUAL, width, height, ROTATION_0 )
 , client( server )
 
 {

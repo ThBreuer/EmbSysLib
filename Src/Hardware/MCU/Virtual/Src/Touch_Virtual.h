@@ -12,7 +12,7 @@ License: See file "LICENSE"
 #define _HW_TOUCH_VIRTUAL_H
 
 //*******************************************************************
-#include "Hardware/Common/Display/Touch.h"
+#include "Hardware/Common/Touch/Touch.h"
 #include "Sys/UDPclient.h"
 #include "Sys/UDPserver.h"
 #include "Sys/UDP_Types.h"
