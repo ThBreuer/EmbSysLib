@@ -1,3 +1,18 @@
+ver-01.04.00
+============
+* New feature:
+    - Touch with rotation
+    - TCP/UDP stack
+
+* New hardware support
+    - External interrupt
+    - Ethernet 
+    
+* Minor changes:
+    - Touch moved to new directory
+    - New version of example Demo/Blinky
+    - New example Demo/LED 
+    
 ver-01.03.00
 ============
 * Bug fix:
