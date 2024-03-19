@@ -333,7 +333,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-ffunction-sections -fdata-sections -fno-exceptions</MiscControls>
+              <MiscControls>-ffunction-sections -fdata-sections -fno-exceptions -Wno-pragma-pack</MiscControls>
               <Define>COMPILER_KEIL, STM32F407xx, MCU_STM32F407, STM32F407_DISCOVERY, OSCSRC=HSI, OSCFREQ = 8000</Define>
               <Undefine></Undefine>
               <IncludePath>.\..\..\..\Src;.\..\..\..\Src\Board\STM32F407-Discovery;{EMBSYSLIB}\Src;{EMBSYSLIB}\Src\Hardware\MCU\STM32F4xx;{EMBSYSLIB}\Src\Hardware\MCU\STM32F4xx\Sys\Keil</IncludePath>

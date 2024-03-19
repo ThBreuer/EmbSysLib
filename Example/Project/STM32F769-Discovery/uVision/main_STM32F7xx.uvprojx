@@ -337,7 +337,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-ffunction-sections -fdata-sections -fno-exceptions</MiscControls>
+              <MiscControls>-ffunction-sections -fdata-sections -fno-exceptions -Wno-pragma-pack</MiscControls>
               <Define>COMPILER_KEIL, STM32F769xx, MCU_STM32F769x, OSCSRC=HSE, OSCFREQ=25000</Define>
               <Undefine></Undefine>
               <IncludePath>.\..\..\..\Src;.\..\..\..\Src\Board\STM32F769-Discovery;{EMBSYSLIB}\Src;{EMBSYSLIB}\Src\Hardware\MCU\STM32F7xx;{EMBSYSLIB}\Src\Hardware\MCU\STM32F7xx\Sys\Keil</IncludePath>
