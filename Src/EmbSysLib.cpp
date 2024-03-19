@@ -18,6 +18,7 @@ License: See file "LICENSE"
 //===================================================================
 // MCU
 //===================================================================
+#include "Mcu_Types.cpp"
 #include "Mcu.cpp"
 
 //===================================================================
@@ -45,17 +46,32 @@ License: See file "LICENSE"
 #include "Hardware/Common/Display/DisplayGraphic.cpp"
 #include "Hardware/Common/Encoder/Encoder.cpp"
 #include "Hardware/Common/Encoder/Encoder_Emul.cpp"
+#include "Hardware/Common/Ethernet/Ethernet.cpp"
 #include "Hardware/Common/I2C/I2Cmaster.cpp"
 #include "Hardware/Common/I2C/I2Cmaster_Emul.cpp"
 #include "Hardware/Common/I2C/I2Cslave.cpp"
 #include "Hardware/Common/Memory/Memory.cpp"
 #include "Hardware/Common/Memory/MemoryImage.cpp"
+
+#include "Hardware/Common/Net/Net.cpp"
+#include "Hardware/Common/Net/NetStd.cpp"
+#include "Hardware/Common/Net/NetSocket.cpp"
+
+#include "Hardware/Common/Net/Eth/NetEthARP.cpp"
+#include "Hardware/Common/Net/Eth/NetEthDHCP.cpp"
+#include "Hardware/Common/Net/Eth/NetEthICMP.cpp"
+#include "Hardware/Common/Net/Eth/NetEthIP.cpp"
+#include "Hardware/Common/Net/Eth/NetEthTransport.cpp"
+#include "Hardware/Common/Net/Eth/NetEthTCP.cpp"
+#include "Hardware/Common/Net/Eth/NetEthUDP.cpp"
+
 #include "Hardware/Common/Port/Port.cpp"
+#include "Hardware/Common/Port/ExtInt.cpp"
 #include "Hardware/Common/Rtc/Rtc.cpp"
 #include "Hardware/Common/SPI/SPImaster.cpp"
 #include "Hardware/Common/SPI/SPIslave.cpp"
 #include "Hardware/Common/Timer/Timer.cpp"
-#include "Hardware/Common/Display/Touch.cpp"
+#include "Hardware/Common/Touch/Touch.cpp"
 #include "Hardware/Common/Uart/Uart.cpp"
 #include "Hardware/Common/USB/USBdevice.cpp"
 #include "Hardware/Common/USB/USBdevice/USBcontrol.cpp"

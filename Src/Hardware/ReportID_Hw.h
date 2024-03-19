@@ -67,6 +67,10 @@ class ReportID_Hw
         static const WORD  TOUCH_FT6206             = 0x00C2; //!< Touch_FT6206    
         static const WORD  I2C_MASTER_MCU           = 0x00D0; //!< I2C_Mcu
         static const WORD  I2C_MASTER_EMUL          = 0x00D2; //!< I2C_Mcu
+        
+        static const WORD  NET_WIN_UDP              = 0x00E1; //!< NetWinUDP
+        static const WORD  NET_WIN_TCP              = 0x00E2; //!< NetWinTCP
+        
         static const WORD  SYSTEM_PIN_CONFIG        = 0x0F00; //!< PinConfig
         static const WORD  SYSTEM_WSA               = 0x0F01; //!< WSA, original WSA error codes
         static const WORD  SYSTEM_UDP_CLIENT        = 0x0F02; //!< UDPclient
@@ -100,6 +104,8 @@ class ReportID_Hw
         static const WORD  THREAD_NOT_CREATED      = 0x000E; //!< The thread could not be created
         static const WORD  NO_DEVICE_HANDLE        = 0x000F; //!< Device handler not valid
         static const WORD  POINTER_NOT_AVAILABLE   = 0x0010; //!< Pointer is not available
+        static const WORD  STARTUP_FAILED          = 0x0011; //!< Startup failed
+        static const WORD  INVALID_HANDLE          = 0x0012; //!< Invalid handle
     };
 
 }; //class ReportID_Hw

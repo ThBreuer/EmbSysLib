@@ -86,6 +86,9 @@ template <class T> inline T SIGN( T x )
 //! a well known nature constant ...
 const float PI = (float)3.1415926535897932384626433832795;
 
+// ...
+static const WORD DEFAUT_STRING_LEN = 20;
+
 }  } //namespace
 
 #endif
