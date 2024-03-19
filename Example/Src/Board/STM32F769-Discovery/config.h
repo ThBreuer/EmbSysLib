@@ -33,7 +33,7 @@ Board:    STM32F769-Discovery
 
 //*******************************************************************
 #include "Hardware/Peripheral/Display/DisplayGraphic_OTM8009A.cpp"
-#include "Hardware/Peripheral/Display/Touch_FT6206.cpp"
+#include "Hardware/Peripheral/Touch/Touch_FT6206.cpp"
 
 //*******************************************************************
 #include "../../Resource/Color/Color.h"
@@ -186,7 +186,7 @@ ScreenGraphic screenGraphic( dispGraphic );
 //-------------------------------------------------------------------
 // Touch
 //-------------------------------------------------------------------
-Touch_FT6206 touch( i2cBusTouch, 800, 480 );
+Touch_FT6206 touch( i2cBusTouch, 480, 800, Touch::ROTATION_90 );
 
 Pointer        pointer( touch );
 

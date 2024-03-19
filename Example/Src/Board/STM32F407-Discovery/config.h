@@ -29,7 +29,7 @@ Board:    STM32F4-Discovery + Base-Board (STM32F4DIS-BB) + LCD-Board (STM32F4DIS
 
 //*******************************************************************
 #include "Hardware/Peripheral/Display/DisplayGraphic_SSD2119.cpp"
-#include "Hardware/Peripheral/Display/Touch_STMPE811i2c.cpp"
+#include "Hardware/Peripheral/Touch/Touch_STMPE811i2c.cpp"
 
 //*******************************************************************
 #include "../../Resource/Color/Color.h"
@@ -146,7 +146,7 @@ Terminal   terminal( uart, 255,255,"# +" );
 //-------------------------------------------------------------------
 // Touch
 //-------------------------------------------------------------------
-Touch_STMPE811i2c touch( i2cBus, 0, 320, 240);
+Touch_STMPE811i2c touch( i2cBus, 0, 320, 240, Touch::ROTATION_0);
 
 Pointer        pointer( touch );
 
