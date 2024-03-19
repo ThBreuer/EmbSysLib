@@ -9,11 +9,10 @@
 //*******************************************************************
 /*
 Used Configuration (see config.h):
-        uart, led_A
+        btn_A, led_A
 
 Usage:
-        The LED is flashing with an initial period of 1000ms.
-        You can set the period by pressing '+' or '-' key on the terminal
+        Press and hold button A to switch on led A
 */
 
 //*******************************************************************
@@ -27,26 +26,10 @@ Usage:
 //*******************************************************************
 int main(void)
 {
-  terminal.printf( "\r\n\nDemo/Blinky," __DATE__ "," __TIME__ "\r\n\n" );
-
-  int  T   = 1000;
-  char key = 1;
-  
-  DigitalIndicator indicator( led_A, taskManager );
+  terminal.printf( "\r\n\nDemo/LED," __DATE__ "," __TIME__ "\r\n\n" );
 
   while( 1 )
   {
-    if( key )
-    {
-      terminal.printf( "Period=%d ms\r\n", T );
-      indicator.blink( T, 50 );
-    }
-
-    switch( key = uart.get() )
-    {
-      case '+': T = MIN( 1000, T+100 ); break;
-      case '-': T = MAX(    0, T-100 ); break;
-      default:  key = 0;                break;
-    }
+    led_A = btn_A;
   }
 }

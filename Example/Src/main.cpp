@@ -21,7 +21,9 @@ Attention:
 // Demo
 //===================================================================
                                                                       // Virtual  STM32  ATmega
-///#include "Main/Demo/Blinky/main.cpp"                               //  X        X      X
+///
+#include "Main/Demo/Blinky/main.cpp"                               //  X        X      X
+///#include "Main/Demo/LED/main.cpp"                                  //  X        X      X
 
 //===================================================================
 // Device
@@ -59,9 +61,12 @@ Attention:
 ///#include "Main/Hardware/HwDisplayChar.cpp"                         //  X        X(1)   -
 ///#include "Main/Hardware/HwDisplayGraphic.cpp"                      //  X        X(1)   -
 ///#include "Main/Hardware/HwEncoder.cpp"                             //  -        X      -
+///#include "Main/Hardware/HwExtInt.cpp"                              //  -        X(3)   -
 ///#include "Main/Hardware/HwI2Cmaster.cpp"                           //  -        X      X(2)
 ///#include "Main/Hardware/HwI2Cslave.cpp"                            //  -        -      X
 ///#include "Main/Hardware/HwMemory.cpp"                              //  X        X      X
+///#include "Main/Hardware/HwNet_TCP.cpp"                             //  X        X      -
+///#include "Main/Hardware/HwNet_UDP.cpp"                             //  X        X      -
 ///#include "Main/Hardware/HwPort.cpp"                                //  X        X      X
 ///#include "Main/Hardware/HwPortPin.cpp"                             //  X        X      X
 ///#include "Main/Hardware/HwRtc.cpp"                                 //  X        X      -
@@ -77,6 +82,7 @@ Attention:
 /*
   (1) STM32F407-Discovery only
   (2) not tested
+  (3) STM32-Nucleo32-L432 and STM32F4-Discovery
 */
 
 //===================================================================
@@ -102,8 +108,7 @@ Attention:
 // Module/Isc
 //-------------------------------------------------------------------
                                                                       // Virtual  STM32  ATmega
-///
-#include "Main/Module/Isc/ModIsc.cpp"                             //  X        X      X
+///#include "Main/Module/Isc/ModIsc.cpp"                             //  X        X      X
 
 //-------------------------------------------------------------------
 // Module/Rtos
