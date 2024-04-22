@@ -36,7 +36,7 @@ AnalogOutPWM::AnalogOutPWM( Timer       &timer,
 //-------------------------------------------------------------------
 void AnalogOutPWM::setRaw( WORD value )
 {
-  timer.setPWM( value, channel );
+  timer.setPWM( channel, value );
 }
 
 } } //namespace
