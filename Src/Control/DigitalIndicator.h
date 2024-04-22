@@ -33,16 +33,29 @@ class DigitalIndicator : public TaskManager::Task
     //---------------------------------------------------------------
     /*! Initialize a DigitalIndicator
         \param Digital Digital output
-        \param taskManager   TaskManager for time measurement
+        \param taskManager TaskManager for time measurement
+        \param brigthness LED brightness, default = 100
     */
     DigitalIndicator( Digital     &devDigital,
-                      TaskManager &taskManager );
+                      TaskManager &taskManager,
+                      BYTE         brightness = 100  );
 
   public:
+    //---------------------------------------------------------------
+    /*! Set brightness of led
+        \param b Brightness 0,...,100 %
+    */
+    virtual void setBrightness( BYTE b );
+
     //---------------------------------------------------------------
     /*! Clears the output
     */
     virtual void clr( void );
+
+    //---------------------------------------------------------------
+    /*! Set output continously on
+    */
+    virtual void set( void );
 
     //---------------------------------------------------------------
     /*! Triggers a transient output
@@ -70,6 +83,12 @@ class DigitalIndicator : public TaskManager::Task
     WORD      t;
     bool      repeat;
     bool      runUpdate;
+  
+    short int mean;
+    short int pwr;
+    short int P;
+    short int M;
+    short int G;
 }; //class DigitalIndicator
 
 } } //namespace

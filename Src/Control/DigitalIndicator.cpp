@@ -21,11 +21,14 @@ namespace Ctrl {
 //*******************************************************************
 //-------------------------------------------------------------------
 DigitalIndicator::DigitalIndicator( Digital     &digital,
-                                    TaskManager &taskManager )
+                                    TaskManager &taskManager,
+                                    BYTE         brightness  )
 : digital( digital )
 {
   clr();
   cycleTime = taskManager.getCycleTime();
+  G = 25E3/cycleTime + 1; // Tics in 25ms (@40Hz), at least one
+  setBrightness( brightness );
   taskManager.add(this);
 }
 
@@ -49,15 +52,39 @@ void DigitalIndicator::update( void )
     {
       if( t == 0 )
       {
-        digital.set();
+        //digital.set();
+        P = pwr;
+        M = G-pwr;
       }
       else if( t >= limit )
       {
-        digital.clr();
+        //digital.clr();
+        P = 0;
+        M = G;
       }
       t++;
     }
   }
+  if( mean <= 0 )
+  {
+    digital.set(0);
+    mean += P;
+  }
+  else
+  {
+    digital.set(1);
+    mean -= M;
+  }
+}
+
+//-------------------------------------------------------------------
+void DigitalIndicator::setBrightness( BYTE b )
+{
+  if( b > 100 )
+  {
+    b = 100;
+  }
+  pwr = (short)b * G / 100;
 }
 
 //-------------------------------------------------------------------
@@ -67,7 +94,9 @@ void DigitalIndicator::clr( void )
   maximum   = 0;
   repeat    = false;
   t         = 0;
-  digital.clr();
+  //digital.clr();
+  P = 0;
+  M = G;
 }
 
 //-------------------------------------------------------------------
@@ -88,6 +117,16 @@ void DigitalIndicator::blink( WORD time, WORD duty )
   repeat    = true;
   maximum   = ((DWORD)time*1000)/cycleTime;
   limit     = ((DWORD)MIN(duty,(WORD)100))*maximum/100;
+  runUpdate = true;
+}
+
+//-------------------------------------------------------------------
+void DigitalIndicator::set( void )
+{
+  runUpdate = false;
+  repeat    = true;
+  maximum   = G;
+  limit     = G;
   runUpdate = true;
 }
 
