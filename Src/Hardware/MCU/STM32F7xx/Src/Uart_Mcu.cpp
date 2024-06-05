@@ -34,6 +34,7 @@ Uart_Mcu *Uart_Mcu::uartPtr_3 = 0;
 Uart_Mcu *Uart_Mcu::uartPtr_4 = 0;
 Uart_Mcu *Uart_Mcu::uartPtr_5 = 0;
 Uart_Mcu *Uart_Mcu::uartPtr_6 = 0;
+Uart_Mcu *Uart_Mcu::uartPtr_7 = 0;
 
 //-------------------------------------------------------------------
 Uart_Mcu::Uart_Mcu( USART_Id id,
@@ -133,6 +134,16 @@ Uart_Mcu::Uart_Mcu( USART_Id id,
       }
       NVIC_EnableIRQ( USART6_IRQn );
       break;
+
+    case UART_7:
+          ptr           = (USART_TypeDef*)UART7_BASE;
+          uartPtr_7     = this;
+          RCC->APB1ENR |= RCC_APB1ENR_UART7EN;
+          PinConfig::set( PinConfig::UART7_RX, PinConfig::ALTERNATE_FUNC );
+          PinConfig::set( PinConfig::UART7_TX, PinConfig::ALTERNATE_FUNC );
+          // no RTS/CTS
+          NVIC_EnableIRQ( UART7_IRQn );
+          break;
 
     default:
       report.error( ReportID_Hw::Event::WRONG_ID );
@@ -262,6 +273,15 @@ extern "C"
   void USART6_IRQHandler(void)
   {
     Uart_Mcu::uartPtr_6->isr();
+  }
+}
+
+//-------------------------------------------------------------------
+extern "C"
+{
+  void UART7_IRQHandler(void)
+  {
+    Uart_Mcu::uartPtr_7->isr();
   }
 }
 
