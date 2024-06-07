@@ -63,7 +63,7 @@ void ScreenGraphic::printf( BYTE        line,
 }
 
 //-------------------------------------------------------------------
-void ScreenGraphic::setFont( Font font, BYTE zoom )
+void ScreenGraphic::setFont( const Font &font, BYTE zoom )
 {
   display.setFont( font, zoom );
 };
@@ -289,7 +289,7 @@ void ScreenGraphic::drawLine( WORD x0,
 //-------------------------------------------------------------------
 void ScreenGraphic::drawBitmap( WORD    x,
                                 WORD    y,
-                                Bitmap &bitmap )
+                                const Bitmap &bitmap )
 {
   display.putBitmap( x, y, bitmap );
 }

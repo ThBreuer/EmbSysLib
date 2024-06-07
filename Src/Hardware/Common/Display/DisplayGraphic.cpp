@@ -23,7 +23,7 @@ namespace Hw {
 DisplayGraphic::DisplayGraphic( WORD moduleId,
                                 WORD width,
                                 WORD height,
-                                Font font,
+                                const Font &font,
                                 BYTE zoom )
 
 : DisplayChar( moduleId,
@@ -45,7 +45,7 @@ DisplayGraphic::DisplayGraphic( WORD moduleId,
 }
 
 //-------------------------------------------------------------------
-void DisplayGraphic::setFont( Font font,
+void DisplayGraphic::setFont( const Font &font,
                               BYTE zoom )
 {
   this->font = font;
@@ -143,7 +143,7 @@ void DisplayGraphic::putRectangle( WORD x,
 //---------------------------------------------------------------
 void DisplayGraphic::putBitmap( WORD   x,
                                 WORD   y,
-                                Bitmap bitmap )
+                                const Bitmap &bitmap )
 {
   WORD w = bitmap.getWidth();
   WORD h = bitmap.getHeight();

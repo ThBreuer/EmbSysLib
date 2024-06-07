@@ -71,7 +71,7 @@ class ScreenGraphic
          \param font Font object
          \param zoom Font zoom factor (default: 1)
     */
-    virtual void setFont( Font font,
+    virtual void setFont( const Font &font,
                           BYTE zoom = 1 );
 
     //---------------------------------------------------------------
@@ -198,7 +198,7 @@ class ScreenGraphic
     */
     virtual void drawBitmap( WORD        x,
                              WORD        y,
-                             Bitmap &bitmap );
+                             const Bitmap &bitmap );
 
     //---------------------------------------------------------------
     // Get Screen width

@@ -47,7 +47,7 @@ WORD Bitmap::getHeight( void ) const
 }
 
 //-------------------------------------------------------------------
-WORD Bitmap::getPixel( WORD x, WORD y )
+WORD Bitmap::getPixel( WORD x, WORD y ) const
 {
   DWORD pixel  = (DWORD)x + (DWORD)y * getWidth();
 

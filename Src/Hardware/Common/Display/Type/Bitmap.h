@@ -22,9 +22,9 @@ namespace Hw {
 /*!
 \class Bitmap
 
-\brief Handle bitmaps 
+\brief Handle bitmaps
 
-This Bitmap is a 2-dimensional array of WORDs, usually used to 
+This Bitmap is a 2-dimensional array of WORDs, usually used to
 store images. It can have different sizes (width x height) and can be stored in RAM, ROM or Flash.
 
 The bitmap object can be instantiated by the template class Bitmap::Data and converted to a Bitmap. The tool \b Bmp2Cpp.exe can be used to generate code for a Bitmap::Data object.
@@ -125,7 +125,7 @@ class Bitmap
         \param y Vertical position within character bitmap
         \return color
     */
-    WORD getPixel( WORD x, WORD y );
+    WORD getPixel( WORD x, WORD y ) const;
 
   private:
     //---------------------------------------------------------------

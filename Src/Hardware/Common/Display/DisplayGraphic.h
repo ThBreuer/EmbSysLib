@@ -59,7 +59,7 @@ class DisplayGraphic : public DisplayChar
     DisplayGraphic( WORD moduleId,
 	                  WORD width,
                     WORD height,
-                    Font font,
+                    const Font &font,
                     BYTE zoom = 1 );
 
   public:
@@ -68,7 +68,7 @@ class DisplayGraphic : public DisplayChar
         \param font Character font used in putChar()
         \param zoom Zoom size of character
     */
-    virtual void setFont( Font font, BYTE zoom = 1 );
+    virtual void setFont( const Font &font, BYTE zoom = 1 );
 
     //---------------------------------------------------------------
     /*! Set font zoom size. The actual font is not changed
@@ -144,7 +144,7 @@ class DisplayGraphic : public DisplayChar
     */
     virtual void putBitmap( WORD   x,
                             WORD   y,
-                            Bitmap bitmap );
+                            const Bitmap &bitmap );
 
     //---------------------------------------------------------------
     /*! Refresh the display.
