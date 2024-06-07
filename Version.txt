@@ -1,7 +1,16 @@
+ver-01.04.02
+============
+* Bug fix:
+  Use const Font&, const Bitmap&
+  Typo: 'Mcu' in file names
+
+* New feature:
+  STM32L7xx: UART7 added  
+
 ver-01.04.01
 ============
 * Bug fix:
-  AnalogOut: Pearameter channel and value changed
+  AnalogOut: Parameter channel and value changed
   
 * New feature:
   DigitalIndicator with brightness control
