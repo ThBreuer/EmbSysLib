@@ -41,7 +41,7 @@ class Uart_Mcu : public Uart
       UART_4  = 4, //!< UART  4
       UART_5  = 5, //!< UART  5
       USART_6 = 6, //!< USART 6
-      UART_7 = 7   //!< UART 7
+      UART_7  = 7  //!< UART  7
     } USART_Id;
 
   public:
