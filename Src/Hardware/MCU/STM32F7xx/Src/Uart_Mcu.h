@@ -40,7 +40,8 @@ class Uart_Mcu : public Uart
       USART_3 = 3, //!< USART 3
       UART_4  = 4, //!< UART  4
       UART_5  = 5, //!< UART  5
-      USART_6 = 6  //!< USART 6
+      USART_6 = 6, //!< USART 6
+      UART_7 = 7   //!< UART 7
     } USART_Id;
 
   public:
@@ -97,6 +98,7 @@ class Uart_Mcu : public Uart
     static Uart_Mcu *uartPtr_4;
     static Uart_Mcu *uartPtr_5;
     static Uart_Mcu *uartPtr_6;
+    static Uart_Mcu *uartPtr_7;
 
   private:
     //---------------------------------------------------------------
