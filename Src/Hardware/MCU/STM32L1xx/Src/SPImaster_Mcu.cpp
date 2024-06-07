@@ -8,7 +8,7 @@ License: See file "LICENSE"
 */
 
 //*******************************************************************
-#include "SPImaster_MCU.h"
+#include "SPImaster_Mcu.h"
 #include "PinConfig.h"
 #include "Hardware/ReportID_Hw.h"
 

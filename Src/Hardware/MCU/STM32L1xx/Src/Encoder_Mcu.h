@@ -1,6 +1,6 @@
 //*******************************************************************
 /*!
-\file   Encoder_MCU.h
+\file   Encoder_Mcu.h
 \author Thomas Breuer (Bonn-Rhein-Sieg University of Applied Sciences)
 \date   26.01.2024
 

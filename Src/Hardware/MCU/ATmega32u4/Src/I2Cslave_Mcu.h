@@ -1,6 +1,6 @@
 //*******************************************************************
 /*!
-\file   I2Cslave_MCU.h
+\file   I2Cslave_Mcu.h
 \author Thomas Breuer (Bonn-Rhein-Sieg University of Applied Sciences)
 \date   02.03.2011
 

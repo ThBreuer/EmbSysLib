@@ -1,6 +1,6 @@
 //*******************************************************************
 /*!
-\file   ExtInt_MCU.cpp
+\file   ExtInt_Mcu.cpp
 \author Thomas Breuer (Bonn-Rhein-Sieg University of Applied Sciences)
 \date   31.01.2024
 
@@ -8,7 +8,7 @@ License: See file "LICENSE"
 */
 
 //*******************************************************************
-#include "ExtInt_MCU.h"
+#include "ExtInt_Mcu.h"
 
 //*******************************************************************
 namespace EmbSysLib {

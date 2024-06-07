@@ -14,7 +14,7 @@ modified by
 */
 
 //*******************************************************************
-#include "Ethernet_MCU.h"
+#include "Ethernet_Mcu.h"
 #include "Hardware/Common/Net/Net.h"
 
 //*******************************************************************

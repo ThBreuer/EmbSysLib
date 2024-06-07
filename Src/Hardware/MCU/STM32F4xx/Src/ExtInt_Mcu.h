@@ -1,6 +1,6 @@
 //*******************************************************************
 /*!
-\file   ExtInt_MCU.h
+\file   ExtInt_Mcu.h
 \author Thomas Breuer (Bonn-Rhein-Sieg University of Applied Sciences)
 \date   31.01.2024
 

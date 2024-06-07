@@ -8,7 +8,7 @@ License: See file "LICENSE"
 */
 
 //*******************************************************************
-#include "SPIslave_MCU.h"
+#include "SPIslave_Mcu.h"
 #include "Hardware/ReportID_Hw.h"
 
 //*******************************************************************

@@ -8,7 +8,7 @@ License: See file "LICENSE"
 */
 
 //*******************************************************************
-#include "Encoder_MCU.h"
+#include "Encoder_Mcu.h"
 #include "PinConfig.h"
 
 //*******************************************************************
