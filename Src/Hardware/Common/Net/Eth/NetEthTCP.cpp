@@ -43,7 +43,7 @@ void NetEthTCP::create( Socket &con, WORD payloadLen )
   {
     // the only option we set is MSS to 1408:
     // 1408 in hex is 0x580
-    //< \todo An echte Grˆﬂe anpassen !!!
+    //< \todo An echte Groesse anpassen !!!
     ip.eth.buf[ sizeof( NetEthTCP::Msg)    ] = 2;
     ip.eth.buf[ sizeof( NetEthTCP::Msg) + 1] = 4;
     ip.eth.buf[ sizeof( NetEthTCP::Msg) + 2] = 0x05;
@@ -85,18 +85,18 @@ todo
 
 
 Sequence Number (4 Byte)
-    Sequenznummer des ersten Daten-Oktetts (Byte) dieses TCP-Pakets oder die Initialisierungs-Sequenznummer falls das SYN-Flag gesetzt ist. Nach der Daten¸bertragung dient sie zur Sortierung der TCP-Segmente, da diese in unterschiedlicher Reihenfolge beim Empf‰nger ankommen kˆnnen.
+    Sequenznummer des ersten Daten-Oktetts (Byte) dieses TCP-Pakets oder die Initialisierungs-Sequenznummer falls das SYN-Flag gesetzt ist. Nach der Datenuebertragung dient sie zur Sortierung der TCP-Segmente, da diese in unterschiedlicher Reihenfolge beim Empf‰nger ankommen kˆnnen.
 Acknowledgement Number (Quittierungsnummer) (4 Byte)
-    Sie gibt die Sequenznummer an, die der Absender dieses TCP-Segmentes als N‰chstes erwartet. Sie ist nur g¸ltig, falls das ACK-Flag gesetzt ist.
+    Sie gibt die Sequenznummer an, die der Absender dieses TCP-Segmentes als N‰chstes erwartet. Sie ist nur gueltig, falls das ACK-Flag gesetzt ist.
 
 (https://de.wikipedia.org/wiki/Transmission_Control_Protocol#)
 
 So keep in mind that any packets generated, which are simply acknowledgments (in other words, have only the ACK flag set and contain no data) to previously received packets, never increment the sequence number.
 
-initial: SN_lok zuf‰llig, AN_lok = 0?
+initial: SN_lok zufaellig, AN_lok = 0?
 
 empfang: test, wenn ACK gesetzt: SN_lok == AN_empf -> letzte Sendung OK
-         test: AN_lok == SN_empf -> segmente vollst‰ndig
+         test: AN_lok == SN_empf -> segmente vollstaendig
 
          empfang SYN:
               SN_lok = zufall
@@ -106,7 +106,7 @@ empfang: test, wenn ACK gesetzt: SN_lok == AN_empf -> letzte Sendung OK
 senden: (SN_lok,AN_lok), danach(!)
                           SN_lok = SN_lok + dataLen_gesendet
 
-unklar: wie groﬂ ist dataLen, wenn nur Flags, nur Daten, Daten und Flags oder ACK gesendet wird.
+unklar: wie gross ist dataLen, wenn nur Flags, nur Daten, Daten und Flags oder ACK gesendet wird.
 
 Sequence number (32 bits)
     Has a dual role:
@@ -242,6 +242,19 @@ bool NetEthTCP::Socket::get( BYTE &x )
     return( true );
   }
   return( false );
+}
+
+//-------------------------------------------------------------------
+DataPointer NetEthTCP::Socket::get( WORD maxLen )
+{
+  DataPointer dp;
+  if( tcp.inPos < tcp.inBufLen )
+  {
+    WORD minLen = MIN( (WORD)(tcp.inBufLen-tcp.inPos), maxLen );
+	dp = DataPointer( (BYTE*)&tcp.buf[tcp.inPos], minLen);
+	tcp.inPos += minLen;
+  }
+  return( dp );
 }
 
 //-------------------------------------------------------------------
@@ -416,6 +429,7 @@ void NetEthTCP::Socket::update( void )
         {
           sendFlags( FLAG_ACK );
           nextState( ESTABLISHED );
+          mss   = false;
         }
         else                     // SYN
         {
@@ -465,7 +479,7 @@ void NetEthTCP::Socket::update( void )
       else if( isFlag( FLAG_FIN ) )
       {
         // todo
-        // mˆglicher weise wurde letzte paket nicht mehr empfangen
+        // moeglicher weise wurde letzte paket nicht mehr empfangen
         // NetEthTCP::Msg &msg = *(NetEthTCP::Msg*)tcp.ip.eth.buf;
         // seqNum = msg.tcp.acknowledgeNumber;
 
@@ -487,6 +501,8 @@ void NetEthTCP::Socket::update( void )
         }
 
         /// \todo wenn app kein ACK sendet, muss dies hier nachgeholt werden!
+        sendFlags( FLAG_ACK );
+
 
         isDataFlag=false;
       }
