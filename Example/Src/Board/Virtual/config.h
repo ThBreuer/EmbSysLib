@@ -30,6 +30,11 @@ Board:    Virtual
 #define ISC_INTERFACE       UART
 #define ISC_INTERFACE_PORT  "COM31"
 
+/// Select font and bitmap sources:
+///----------------------------------
+#define USE_RESOURCE 'F'  // use 'C': Code, 'I': Image or 'F': File
+
+
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
@@ -56,12 +61,41 @@ TaskManager taskManager( timer );
 //*******************************************************************
 #include "../../Resource/Color/Color.h"
 
-Font        fontFont_10x20      ( Memory_Mcu( "../../../Src/Resource/Font/font_10x20.bin"       ).getPtr() );
-Font        fontFont_16x24      ( Memory_Mcu( "../../../Src/Resource/Font/font_16x24.bin"       ).getPtr() );
-Font        fontFont_8x12       ( Memory_Mcu( "../../../Src/Resource/Font/font_8x12.bin"        ).getPtr() );
-Font        fontFont_8x8        ( Memory_Mcu( "../../../Src/Resource/Font/font_8x8.bin"         ).getPtr() );
-Bitmap      bitmapBitmap_320x240( Memory_Mcu( "../../../Src/Resource/Bitmap/Bitmap_320x240.bin" ).getPtr() );
-Bitmap      bitmapBitmap_32x32  ( Memory_Mcu( "../../../Src/Resource/Bitmap/Bitmap_32x32.bin"   ).getPtr() );
+//-------------------------------------------------------------------
+// Display
+//-------------------------------------------------------------------
+#if USE_RESOURCE == 'C'
+
+  #include "../../Resource/Font/Font_16x24.h"
+  #include "../../Resource/Font/Font_10x20.h"
+  #include "../../Resource/Font/Font_8x12.h"
+  #include "../../Resource/Font/Font_8x8.h"
+  #include "../../Resource/Bitmap/Bitmap_320x240.h"
+  #include "../../Resource/Bitmap/Bitmap_32x32.bin"
+
+#elif USE_RESOURCE == 'I'
+
+  Memory_Mcu  image   ( "../image.bin" );
+  Font        fontFont_10x20      ( MemoryImage( image, "Font_10x20"     ).getPtr() );
+  Font        fontFont_16x24      ( MemoryImage( image, "Font_16x24"     ).getPtr() );
+  Font        fontFont_8x12       ( MemoryImage( image, "Font_8x12"      ).getPtr() );
+  Font        fontFont_8x8        ( MemoryImage( image, "Font_8x8"       ).getPtr() );
+  Bitmap      bitmapBitmap_320x240( MemoryImage( image, "Bitmap_320x240" ).getPtr() );
+  Bitmap      bitmapBitmap_32x32  ( MemoryImage( image, "Bitmap_32x32"   ).getPtr() );
+
+#elif USE_RESOURCE == 'F'
+
+  Font        fontFont_10x20      ( Memory_Mcu( "../../../Src/Resource/Font/font_10x20.bin"       ).getPtr() );
+  Font        fontFont_16x24      ( Memory_Mcu( "../../../Src/Resource/Font/font_16x24.bin"       ).getPtr() );
+  Font        fontFont_8x12       ( Memory_Mcu( "../../../Src/Resource/Font/font_8x12.bin"        ).getPtr() );
+  Font        fontFont_8x8        ( Memory_Mcu( "../../../Src/Resource/Font/font_8x8.bin"         ).getPtr() );
+  Bitmap      bitmapBitmap_320x240( Memory_Mcu( "../../../Src/Resource/Bitmap/Bitmap_320x240.bin" ).getPtr() );
+  Bitmap      bitmapBitmap_32x32  ( Memory_Mcu( "../../../Src/Resource/Bitmap/Bitmap_32x32.bin"   ).getPtr() );
+
+#else
+  #error "Compiler flag 'USE_RESOURCE' not defined"
+#endif
+
 
 DisplayGraphic_Virtual  dispGraphic( 800, 480, "localhost:1000", fontFont_8x12, 1 );
 
