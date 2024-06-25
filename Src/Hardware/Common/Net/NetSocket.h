@@ -189,6 +189,12 @@ class NetSocket : protected Net::Task
     virtual bool get( BYTE &x ) = 0;
 
     //---------------------------------------------------------------
+    /*! todo comment
+        \return ...
+    */
+    virtual DataPointer get( WORD maxLen ) = 0;
+
+    //---------------------------------------------------------------
     /*! Get the DataPointer of the outgoing data buffer
         \return DataPointer
     */

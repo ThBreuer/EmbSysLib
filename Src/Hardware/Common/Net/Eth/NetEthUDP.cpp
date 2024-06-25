@@ -188,6 +188,22 @@ bool NetEthUDP::Socket::get( BYTE &x )
 }
 
 //-------------------------------------------------------------------
+DataPointer NetEthUDP::Socket::get( WORD maxLen )
+{
+  DataPointer dp;
+  if( stateLocal == OPEN || stateLocal == LISTEN )
+  {
+    if( udp.inPos < udp.inBufLen )
+    {
+      WORD minLen = MIN( (WORD)(udp.inBufLen-udp.inPos), dp.getSize() );
+	  dp = DataPointer( (BYTE*)&udp.buf[udp.inPos], minLen);
+	  udp.inPos += minLen;
+    }
+  }
+  return( dp );
+}
+
+//-------------------------------------------------------------------
 DataPointer NetEthUDP::Socket::getDataPointer( void )
 {
   const WORD offset = sizeof(NetEthUDP::Msg);

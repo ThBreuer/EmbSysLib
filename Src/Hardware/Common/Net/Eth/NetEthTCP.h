@@ -166,6 +166,9 @@ class NetEthTCP : public NetEthTransport
         virtual bool get( BYTE &x );
 
         //-----------------------------------------------------------
+        virtual DataPointer get( WORD maxLen );
+
+        //-----------------------------------------------------------
         virtual DataPointer getDataPointer( void );
 
      private:

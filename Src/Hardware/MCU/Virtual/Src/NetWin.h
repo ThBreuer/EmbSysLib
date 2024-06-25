@@ -75,6 +75,19 @@ class NetWin : public Net
           return( false );
         }
 
+        //-------------------------------------------------------------------
+        virtual DataPointer get( WORD maxLen )
+        {
+          DataPointer dp;
+          if( net.bufIdx < net.bufLen )
+          {
+            WORD minLen = MIN( (WORD)(net.bufLen-net.bufIdx), maxLen );
+            dp = DataPointer( (BYTE*)&net.buf[net.bufIdx], minLen);
+            net.bufIdx += minLen;
+          }
+          return( dp );
+        }
+
         //-----------------------------------------------------------
         virtual DataPointer getDataPointer( void )
         {
