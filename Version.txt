@@ -1,3 +1,12 @@
+ver-01.04.03
+============
+* Bug fix:
+  Typo
+  Missing TCP acknowledge and wrong data size
+
+* New feature:
+  New methods: Net::isNewIP() and NetSocket::get() 
+
 ver-01.04.02
 ============
 * Bug fix:
