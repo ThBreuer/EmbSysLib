@@ -90,6 +90,7 @@ class Net
     */
     Net( Timer &timer )
     {
+      isIPvalidFlag = false;
       timeoutTics =   1E6 / Net::Task::ticsPerSecond / timer.getCycleTime();
       timer.add( &handler );
     }
@@ -124,10 +125,28 @@ class Net
 
   public:
     //---------------------------------------------------------------
-    /*! Returns own IPv4 addrss
+    /*! Returns own IPv4 address
         \return address of zeroAddr if address is unkown/not defined
     */
     virtual NetAddr<4> &getIP( void ) = 0;
+
+    //---------------------------------------------------------------
+    /*! Checks, if own IP becomes valid
+        \return Flag
+    */
+    bool isNewIP( void )
+    {
+      if( isIPvalidFlag )
+      {
+        return( false ); // valid, but not new
+      }
+      else
+      {
+        isIPvalidFlag = !(getIP() == zeroAddr);
+      }
+      return( isIPvalidFlag );
+    }
+
 
   protected:
     //---------------------------------------------------------------
@@ -140,6 +159,7 @@ class Net
   private:
     //---------------------------------------------------------------
     WORD timeoutTics;
+    bool isIPvalidFlag = false;
 
 }; //class Net
 
