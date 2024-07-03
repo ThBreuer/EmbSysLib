@@ -268,11 +268,18 @@ DataPointer NetEthTCP::Socket::getDataPointer( void )
 //-------------------------------------------------------------------
 bool NetEthTCP::Socket::onProcess( void )
 {
-  isDataFlag = true;
-
   NetEthTCP::Msg &msg = *(NetEthTCP::Msg*)tcp.ip.eth.buf;
 
+  WORD destPort = msg.tcp.destPort;
+
+  if( localPort != destPort )
+  {
+    return( false );
+  }
+
   flags   = msg.tcp.getFlags();
+
+  isDataFlag = true;
 
   DWORD ackNumMsg  = msg.tcp.acknowledgeNumber;
   DWORD seqNumMsg  = msg.tcp.sequenceNumber;
@@ -295,10 +302,10 @@ bool NetEthTCP::Socket::onProcess( void )
   // todo  clear(); /// ??? plen is used later !
   tcp.ip.eth.plen = 0;
 
-  if( !(localPort == msg.tcp.destPort)  )// todo if established check also: || !(remotePort == msg.tcp.sourcePort) || !(remoteAddr == msg.ip.sourceAddr))
-  {
-    return( false );
-  }
+////  if( !(localPort == msg.tcp.destPort)  )// todo if established check also: || !(remotePort == msg.tcp.sourcePort) || !(remoteAddr == msg.ip.sourceAddr))
+////  {
+////    return( false );
+////  }
 
   if( isRemoteValid )
   {
@@ -501,7 +508,7 @@ void NetEthTCP::Socket::update( void )
         }
 
         /// \todo wenn app kein ACK sendet, muss dies hier nachgeholt werden!
-        sendFlags( FLAG_ACK );
+       sendFlags( FLAG_ACK );
 
 
         isDataFlag=false;
