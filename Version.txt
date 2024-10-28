@@ -2,6 +2,9 @@ ver-01.04.04
 ============
 * Bug fix
     - NetEthTCP: Check port first
+    - STM32L4xx: I2Cmaster_Mcu, register STOP condition corrected
+    - STM32L4xx: Return false, if PinConfig::set() failed
+    - STM32L1xx: DAC enable buffer
 
 ver-01.04.03
 ============
