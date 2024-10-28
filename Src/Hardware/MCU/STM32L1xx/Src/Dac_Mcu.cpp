@@ -54,14 +54,12 @@ inline void Dac_Mcu::enable( BYTE ch )
 
     case CH1:
       PinConfig::set( PinConfig::DAC1_OUT, PinConfig::ANALOG );
-      DAC->CR |=   DAC_CR_EN1
-                 | DAC_CR_BOFF1;
+      DAC->CR |=   DAC_CR_EN1;
       break;
 
     case CH2:
       PinConfig::set( PinConfig::DAC2_OUT, PinConfig::ANALOG );
-      DAC->CR |=   DAC_CR_EN2
-                 | DAC_CR_BOFF2;
+      DAC->CR |=   DAC_CR_EN2;
       break;
   }
 }
