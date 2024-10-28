@@ -79,7 +79,7 @@ bool PinConfig::set( Function func, DWORD mode )
         case 7: RCC->AHB2ENR |= RCC_AHB2ENR_GPIOHEN; gpio = GPIOH; break;
         default:
           report.error( ReportID_Hw::Event::HARDWARE_NOT_SUPPORTED );
-          break;
+          return( false );
       }
       set( gpio, pin, mode, af );
       return( true );
