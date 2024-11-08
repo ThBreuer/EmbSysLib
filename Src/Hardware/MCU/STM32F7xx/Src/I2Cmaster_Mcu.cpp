@@ -110,7 +110,7 @@ inline void I2Cmaster_Mcu::start( BYTE size )
 //-------------------------------------------------------------------
 inline void I2Cmaster_Mcu::stop( void )
 {
-  ptr->CR1 |= I2C_CR2_STOP;
+  ptr->CR2 |= I2C_CR2_STOP;
 }
 
 //-------------------------------------------------------------------
