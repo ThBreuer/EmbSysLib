@@ -16,7 +16,7 @@ All controller specific header files are included here.
 #define _MCU_TYPES_H
 
 //*******************************************************************
-#if defined MCU_STM32F769x
+#if defined MCU_STM32F769x || defined MCU_STM32F746x
 
 #else
   #error "device type mismatch"

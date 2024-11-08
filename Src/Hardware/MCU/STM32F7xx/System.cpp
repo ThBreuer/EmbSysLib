@@ -330,21 +330,21 @@ void SystemInit( void )
                                         //  PLL selected as system clock
 
   // Wait for system clock switch is ready
-  while( (RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_PLL );
+  while( (RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_PLL ) {asm("NOP");}
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   //-----------------------------------------------------------------
   // calculate PLLSAI
   // f_in  =   1 MHz
-  // f_out = 384 MHz => N = f_out/f_in
-  const DWORD pllsai_N = 384;
+  // f_out = 192 MHz => N = f_out/f_in  {f_out=[100,...,432]MHz}
+  const DWORD pllsai_N = 192; // {50,...,432}
 
   //-----------------------------------------------------------------
   // calculate clock divider PLLSAI
-	const DWORD pllsai_P = 8;	// -> f_pllsaip = 384/8 MHz = 48 MHz (USB)
-	const DWORD pllsai_Q = 4; // -> f_pllsaiq = 384/4 MHz = 96 MHz (default)
-	const DWORD pllsai_R = 5;	// -> f_pllsaip = 384/5 MHz = 76.8 MHz (LCD-TFT)
+  const DWORD pllsai_P = 4; // {2,4,6,8}  -> f_pllsaip = 192/4 MHz = 48 MHz (USB)
+  const DWORD pllsai_Q = 2; // {2,...,15} -> f_pllsaiq = 192/2 MHz = 96 MHz (default)
+  const DWORD pllsai_R = 4; // {2,...,7}  -> f_pllsaip = 192/4 MHz = 48 MHz (LCD-TFT)
 
   RCC->CR &= ~RCC_CR_PLLSAION;         // PLLSAI disable   ???
   while( RCC->CR & RCC_CR_PLLSAIRDY ); // Wait until disabled ????
