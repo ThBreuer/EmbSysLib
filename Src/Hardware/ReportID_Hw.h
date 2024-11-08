@@ -65,6 +65,7 @@ class ReportID_Hw
         static const WORD  TOUCH_VIRTUAL            = 0x00C0; //!< Touch_Virtual
         static const WORD  TOUCH_STMPE811           = 0x00C1; //!< Touch_STMPE811
         static const WORD  TOUCH_FT6206             = 0x00C2; //!< Touch_FT6206    
+        static const WORD  TOUCH_FT5336             = 0x00C3; //!< Touch_FT5336    
         static const WORD  I2C_MASTER_MCU           = 0x00D0; //!< I2C_Mcu
         static const WORD  I2C_MASTER_EMUL          = 0x00D2; //!< I2C_Mcu
         
