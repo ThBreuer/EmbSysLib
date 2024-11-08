@@ -6,7 +6,6 @@
 "%EMBSYSLIB%\Tools\Image.exe" -A -out image.bin -in ../../Src/Resource/Font/Font_8x12.bin
 "%EMBSYSLIB%\Tools\Image.exe" -A -out image.bin -in ../../Src/Resource/Font/Font_8x8.bin
 
-ST-Link_CLI -P image.bin 0x08080000 -V while_programming
-ST-Link_CLI -Rst
+STM32_Programmer_CLI.exe -c port=SWD -w image.bin 0x08080000 -v
 
 pause
