@@ -1,0 +1,49 @@
+//*******************************************************************
+/*!
+\file   board_pinout.txt
+\author Thomas Breuer
+\date   05.01.2023
+\brief  Board specific configuration
+*/
+
+Board:    STM32F769-Discovery
+
+LED:      LD1 (green) - PI1
+          LED (ext)   - PA8 (TIM1_CH1), connect LED at CN7.3 (Arduino connector D10)
+          
+Button:   B1 (user)   - PI11 (with pull down resistor)
+
+UART:     Virtual COM port, available via ST-Link/USB
+          Connect USB and start a terminal (e.g. Putty)
+          Configuration: 9600 baud,8 bit,1 stop bit, no parity, now flow control
+                         line editing: force off
+
+ADC:      Connect at least one voltage source (0,...,3V or potentiometer)
+          ADC 1:
+            Channel  0  - PA0  (CN5.1, Arduino A0)
+          ADC 2:
+            Channel  0  - PA0  (CN5.1, Arduino A0)
+          ADC 3:
+            Channel  0  - PA0  (CN5.1, Arduino A0)
+            Channel  4  - PF6  (CN5.6, Arduino A5)
+            Channel  5  - PF7  (CN5.5, Arduino A4)
+            Channel  6  - PF8  (CN5.4, Arduino A3)
+            Channel  7  - PF9  (CN5.3, Arduino A2)
+            Channel  8  - PF10 (CN5.2, Arduino A1)
+
+USB:      Connector CN13, USB OTG FS Micro-AB
+
+I2C:      Connector CN2, I2C extension connector
+            SCL - PB8  (CN2.3)
+            SDA - PB9  (CN2.1)
+            +3.3V      (CN2.5)
+            GND        (CN2.7)
+          Connector CN7
+            SCL - PB8  (CN7.10, Arduino D15)
+            SDA - PB9  (CN7.9,  Arduino D14)
+
+GND:      CN6.6, CN6.7
+
+Vcc,3.3V: CN6.4
+
+
