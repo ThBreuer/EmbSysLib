@@ -19,6 +19,8 @@ All controller specific header files are included here.
 //*******************************************************************
 #if defined       MCU_STM32F769x
   #include "PinConfig_STM32F769.h"
+#elif defined     MCU_STM32F746x
+  #include "PinConfig_STM32F746.h"
 #else
   #error "PinConfig.h: device type mismatch"
 #endif
