@@ -96,6 +96,13 @@ class SPImaster
         }
 
         //---------------------------------------------------------------
+        /*! Transmit and receive one data byte, NO START/STOP
+            \param data Transmitted data byte
+            \return Received data byte
+        */
+        BYTE transceiveByte( BYTE data = 0 );
+
+        //---------------------------------------------------------------
         /*! Transmit and receive one data byte
             \param data Transmitted data byte
             \return Received data byte

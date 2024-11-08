@@ -15,7 +15,7 @@ namespace EmbSysLib {
 namespace Hw {
 
 //*******************************************************************
-// 
+//
 // cHwSPImaster
 //
 //*******************************************************************
@@ -24,6 +24,13 @@ SPImaster::SPImaster( void )
 {
   // nothing to do ...
 }
+
+//-------------------------------------------------------------------
+BYTE SPImaster::Device::transceiveByte( BYTE data )
+{
+  return( spi.transceiveByte( data ) );
+}
+
 
 //-------------------------------------------------------------------
 BYTE SPImaster::Device::transceive( BYTE data )
@@ -35,7 +42,7 @@ BYTE SPImaster::Device::transceive( BYTE data )
 }
 
 //-------------------------------------------------------------------
-void SPImaster::Device::transceive( BYTE *data, 
+void SPImaster::Device::transceive( BYTE *data,
                                     WORD  size )
 {
   start();
@@ -54,7 +61,7 @@ inline BYTE SPImaster::Device::read( void )
 
 //-------------------------------------------------------------------
 template <class T>
-inline void SPImaster::Device::read( T *data )
+void SPImaster::Device::read( T *data )
 {
   start();
   for( WORD i = 0; i < sizeof(T); i++ )
@@ -65,13 +72,13 @@ inline void SPImaster::Device::read( T *data )
 }
 
 //-------------------------------------------------------------------
-inline void SPImaster::Device::write( BYTE data )
+void SPImaster::Device::write( BYTE data )
 {
   transceive( data );
 }
 
 //-------------------------------------------------------------------
-inline void SPImaster::Device::write( WORD data )
+void SPImaster::Device::write( WORD data )
 {
   start();
   spi.transceiveByte( data >> 8    );

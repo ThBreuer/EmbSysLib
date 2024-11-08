@@ -27,11 +27,12 @@ namespace Hw {
 #endif
 
 //-------------------------------------------------------------------
-SPImaster_Mcu::SPImaster_Mcu( SPI_ID         id, 
-                                SPI_Baudrate baudrate,
-                                ClockPolPha  clockPolPha )
+SPImaster_Mcu::SPImaster_Mcu( SPI_ID       id,
+                              SPI_Baudrate baudrate,
+                              ClockPolPha  clockPolPha,
+                              bool         lsbFirst )
 
-: SPImaster() 
+: SPImaster()
 
 {
   switch( id )
@@ -39,7 +40,7 @@ SPImaster_Mcu::SPImaster_Mcu( SPI_ID         id,
     default:
       // error!
       break;
-      
+
     case SPI_1:
       ptr           = SPI1;
       RCC->APB2ENR |= RCC_APB2ENR_SPI1EN;
@@ -60,7 +61,7 @@ SPImaster_Mcu::SPImaster_Mcu( SPI_ID         id,
   }
 
   WORD br;
-  
+
   switch( baudrate )
   {
     default:
@@ -74,15 +75,18 @@ SPImaster_Mcu::SPImaster_Mcu( SPI_ID         id,
     case CR_10MHz:   br = 2; /* 80MHz/8   */ break;
     case CR_20MHz:   br = 1; /* 80MHz/4   */ break;
     case CR_40MHz:   br = 0; /* 80MHz/2   */ break;
-  } 
+  }
 
-  ptr->CR2  =  ((8-1)<<8)         // Data Size: 8-bit
+  ptr->CR1 &= ~SPI_CR1_SPE;
+
+  ptr->CR2  =  !SPI_CR2_FRXTH
+              | ((8-1)<<8)         // Data Size: 8-bit
              | !SPI_CR2_FRF       // Frame format: Motorola
-             |  SPI_CR2_SSOE;     // Slave Select output enable
+             | !SPI_CR2_SSOE;     // Slave Select output disable
 
-  ptr->CR1  =  !SPI_CR1_SSM       // Slave management: SW
+  ptr->CR1  =   SPI_CR1_SSM       // Slave management: HW
              |  SPI_CR1_SSI       //
-             |  SPI_CR1_LSBFIRST  // LSB first: disable
+             |  (lsbFirst?SPI_CR1_LSBFIRST:0)  // LSB first
              | !SPI_CR1_SPE       // SPI disable
              |  (br<<3)           // Baud rate
              |  SPI_CR1_MSTR      // Master mode
@@ -118,7 +122,7 @@ BYTE SPImaster_Mcu::transceiveByte( BYTE data )
     asm("NOP");
   };
 
-  ret = ptr->DR;
+    ret = *((__IO uint8_t *)&ptr->DR);
   // wait until data received
   while( (ptr->SR & SPI_SR_FRLVL) )
   {

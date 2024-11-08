@@ -147,9 +147,12 @@ ExtInt_Mcu extInt( Port_Mcu::PA, 9 ); // External Interrupt on btnA_Pin
 
 SPImaster_Mcu     spi2      ( SPImaster_Mcu::SPI_1,
                               SPImaster_Mcu::CR_312kHz,
-                              SPImaster_Mcu::CPOL_H_CPHA_H );
+                              SPImaster_Mcu::CPOL_H_CPHA_H,
+                              true );
 SPImaster::Device spiDisplay( spi2, portA, 4 );
-SPImaster::Device spiMaster ( spi2, portA, 4 );
+
+SPImaster::Device &spiMaster   = spiDisplay;
+SPImaster::Device &spiENC28J60 = spiDisplay;
 
 //-------------------------------------------------------------------
 // Memory

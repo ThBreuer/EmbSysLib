@@ -58,15 +58,18 @@ class SPImaster_Mcu : public SPImaster
     //---------------------------------------------------------------
     /*! Initialize SPI hardware
         \param id           Hardware selection
-               mode         Clock rate
-               clockPolPha  Clock polarity and phase
+        \param mode         Clock rate
+        \param clockPolPha  Clock polarity and phase
+        \param lsbFirst
     */
-    SPImaster_Mcu( SPI_ID        id,      
-                    SPI_Baudrate baudrate,       
-                    ClockPolPha  clockPolPha );
+    SPImaster_Mcu( SPI_ID        id,
+                    SPI_Baudrate baudrate,
+                    ClockPolPha  clockPolPha,
+                    bool         lsbFirst );
 
-  private:
     //---------------------------------------------------------------
+    /*! todo comment
+    */
     virtual BYTE transceiveByte( BYTE value = 0 );
 
   private:
