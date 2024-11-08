@@ -49,7 +49,7 @@ using namespace EmbSysLib::Hw;
 //*******************************************************************
 PinConfig::MAP PinConfig::table[] =
 {
-  // ADC  
+  // ADC
   ADC1_IN4_PA4,
   ADC1_IN6_PA6,
   ADC1_IN12_PC2,
@@ -74,28 +74,28 @@ PinConfig::MAP PinConfig::table[] =
   // UART
   USART1_TX_PA9,
   USART1_RX_PA10,
-  
+
   // USB
   USB_OTG_FS_DM_PA11,
   USB_OTG_FS_DP_PA12,
-  
+
   // FMC
-  FMC_D0_PD14,  
-  FMC_D1_PD15,  
-  FMC_D2_PD0, 
+  FMC_D0_PD14,
+  FMC_D1_PD15,
+  FMC_D2_PD0,
   FMC_D3_PD1,
   FMC_D4_PE7,
-  FMC_D5_PE8, 
-  FMC_D6_PE9, 
-  FMC_D7_PE10, 
-  FMC_D8_PE11, 
-  FMC_D9_PE12, 
-  FMC_D10_PE13, 
-  FMC_D11_PE14, 
+  FMC_D5_PE8,
+  FMC_D6_PE9,
+  FMC_D7_PE10,
+  FMC_D8_PE11,
+  FMC_D9_PE12,
+  FMC_D10_PE13,
+  FMC_D11_PE14,
   FMC_D12_PE15,
-  FMC_D13_PD8,  
+  FMC_D13_PD8,
   FMC_D14_PD9,
-  FMC_D15_PD10,  
+  FMC_D15_PD10,
   FMC_D16_PH8,
   FMC_D17_PH9,
   FMC_D18_PH10,
@@ -137,7 +137,7 @@ PinConfig::MAP PinConfig::table[] =
   FMC_SDNWE_PH5,
   FMC_SDNRAS_PF11,
   FMC_NBL0_PE0,
-  FMC_NBL1_PE1, 
+  FMC_NBL1_PE1,
   FMC_NBL2_PI4,
   FMC_NBL3_PI5,
 
@@ -240,8 +240,8 @@ Rtc_Mcu  rtc( Rtc_Mcu::LSE) ;  // The RTC is NOT battery buffered on STM32L100-D
 //-------------------------------------------------------------------
 // UART
 //-------------------------------------------------------------------
-Uart_Mcu  uart( Uart_Mcu::USART_1, 
-                9600, 
+Uart_Mcu  uart( Uart_Mcu::USART_1,
+                9600,
                 0,
                 100, 100 ); // RX and TX buffer size
 
@@ -270,23 +270,23 @@ Uart_Mcu  uart( Uart_Mcu::USART_1,
 #endif
 
 Port::Pin     lcdResetPin( portJ, 15 );
-Fmc_Mcu       fmc        ( Fmc_Mcu::SDRAM_Bank1 );  
+Fmc_Mcu       fmc        ( Fmc_Mcu::SDRAM_Bank1, Fmc_Mcu::BusConfig_type::DATA_BUS_WIDTH_32BIT );
 Dsi_Mcu       hwDSI      ( fmc.startAddr() );
-                        
-DisplayGraphic_OTM8009Aram dispGraphic( hwDSI,lcdResetPin, 
-                                        DisplayGraphic_OTM8009A::LANDSCAPE_90, 
-                                        fontFont_16x24, 
+
+DisplayGraphic_OTM8009Aram dispGraphic( hwDSI,lcdResetPin,
+                                        DisplayGraphic_OTM8009A::LANDSCAPE_90,
+                                        fontFont_16x24,
                                         1 );
 
-// Variante: 
+// Variante:
 // DisplayGraphic_OTM8009Acmd
- 
+
 DisplayChar &disp = dispGraphic; // reuse as character display if needed
 
 //-------------------------------------------------------------------
 // Touch
 //-------------------------------------------------------------------
-Touch_FT6206 touch( i2cBusTouch, 800, 480, Touch::ROTATION_0 );
+Touch_FT6206 touch( i2cBusTouch, 480, 800, Touch::ROTATION_0 );
 
 //-------------------------------------------------------------------
 // USB

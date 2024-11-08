@@ -10,7 +10,7 @@
 /*
 Board:    STM32F769-Discovery
 
-\see ´Example\Src\Board\STM32F769-Discovery/board_pinout.txt
+\see Example\Src\Board\STM32F769-Discovery/board_pinout.txt
 */
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -50,7 +50,7 @@ PinConfig::MAP PinConfig::table[] =
   // UART
   USART1_TX_PA9,
   USART1_RX_PA10,
-
+  
   // I2C
   I2C4_SCL_PD12,
   I2C4_SDA_PB7,
@@ -164,7 +164,7 @@ Bitmap  bitmapBitmap_320x240( MemoryImage( image, "Bitmap_320x240" ).getPtr() );
 Bitmap  bitmapBitmap_32x32  ( MemoryImage( image, "Bitmap_32x32"   ).getPtr() );
 
 Port::Pin     lcdResetPin( portJ, 15 );
-Fmc_Mcu       fmc        ( Fmc_Mcu::SDRAM_Bank1 );  
+Fmc_Mcu       fmc        ( Fmc_Mcu::SDRAM_Bank1, Fmc_Mcu::BusConfig_type::DATA_BUS_WIDTH_32BIT );  
 Dsi_Mcu       hwDSI      ( fmc.startAddr() );
                         
 DisplayGraphic_OTM8009Aram dispGraphic( hwDSI,lcdResetPin, 

@@ -41,7 +41,11 @@ All controller specific header files are included here.
 #include "Src/Uart_Mcu.h"
 #include "Src/USBdevice_Mcu.h"
 
+#if defined MCU_STM32F769x
 #include "Src/Dsi_Mcu.h"
+#endif
+
+#include "Src/Fmc_Mcu.h"
 #include "Src/Ltdc_Mcu.h"
 
 #endif //_HW_MCU_H

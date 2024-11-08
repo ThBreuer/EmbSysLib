@@ -33,20 +33,29 @@ class Fmc_Mcu
       NAND        = 0x01,
       SDRAM       = 0x02,
       SDRAM_Bank1 = (0<<4) | SDRAM,
-      SDRAM_Bank2 = (1<<4) | SDRAM
-
+      SDRAM_Bank2 = (1<<4) | SDRAM,
+      SDRAM_Both  = (2<<4) | SDRAM
     } FMCtype;
+
+    typedef enum
+    {
+      DATA_BUS_WIDTH_16BIT      = 0x00,
+      DATA_BUS_WIDTH_32BIT      = 0x01
+
+    } BusConfig_type;
 
   public:
     //---------------------------------------------------------------
     /*! Initialize the FSCM hardware
         \param xxx  xxx
     */
-    Fmc_Mcu( FMCtype typeIn, bool bothIn = false )
+    Fmc_Mcu( FMCtype typeIn, BusConfig_type busConfigIn )
     {
-      type = typeIn&0x0F;
-      bank = (typeIn>>4)&0x0F;
-      both = bothIn;
+      type      = typeIn&0x0F;
+      bank      = (typeIn>>4)&0x01;
+      both      = ((typeIn>>4)&0x02)?true:false;
+
+      busConfig = busConfigIn;
 
       WORD mode =  PinConfig::FAST_SPEED
                  | PinConfig::PUSH_PULL
@@ -69,23 +78,25 @@ class Fmc_Mcu
       PinConfig::set(PinConfig::FMC_D13,mode);
       PinConfig::set(PinConfig::FMC_D14,mode);
       PinConfig::set(PinConfig::FMC_D15,mode);
-      PinConfig::set(PinConfig::FMC_D16,mode);
-      PinConfig::set(PinConfig::FMC_D17,mode);
-      PinConfig::set(PinConfig::FMC_D18,mode);
-      PinConfig::set(PinConfig::FMC_D19,mode);
-      PinConfig::set(PinConfig::FMC_D20,mode);
-      PinConfig::set(PinConfig::FMC_D21,mode);
-      PinConfig::set(PinConfig::FMC_D22,mode);
-      PinConfig::set(PinConfig::FMC_D23,mode);
-      PinConfig::set(PinConfig::FMC_D24,mode);
-      PinConfig::set(PinConfig::FMC_D25,mode);
-      PinConfig::set(PinConfig::FMC_D26,mode);
-      PinConfig::set(PinConfig::FMC_D27,mode);
-      PinConfig::set(PinConfig::FMC_D28,mode);
-      PinConfig::set(PinConfig::FMC_D29,mode);
-      PinConfig::set(PinConfig::FMC_D30,mode);
-      PinConfig::set(PinConfig::FMC_D31,mode);
-
+      if( busConfig & DATA_BUS_WIDTH_32BIT )
+      {
+        PinConfig::set(PinConfig::FMC_D16,mode);
+        PinConfig::set(PinConfig::FMC_D17,mode);
+        PinConfig::set(PinConfig::FMC_D18,mode);
+        PinConfig::set(PinConfig::FMC_D19,mode);
+        PinConfig::set(PinConfig::FMC_D20,mode);
+        PinConfig::set(PinConfig::FMC_D21,mode);
+        PinConfig::set(PinConfig::FMC_D22,mode);
+        PinConfig::set(PinConfig::FMC_D23,mode);
+        PinConfig::set(PinConfig::FMC_D24,mode);
+        PinConfig::set(PinConfig::FMC_D25,mode);
+        PinConfig::set(PinConfig::FMC_D26,mode);
+        PinConfig::set(PinConfig::FMC_D27,mode);
+        PinConfig::set(PinConfig::FMC_D28,mode);
+        PinConfig::set(PinConfig::FMC_D29,mode);
+        PinConfig::set(PinConfig::FMC_D30,mode);
+        PinConfig::set(PinConfig::FMC_D31,mode);
+      }
       PinConfig::set(PinConfig::FMC_NBL0,mode);
       PinConfig::set(PinConfig::FMC_NBL1,mode);
 
@@ -101,11 +112,15 @@ class Fmc_Mcu
       PinConfig::set(PinConfig::FMC_A9,mode);
       PinConfig::set(PinConfig::FMC_A10,mode);
       PinConfig::set(PinConfig::FMC_A11,mode);
-      PinConfig::set(PinConfig::FMC_A12,mode);
-      PinConfig::set(PinConfig::FMC_A13,mode);
-      PinConfig::set(PinConfig::FMC_A14,mode);
-      PinConfig::set(PinConfig::FMC_A15,mode);
 
+      // \todo this does not depend on data bus width, use other flag!
+      if( busConfig & DATA_BUS_WIDTH_32BIT )
+      {
+        PinConfig::set(PinConfig::FMC_A12,mode);
+        PinConfig::set(PinConfig::FMC_A13,mode);
+        PinConfig::set(PinConfig::FMC_A14,mode);
+        PinConfig::set(PinConfig::FMC_A15,mode);
+      }
       PinConfig::set(PinConfig::FMC_SDCLK,mode);
       PinConfig::set(PinConfig::FMC_SDNCAS,mode);
 
@@ -114,8 +129,13 @@ class Fmc_Mcu
       PinConfig::set(PinConfig::FMC_SDCKE0,mode);
       PinConfig::set(PinConfig::FMC_SDNE0,mode);
       PinConfig::set(PinConfig::FMC_SDNWE,mode);
-      PinConfig::set(PinConfig::FMC_NBL2,mode);
-      PinConfig::set(PinConfig::FMC_NBL3,mode);
+
+      // \todo this does not depend on data bus width, use other flag!
+      if( busConfig & DATA_BUS_WIDTH_32BIT )
+      {
+        PinConfig::set(PinConfig::FMC_NBL2,mode);
+        PinConfig::set(PinConfig::FMC_NBL3,mode);
+      }
 
       /* Enable FMC clock */
       RCC->AHB3ENR |= RCC_AHB3ENR_FMCEN;
@@ -125,7 +145,7 @@ class Fmc_Mcu
         SDRAM_Init( );
       }
     }
-    
+
     //---------------------------------------------------------------
     uint32_t startAddr( void )
     {
@@ -134,7 +154,7 @@ class Fmc_Mcu
       else
         return( 0xD0000000 );
     }
-    
+
   private:
     //---------------------------------------------------------------
     void SDRAM_Init(  )
@@ -175,7 +195,7 @@ class Fmc_Mcu
               | FMC_SDCR1_WP );
       reg |=  ( (0 <<  0)       // Number of column address bits:8
               | (1 <<  2)       // Number of row address bits:12
-              | (2 <<  4)       // Memory data bus width:32 bits
+              | (((busConfig & DATA_BUS_WIDTH_32BIT)?2:1) <<  4)       // Memory data bus width
               | (1 <<  6)       // Number of internal banks:4
               | (3 <<  7)       // CAS Latency:3 (must be same as in Load Mode Register)
               |!FMC_SDCR1_WP ); // Write protection: disable
@@ -236,7 +256,7 @@ class Fmc_Mcu
     void SendCommand( uint32_t Command,       //!< Command issued to the SDRAM device
                       uint32_t AutoRefresh,   //!< Number of consecutive auto refresh
                                               //   command issued in auto refresh mode
-                      uint32_t ModeRegister ) //!< SDRAM Mode register content                                */
+                      uint32_t ModeRegister ) //!< SDRAM Mode register content
     {
       uint32_t ctb;
 
@@ -246,7 +266,7 @@ class Fmc_Mcu
       //       with CTB1 and CTB2 bits set"
       if( both && (   Command == 0x02    // PALL Command
                    || Command == 0x03 )) // Auto Refresh Mode
-        ctb = 3; // use CTB1 and CTB2 simultanously
+        ctb = 3; // use CTB1 and CTB2 simultaneously
       else if( bank == 0)
         ctb = 1<<1; // CTB1
       else
@@ -262,9 +282,10 @@ class Fmc_Mcu
 
   private:
     //---------------------------------------------------------------
-    uint8_t type;
-    uint8_t bank;
-    bool    both;
+    uint8_t         type;
+    uint8_t         bank;
+    bool            both;
+    BusConfig_type  busConfig;
 
 }; //class Fmc_Mcu
 

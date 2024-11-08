@@ -37,7 +37,7 @@ class Dsi_Mcu
     //---------------------------------------------------------------
     Dsi_Mcu( uint32_t startAddr )
 
-    : hwLTDC( startAddr )
+    : hwLTDC( startAddr, false )
 
     {
       // Enable clock and reset-cycle

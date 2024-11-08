@@ -25,13 +25,57 @@ class Ltdc_Mcu
 {
   public:
     //---------------------------------------------------------------
-    Ltdc_Mcu( uint32_t startAddrIn )
+    Ltdc_Mcu( uint32_t startAddrIn, bool usePin, WORD width = 0, WORD height = 0)
     {
       startAddr = startAddrIn;
 
       RCC->APB2ENR  |=  RCC_APB2ENR_LTDCEN;   // clock enable
       RCC->APB2RSTR |=  RCC_APB2RSTR_LTDCRST; // reset cycle
       RCC->APB2RSTR &= ~RCC_APB2RSTR_LTDCRST;
+
+      if( usePin )
+      {
+        WORD mode =  PinConfig::FAST_SPEED
+                   | PinConfig::PUSH_PULL
+                   | PinConfig::PULL_UP // ???
+                   | PinConfig::NO_PUPD;
+
+        PinConfig::set(PinConfig::LTDC_R0,mode);
+        PinConfig::set(PinConfig::LTDC_R1,mode);
+        PinConfig::set(PinConfig::LTDC_R2,mode);
+        PinConfig::set(PinConfig::LTDC_R3,mode);
+        PinConfig::set(PinConfig::LTDC_R4,mode);
+        PinConfig::set(PinConfig::LTDC_R5,mode);
+        PinConfig::set(PinConfig::LTDC_R6,mode);
+        PinConfig::set(PinConfig::LTDC_R7,mode);
+        PinConfig::set(PinConfig::LTDC_G0,mode);
+        PinConfig::set(PinConfig::LTDC_G1,mode);
+        PinConfig::set(PinConfig::LTDC_G2,mode);
+        PinConfig::set(PinConfig::LTDC_G3,mode);
+        PinConfig::set(PinConfig::LTDC_G4,mode);
+        PinConfig::set(PinConfig::LTDC_G5,mode);
+        PinConfig::set(PinConfig::LTDC_G6,mode);
+        PinConfig::set(PinConfig::LTDC_G7,mode);
+        PinConfig::set(PinConfig::LTDC_B0,mode);
+        PinConfig::set(PinConfig::LTDC_B1,mode);
+        PinConfig::set(PinConfig::LTDC_B2,mode);
+        PinConfig::set(PinConfig::LTDC_B3,mode);
+        PinConfig::set(PinConfig::LTDC_B4,mode);
+        PinConfig::set(PinConfig::LTDC_B5,mode);
+        PinConfig::set(PinConfig::LTDC_B6,mode);
+        PinConfig::set(PinConfig::LTDC_B7,mode);
+
+        PinConfig::set(PinConfig::LTDC_CLK,mode);
+        PinConfig::set(PinConfig::LTDC_DE,mode);
+        PinConfig::set(PinConfig::LTDC_HSYNC,mode);
+        PinConfig::set(PinConfig::LTDC_VSYNC,mode);
+      }
+
+      if( width && height )
+      {
+        Init( width, height );
+        LayerConfig( width, height );
+      }
     }
 
     //---------------------------------------------------------------
