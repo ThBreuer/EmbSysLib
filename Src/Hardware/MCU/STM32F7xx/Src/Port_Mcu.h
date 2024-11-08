@@ -43,6 +43,7 @@ class Port_Mcu : public Port
       PH,     //!< GPIO Port H
       PI,     //!< GPIO Port I
       PJ,     //!< GPIO Port J
+      PK,     //!< GPIO Port K
     } PortId;
 
   public:

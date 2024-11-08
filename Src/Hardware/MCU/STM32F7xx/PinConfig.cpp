@@ -83,6 +83,8 @@ bool PinConfig::set( Function func, DWORD mode )
         case 7: gpio = (GPIO_TypeDef *)(GPIOH_BASE); RCC->AHB1ENR |= RCC_AHB1ENR_GPIOHEN; break;
         case 8: gpio = (GPIO_TypeDef *)(GPIOI_BASE); RCC->AHB1ENR |= RCC_AHB1ENR_GPIOIEN; break;
         case 9: gpio = (GPIO_TypeDef *)(GPIOJ_BASE); RCC->AHB1ENR |= RCC_AHB1ENR_GPIOJEN; break;
+        case 10:gpio = (GPIO_TypeDef *)(GPIOK_BASE); RCC->AHB1ENR |= RCC_AHB1ENR_GPIOKEN; break;
+
         default:report.error( ReportID_Hw::Event::HARDWARE_NOT_SUPPORTED );
           break;
       }
