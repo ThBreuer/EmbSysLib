@@ -1,3 +1,30 @@
+ver-01.05.00
+============
+* Bug fix
+    - Documentation moved to Doc/HTML
+    - Typo and comments
+    - asm("NOP") added due to uVision optimization
+    - STM32F7xx: missing Port K
+    - STM32F7xx: I2Cmaster_Mcu, register STOP condition corrected
+
+* New feature:
+    - MQTT
+    
+* New hardware support
+    - Ethernet_ENC28J60
+    - Touch controller FT5336
+    - Graphic-RAM display
+    - New Controller: STM32746
+    - New Example: STM32F746-Discovery
+
+* Minor changes:
+    - Documentation updated
+    - HTML.zip replaces Doc.exe
+    - STM32_Programmer replaces ST-Link_CLI
+    - List of examples (main.cpp) refined
+    - STM32F7xx: LTDC and FMC configuration refined
+    - SPImaster: new method transceiveByte() and configuration refined
+
 ver-01.04.04
 ============
 * Bug fix
