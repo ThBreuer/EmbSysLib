@@ -66,6 +66,8 @@ DWORD Timer_Mcu::loop( Timer_Mcu *ptr )
   long long timeNow  = 0;
   long long timeNext = GetSysTimeMicroSec();
 
+  // todo set thread prio with 'SetThreadPriority(GetCurrentThread(), THREAD_MODE_BACKGROUND_BEGIN)'
+
   while(1) // The task should never end
   {
     if( (timeNow = GetSysTimeMicroSec()) >= timeNext )

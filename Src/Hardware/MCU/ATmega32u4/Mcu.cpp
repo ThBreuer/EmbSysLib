@@ -1,6 +1,6 @@
 //*******************************************************************
 /*!
-\file   ATmega.cpp
+\file   Mcu.cpp
 \author Thomas Breuer
 \date   14.03.2011
 
