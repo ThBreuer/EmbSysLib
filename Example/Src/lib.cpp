@@ -21,3 +21,6 @@ This file is used to avoid modifications in the IDE project file
 #include "Module/Isc/Isc_Uart.cpp"
 #include "Module/Isc/Isc_USBhost.cpp"
 #include "Module/Isc/Isc_USBdevice.cpp"
+
+#include "Module/Mqtt/Mqtt.cpp"
+#include "Module/Mqtt/MqttClient.cpp"
