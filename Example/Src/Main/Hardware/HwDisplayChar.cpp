@@ -27,6 +27,10 @@ int main(void)
   BYTE c   = 32; // skip control character
   WORD cnt = 0;
   char txt[21];
+	
+  #ifdef HAS_LCD_ENABLE_PIN
+  lcdDisp.set(1);
+  #endif
 
   disp.clear();
 

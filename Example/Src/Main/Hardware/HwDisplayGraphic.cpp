@@ -70,6 +70,10 @@ char c    = ' ';
 int main(void)
 {
   uart.set( "\r\n\nHwDisplayGraphic," __DATE__ "," __TIME__ "\r\n\n" );
+	
+  #ifdef HAS_LCD_ENABLE_PIN
+  lcdDisp.set(1);
+  #endif
 
   WORD w = dispGraphic.getWidth();
   WORD h = dispGraphic.getHeight();
