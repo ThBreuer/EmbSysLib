@@ -5,6 +5,7 @@ echo -----
 set pfad="%cd%"
 
 mkdir "%EMBSYSLIB%\Doc\_Log" 2>>nul
+mkdir "%EMBSYSLIB%\Doc\HTML" 2>>nul
 
 cd "%EMBSYSLIB%\Doc\_Doxygen"
 
