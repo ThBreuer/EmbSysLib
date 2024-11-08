@@ -79,6 +79,6 @@ int main( void )
   uart.set( "done\r\n" );
   while(1)
   {
-
+    asm("NOP");
   }
 }
