@@ -85,13 +85,19 @@ todo
 
 
 Sequence Number (4 Byte)
-    Sequenznummer des ersten Daten-Oktetts (Byte) dieses TCP-Pakets oder die Initialisierungs-Sequenznummer falls das SYN-Flag gesetzt ist. Nach der Datenuebertragung dient sie zur Sortierung der TCP-Segmente, da diese in unterschiedlicher Reihenfolge beim Empfänger ankommen können.
+    Sequenznummer des ersten Daten-Oktetts (Byte) dieses TCP-Pakets oder
+    die Initialisierungs-Sequenznummer falls das SYN-Flag gesetzt ist.
+    Nach der Datenuebertragung dient sie zur Sortierung der TCP-Segmente,
+    da diese in unterschiedlicher Reihenfolge beim Empfaenger ankommen koennen.
 Acknowledgement Number (Quittierungsnummer) (4 Byte)
-    Sie gibt die Sequenznummer an, die der Absender dieses TCP-Segmentes als Nächstes erwartet. Sie ist nur gueltig, falls das ACK-Flag gesetzt ist.
+    Sie gibt die Sequenznummer an, die der Absender dieses TCP-Segmentes als
+    naechstes erwartet. Sie ist nur gueltig, falls das ACK-Flag gesetzt ist.
 
 (https://de.wikipedia.org/wiki/Transmission_Control_Protocol#)
 
-So keep in mind that any packets generated, which are simply acknowledgments (in other words, have only the ACK flag set and contain no data) to previously received packets, never increment the sequence number.
+So keep in mind that any packets generated, which are simply acknowledgments
+(in other words, have only the ACK flag set and contain no data) to previously
+received packets, never increment the sequence number.
 
 initial: SN_lok zufaellig, AN_lok = 0?
 
@@ -223,6 +229,7 @@ void NetEthTCP::Socket::flush( void )
 //-------------------------------------------------------------------
 void NetEthTCP::Socket::sendFlags( BYTE flagsIn)
 {
+  BYTE temp = flags;
   flags = flagsIn;
   clear();
 
@@ -231,6 +238,7 @@ void NetEthTCP::Socket::sendFlags( BYTE flagsIn)
   {
     seqNum += 1;
   }
+  flags = temp;
 }
 
 //-------------------------------------------------------------------
@@ -272,9 +280,16 @@ bool NetEthTCP::Socket::onProcess( void )
 
   WORD destPort = msg.tcp.destPort;
 
-  if( localPort != destPort )
+  if( !(localPort == destPort) )
   {
     return( false );
+  }
+  if( isRemoteValid )
+  {
+    if( !(remotePort == msg.tcp.sourcePort) || !(remoteAddr == msg.ip.sourceAddr) )
+    {
+      return( false );
+    }
   }
 
   flags   = msg.tcp.getFlags();
@@ -301,19 +316,6 @@ bool NetEthTCP::Socket::onProcess( void )
 
   // todo  clear(); /// ??? plen is used later !
   tcp.ip.eth.plen = 0;
-
-////  if( !(localPort == msg.tcp.destPort)  )// todo if established check also: || !(remotePort == msg.tcp.sourcePort) || !(remoteAddr == msg.ip.sourceAddr))
-////  {
-////    return( false );
-////  }
-
-  if( isRemoteValid )
-  {
-    if( !(remotePort == msg.tcp.sourcePort) || !(remoteAddr == msg.ip.sourceAddr) )
-    {
-      return( false );
-    }
-  }
 
   if( isFlag( FLAG_RST ) )
   {
@@ -346,6 +348,8 @@ void NetEthTCP::Socket::update( void )
     //---------------
     case CLOSED:
     //---------------
+      isRemoteValid = false;
+
       if( openReq )
       {
         if( isServerFlag )
@@ -387,6 +391,8 @@ void NetEthTCP::Socket::update( void )
     case LISTEN:
     //---------------
       // maybe leaved by open()/SYN -> SYN_SENT (not supported)
+      isRemoteValid = false;
+
       if( closeReq )
       {
         nextState( CLOSED );
