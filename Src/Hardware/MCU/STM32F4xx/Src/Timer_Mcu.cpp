@@ -148,7 +148,7 @@ Timer_Mcu::Timer_Mcu( TimerId timerIdIn,
   // calculate tics and prescaler
   float rawTics = (float)system_PCLK_TIM * cycleTimeIn * 1E-6f;
   DWORD ps      = 1;
-  while( rawTics > 0x10000 ) // tics must be < 16Bits
+  while( rawTics > 0xFFFF ) // tics must be <= 16Bits
   {
     ps      *= 10;
     rawTics /= 10;
