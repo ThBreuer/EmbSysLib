@@ -1,3 +1,9 @@
+ver-01.05.01
+============
+* Bug fix
+    - NetEthTCP.cpp: Spurious FIN flag received
+    - STM32: Timer ARR overflow
+
 ver-01.05.00
 ============
 * Bug fix
