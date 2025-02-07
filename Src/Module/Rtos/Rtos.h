@@ -1,6 +1,6 @@
 //*******************************************************************
 /*!
-\file   Rtos.cpp
+\file   Rtos.h
 \author Thomas Breuer (Bonn-Rhein-Sieg University of Applied Sciences)
 \date   13.03.2023
 
@@ -52,7 +52,7 @@ class Rtos
         //-----------------------------------------------------------
         TCB()
         {
-          stackPointer = 0;
+          stackPointer = NULL;
           stack        = NULL;
           stackSize    = 0;
           state        = NO_TASK;
@@ -148,6 +148,43 @@ class Rtos
     }; // class Task
 
   public:
+    //*******************************************************************
+    /*!
+    \class Clock
+
+    \brief Timing features within a task
+
+    The Clock uses the timer tics, which are provided by a task object.
+    */
+    class Clock : public Std::Clock
+    {
+      public:
+        //---------------------------------------------------------------
+        /*! Instantiate a timer
+            The runtime will be stored in the object. Further calls to
+            \a start() or \a timeout() without parameter will use this stored runtime.
+            \param taskHandler Reference to a task handler, which
+                               provides the timer tics
+            \param timeToWait_msec Runtime in miliseconds (ms)
+            \param timeToWait_usec Runtime in microseconds (us)
+        */
+        Clock( WORD timeToWait_msec = 0,
+               WORD timeToWait_usec = 0 );
+
+      private:
+        //---------------------------------------------------------------
+        virtual LWORD getTics( void );
+
+        //---------------------------------------------------------------
+        virtual DWORD getTimeOfTic( void );
+
+      private:
+        //---------------------------------------------------------------
+        //Rtos &taskHandler;
+
+    }; //Clock
+
+  public:
     //---------------------------------------------------------------
     /*! ...
     */
@@ -158,7 +195,7 @@ class Rtos
       ptr              = this;
       currentTask      = 0;
 
-      Rtos_Mcu::init( us, schedule );
+       Rtos_Mcu::init( us, schedule );
     }
 
     //---------------------------------------------------------------
@@ -189,7 +226,7 @@ class Rtos
         {
           Rtos_Mcu::stop( tcb[task.id].stackPointer);
           tcb[task.id].state        = TCB::READY;
-          tcb[task.id].stackPointer = 0;
+          tcb[task.id].stackPointer = NULL;
         }
       }
     }
@@ -224,7 +261,7 @@ class Rtos
         {
           tcb[i].stackSize    = stackSize;
           tcb[i].stack        = new BYTE[stackSize];
-          tcb[i].stackPointer = 0;
+          tcb[i].stackPointer = NULL;
           tcb[i].state        = TCB::READY;
           return( i );
         }
@@ -238,7 +275,7 @@ class Rtos
       if( task.id != (BYTE)(-1) )
       {
         tcb[task.id].state        = TCB::NO_TASK;
-        tcb[task.id].stackPointer = 0;
+        tcb[task.id].stackPointer = NULL;
         delete tcb[task.id].stack;
       }
     }

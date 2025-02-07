@@ -28,4 +28,28 @@ Rtos *Rtos::ptr = NULL;
 
 }  } //namespace
 
+//*******************************************************************
+//
+// Rtos::Clock
+//
+//*******************************************************************
+//-------------------------------------------------------------------
+Rtos::Clock::Clock( WORD timeToWait_msec,
+                    WORD timeToWait_usec )
+{
+  start( timeToWait_msec, timeToWait_usec ); // Don't use cTimer constructor
+}
+
+//-------------------------------------------------------------------
+LWORD Rtos::Clock::getTics( void )
+{
+  return( Rtos_Mcu::getTics() );
+}
+
+//-------------------------------------------------------------------
+DWORD Rtos::Clock::getTimeOfTic( void )
+{
+  return( Rtos_Mcu::getTimeOfTic() );
+}
+
 //EOF
