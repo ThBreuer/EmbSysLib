@@ -62,7 +62,7 @@ void USBdeviceEndpoint::in( void )
     {
       if( interf->onTransmit( id, epData ) )
       {
-        if( epData.getSize()%maxPacketSize == 0 )
+        if( epData.getSize() && epData.getSize()%maxPacketSize == 0 )
         {
           addZLP = true;
         }
