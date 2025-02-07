@@ -1,3 +1,13 @@
+ver-01.05.02
+============
+* Bug fix
+    - Std::Clock timeout() replaces isRunning()
+	- USB: missing OUT transfer 
+    - USB: avoid second ZLP
+	
+* New feature:
+	- Clock features added to RTOS
+
 ver-01.05.01
 ============
 * Bug fix
