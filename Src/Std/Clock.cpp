@@ -43,7 +43,7 @@ void Clock::start( void )
 }
 
 //-------------------------------------------------------------------
-BYTE Clock::timeout( void )
+bool Clock::trigger( void )
 {
   if( running )
   {
@@ -54,6 +54,19 @@ BYTE Clock::timeout( void )
     }
   }
   return( false );
+}
+
+//-------------------------------------------------------------------
+bool Clock::timeout( void )
+{
+  if( running )
+  {
+    if(getTics() - startTime >= timeToGo )
+    {
+      stop();
+    }
+  }
+  return( !running );
 }
 
 //-------------------------------------------------------------------

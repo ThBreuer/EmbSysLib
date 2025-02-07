@@ -69,17 +69,19 @@ class Clock
 //                  WORD timeToWait_usec = 0 );
 
     //--------------------------------------------------------------
+    // todo review comment
     /*! \see \a timeout(), but reuse the stored runtime
         \return timer state:
                  - true: timeout
                  - false: timer is still running
     */
-    BYTE timeout( void );
+    bool trigger( void );
 
     //---------------------------------------------------------------
+    // todo add comment
     /*!
     */
-    BYTE isRunning( void );
+    bool timeout( void );
 
     //---------------------------------------------------------------
     /*! Stop the timer

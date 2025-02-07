@@ -40,7 +40,7 @@ int main(void)
   {
     DWORD t = clock.get();
 
-    if( clock.timeout() )
+    if( clock.trigger() )
     {
       clock.start( timeOut+=100 );
 
