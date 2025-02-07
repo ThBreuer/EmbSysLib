@@ -642,6 +642,10 @@ inline void USBdevice_Mcu::isr(void)
         if( interruptType & USB_OTG_DIEPINT_ITTXFE )
         {
           epIN[epNum].writeToFifo();
+          if( epNum > 0 )
+          {
+            epIN[epNum].transmit( false );
+          }
           epIN[epNum].clrInterrupt( USB_OTG_DIEPINT_ITTXFE );
         }
 
