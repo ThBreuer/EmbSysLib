@@ -296,7 +296,7 @@ bool NetEthTCP::Socket::onProcess( void )
 
   isDataFlag = true;
 
-  DWORD ackNumMsg  = msg.tcp.acknowledgeNumber;
+  //DWORD ackNumMsg  = msg.tcp.acknowledgeNumber;
   DWORD seqNumMsg  = msg.tcp.sequenceNumber;
 
    dataLen =   msg.ip.packetLength

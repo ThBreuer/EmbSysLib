@@ -99,7 +99,7 @@ bool USB_Uart::CtrlInterface::onRequestCtrl_OUT( DataPointer &dataPtr,
 USB_Uart::USB_Uart( Hw::USBdevice &usb, 
                     BYTE           configId, 
                     BYTE           interfId,
-                    BYTE           bufferSize )
+                    WORD           bufferSize )
     : USBdeviceInterface( usb, configId, interfId+1 )
     , Hw::Uart          ( ReportID_Mod::Module::USB_Uart, bufferSize, bufferSize )
     , ctrlInterface     ( usb, interfId, connection )
@@ -126,7 +126,7 @@ void USB_Uart::onConfigEndpoint( BYTE         epId,
 bool USB_Uart::onTransmit( BYTE epId, DataPointer &data )
 {
   BYTE i;
-  for( i=0; i<packetSize && !dataTxBuf.isEmpty(); i++ )
+  for( i=0; i<packetSize - 1 && !dataTxBuf.isEmpty(); i++ )
   {
     dataTxBuf >> bufIN[i];
   }

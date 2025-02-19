@@ -12,47 +12,47 @@ SerialNumberStr = 'SN0000'
 
 CONFIGURATION
 <BEGIN>
-    Name         = 'DEMO'
-    SelfPowered  = yes
-    RemoteWakeup = no
-    MaxPower     = 100
+  Name         = 'DEMO'
+  SelfPowered  = yes
+  RemoteWakeup = no
+  MaxPower     = 100
 
-    INTERFACE
+  INTERFACE
+    <BEGIN>
+      // Communication Interface
+      Name     = 'Device 0'
+      Class    = CDC_COMMUNICATION
+      SubClass = 0x02
+      Protocol = 0
+
+      ENDPOINT
         <BEGIN>
-            // Communication Interface
-            Name     = 'Device 0'
-            Class    = CDC_COMMUNICATION
-            SubClass = 0x02
-            Protocol = 0
+          Address       = 1
+          Direction     = IN
+          Attributes    = INTERRUPT
+          MaxPacketSize = 8
+          Interval      = 10 
+        <END> 
+    <NEXT> 
+      // Data Interface
+      Name     = 'Device 0'
+      Class    = CDC_DATA
+      SubClass = 0
+      Protocol = 0
 
-            ENDPOINT
-            <BEGIN>
-                Address       = 4
-                Direction     = IN
-                Attributes    = INTERRUPT
-                MaxPacketSize = 8
-                Interval      = 100
-            <END> 
-        <NEXT> 
-            // Data Interface
-            Name     = 'Device 0'
-            Class    = CDC_DATA
-            SubClass = 0
-            Protocol = 0
-
-            ENDPOINT
-            <BEGIN>
-                Address       = 2
-                Direction     = IN
-                Attributes    = BULK
-                MaxPacketSize = Mod::USB_Uart::packetSize
-                Interval      = 10
-            <NEXT>
-                Address       = 3
-                Direction     = OUT
-                Attributes    = BULK
-                MaxPacketSize = Mod::USB_Uart::packetSize
-                Interval      = 10
-            <END> 
+      ENDPOINT
+        <BEGIN>
+          Address       = 2
+          Direction     = OUT
+          Attributes    = BULK
+          MaxPacketSize = Mod::USB_Uart::packetSize
+          Interval      = 10
+        <NEXT>
+          Address       = 2
+          Direction     = IN
+          Attributes    = BULK
+          MaxPacketSize = Mod::USB_Uart::packetSize
+          Interval      = 10
+        <END> 
     <END> // Interface
 <END> // Configuration

@@ -26,8 +26,6 @@ using namespace Std;
 //-------------------------------------------------------------------
 Rtos *Rtos::ptr = NULL;
 
-}  } //namespace
-
 //*******************************************************************
 //
 // Rtos::Clock
@@ -52,4 +50,5 @@ DWORD Rtos::Clock::getTimeOfTic( void )
   return( Rtos_Mcu::getTimeOfTic() );
 }
 
+}  } //namespace
 //EOF

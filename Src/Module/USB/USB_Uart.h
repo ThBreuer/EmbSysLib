@@ -103,7 +103,7 @@ class USB_Uart : public Hw::USBdeviceInterface, public Hw::Uart
     USB_Uart( Hw::USBdevice &usb, 
               BYTE           configId, 
               BYTE           interfId,
-              BYTE           bufferSize );
+              WORD           bufferSize );
 
   private:
     //---------------------------------------------------------------

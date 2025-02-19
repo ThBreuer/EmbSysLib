@@ -193,6 +193,18 @@ class Rtos_Mcu
     //---------------------------------------------------------------
     static TaskHandle (*schedule)( TaskHandle sp, BYTE flag );
 
+    //---------------------------------------------------------------
+    static DWORD getTics()
+    {
+      return( sysTic );
+    }
+
+    //---------------------------------------------------------------
+    static WORD getTimeOfTic( void )
+    {
+      return( sysTicTime );
+    }
+
   public:
     //---------------------------------------------------------------
     static volatile unsigned long  sysTic;

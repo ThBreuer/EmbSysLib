@@ -2,7 +2,7 @@
 /*!
 \file   config.h
 \author Thomas Breuer
-\date   23.02.20232
+\date   23.02.2023
 \brief  Board specific configuration
 */
 
@@ -36,6 +36,13 @@ using namespace EmbSysLib::Mod;
 //*******************************************************************
 PinConfig::MAP PinConfig::table[] =
 {
+  // ADC
+  ADC1_IN5_PA0,
+
+  // DAC
+  DAC1_OUT1_PA4,
+  DAC1_OUT2_PA5,
+
   // UART
   USART2_TX_PA2,
   USART2_RX_PA15,

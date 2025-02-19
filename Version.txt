@@ -1,12 +1,22 @@
+ver-01.05.03
+============
+* Bug fix
+    - STM32-Nucleo32-L432, config.h: Missing pin configuration
+    - STM32F4, *F7, USB: No Bulk IN transfer
+    - Example StdClock.cpp: format mismatch
+    - NetEthTCP.cpp: unused variable
+    - Rtos_Mcu.h: Missing getTics() and getTimeOfTic()
+    - USB_Uart: Wrong data type bufferSize
+
 ver-01.05.02
 ============
 * Bug fix
     - Std::Clock timeout() replaces isRunning()
-	- USB: missing OUT transfer 
+    - USB: missing OUT transfer 
     - USB: avoid second ZLP
-	
+
 * New feature:
-	- Clock features added to RTOS
+    - Clock features added to RTOS
 
 ver-01.05.01
 ============

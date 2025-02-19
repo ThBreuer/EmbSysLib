@@ -112,6 +112,19 @@ class Rtos_Mcu //: public Rtos
 			return( (unsigned long)GetSysTimeMilliSec() - timeOffset);
 		}
 
+    // todo redesign, use another TimeOfTic
+    //---------------------------------------------------------------
+    static DWORD getTics()
+    {
+      return( getSysTime() );
+    }
+
+    //---------------------------------------------------------------
+    static WORD getTimeOfTic( void )
+    {
+      return( 1000 );
+    }
+
   private:
     //---------------------------------------------------------------
     //This is called when the task returns

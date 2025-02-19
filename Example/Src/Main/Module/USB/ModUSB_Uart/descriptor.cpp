@@ -90,9 +90,9 @@ class USBdeviceDescriptor_0 : public USBdeviceDescriptor
     {
       switch( epId )
       {
-        case 0x84: epList[0] = ep; break;
-        case 0x82: epList[1] = ep; break;
-        case 0x03: epList[2] = ep; break;
+        case 0x81: epList[0] = ep; break;
+        case 0x02: epList[1] = ep; break;
+        case 0x82: epList[2] = ep; break;
         default: break;
       }
     }
@@ -102,9 +102,9 @@ class USBdeviceDescriptor_0 : public USBdeviceDescriptor
     {
       switch( epId )
       {
-       case 0x84: return( epList[0] );
-       case 0x82: return( epList[1] );
-       case 0x03: return( epList[2] );
+       case 0x81: return( epList[0] );
+       case 0x02: return( epList[1] );
+       case 0x82: return( epList[2] );
         default: break;
       }
       return( NULL );
@@ -183,10 +183,10 @@ const BYTE USBdeviceDescriptor_0::descriptor[165] =
   // ENDPOINT */ 
     /* bLength          */ 7,
     /* bDescriptorType  */ 0x05,
-    /* bEndpointAddress */ 0x84,
+    /* bEndpointAddress */ 0x81,
     /* bmAttributes     */ Endpoint::INTERRUPT,
     /* wMaxPacketSize   */ (8)&0xFF, (8)>>8,
-    /* bInterval        */ 100,
+    /* bInterval        */ 10,
 
   // INTERFACE
     /* bLength            */ 9,
@@ -202,7 +202,7 @@ const BYTE USBdeviceDescriptor_0::descriptor[165] =
   // ENDPOINT */ 
     /* bLength          */ 7,
     /* bDescriptorType  */ 0x05,
-    /* bEndpointAddress */ 0x82,
+    /* bEndpointAddress */ 0x02,
     /* bmAttributes     */ Endpoint::BULK,
     /* wMaxPacketSize   */ (Mod::USB_Uart::packetSize)&0xFF, (Mod::USB_Uart::packetSize)>>8,
     /* bInterval        */ 10,
@@ -210,7 +210,7 @@ const BYTE USBdeviceDescriptor_0::descriptor[165] =
   // ENDPOINT */ 
     /* bLength          */ 7,
     /* bDescriptorType  */ 0x05,
-    /* bEndpointAddress */ 0x03,
+    /* bEndpointAddress */ 0x82,
     /* bmAttributes     */ Endpoint::BULK,
     /* wMaxPacketSize   */ (Mod::USB_Uart::packetSize)&0xFF, (Mod::USB_Uart::packetSize)>>8,
     /* bInterval        */ 10,

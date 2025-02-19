@@ -59,7 +59,7 @@ int main(void)
 
   while( 1 )
   {
-    sprintf( str, "Time: %8llu \r", clock.get() );
+    sprintf( str, "Time: %8lu \r", (DWORD)clock.get() );
     uart.set( str );
   }
 }
