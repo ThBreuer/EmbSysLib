@@ -1,3 +1,15 @@
+ver-01.05.04
+============
+* Bug fix
+    - board_pinout.txt: table layout
+    - configHw.h: typo
+    - Demo/Blinky/main.cpp: better name of variable
+    - HwAdc.cpp, HwDac.cpp: avoid type mismatch (warning)
+    - USB, IAD: use subclass, protocol and function from major interface descriptor
+
+* New feature:
+    - Ethernet and TCP/UDP: Check connection and generate connection events
+
 ver-01.05.03
 ============
 * Bug fix
