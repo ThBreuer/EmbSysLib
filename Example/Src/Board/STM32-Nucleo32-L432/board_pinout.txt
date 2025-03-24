@@ -9,22 +9,23 @@
 Board:    STM32-Nucleo32-L432
 
 Pinout:
-                 CN3   CN4
-          PA9  -  1     1 - VIN
-          PA10 -  2     2 - GND
-          NRST -  3     3 - NRST
-          GND  -  4     4 - +5V
-          PA12 -  5     5 - PA2/USART-USB
-          PB0  -  6     6 - PA7
-          PB7  -  7     7 - PA6
-          PB6  -  8     8 - PA5
-          PB1  -  9     9 - PA4
-          PC14 - 10    10 - PA3
-          PC15 - 11    11 - PA1
-          PA8  - 12    12 - PA0
-          PA11 - 13    13 - AREF
-          PB5  - 14    14 - +3V3
-          PB4  - 15    15 - PB3/LD3
+              CN3     |    CN4
+          ------------+------------
+          PA9  -  1   |   1 - VIN
+          PA10 -  2   |   2 - GND
+          NRST -  3   |   3 - NRST
+          GND  -  4   |   4 - +5V
+          PA12 -  5   |   5 - PA2/USART-USB
+          PB0  -  6   |   6 - PA7
+          PB7  -  7   |   7 - PA6
+          PB6  -  8   |   8 - PA5
+          PB1  -  9   |   9 - PA4
+          PC14 - 10   |  10 - PA3
+          PC15 - 11   |  11 - PA1
+          PA8  - 12   |  12 - PA0
+          PA11 - 13   |  13 - AREF
+          PB5  - 14   |  14 - +3V3
+          PB4  - 15   |  15 - PB3/LD3
 
 
 LED:      LD3 (green) - PB3 (TIM2_CH2)

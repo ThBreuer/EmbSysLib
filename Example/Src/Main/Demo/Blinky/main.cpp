@@ -29,7 +29,7 @@ int main(void)
 {
   terminal.printf( "\r\n\nDemo/Blinky," __DATE__ "," __TIME__ "\r\n\n" );
 
-  int  T   = 1000;
+  int  duration = 1000;
   char key = 1;
   
   DigitalIndicator indicator( led_A, taskManager );
@@ -38,14 +38,14 @@ int main(void)
   {
     if( key )
     {
-      terminal.printf( "Period=%d ms\r\n", T );
-      indicator.blink( T, 50 );
+      terminal.printf( "Period=%d ms\r\n", duration );
+      indicator.blink( duration, 50 );
     }
 
     switch( key = uart.get() )
     {
-      case '+': T = MIN( 1000, T+100 ); break;
-      case '-': T = MAX(    0, T-100 ); break;
+      case '+': duration = MIN( 1000, duration+100 ); break;
+      case '-': duration = MAX(    0, duration-100 ); break;
       default:  key = 0;                break;
     }
   }

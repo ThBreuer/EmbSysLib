@@ -31,12 +31,14 @@ int main(void)
 {
   uart.set( "\r\n\nHwDac," __DATE__ "," __TIME__ "\r\n\n" );
 
+  const BYTE ch_max = (BYTE)sizeof( DacChannelList );
+
   BYTE step  = 0;
   WORD value = 0;
   BYTE ch    = 0;
   char str[40];
 
-  for( BYTE i = 0; i < sizeof( DacChannelList ); i++ )
+  for( BYTE i = 0; i < ch_max; i++ )
   {
     dac.enable( DacChannelList[i] );
   }
@@ -55,8 +57,8 @@ int main(void)
       case '-': if( step >  0 ) step--;    break;
 
       // select channel
-      case 'n': if( ch+1 < sizeof( DacChannelList) ) ch++; break;
-      case 'p': if( ch   > 0                       ) ch--; break;
+      case 'n': if( ch+1 < ch_max ) ch++; break;
+      case 'p': if( ch   > 0      ) ch--; break;
     }
     value = (WORD)((DWORD)0xFFFF*step/32);
   }

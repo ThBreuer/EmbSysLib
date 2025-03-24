@@ -24,7 +24,7 @@ Board:    STM32-Nucleo32-L432
 
 /// Select a memory object:
 ///------------------------
-#define USE_MEMORY_TYPE  'B' // use 'B': BKRAM or 'F': Flash
+#define USE_MEMORY_TYPE  'B' /// use 'B': BKRAM or 'F': Flash
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -119,7 +119,7 @@ Encoder_Mcu enc( Encoder_Mcu::TIM_2, Encoder_Mcu::NORMAL );
 //-------------------------------------------------------------------
 Adc_Mcu  adc( timerFast );
 
-BYTE AdcChannelList[] = {5,6,8,9,10,11,12,15,16};
+BYTE AdcChannelList[] = {5,/*6,*/8,9,10,11,12,15,16};
 
 //-------------------------------------------------------------------
 // DAC
@@ -131,7 +131,6 @@ BYTE DacChannelList[] = {Dac_Mcu::CH1,Dac_Mcu::CH2};
 //-------------------------------------------------------------------
 // Port::Pin
 //-------------------------------------------------------------------
-
 Port::Pin  ledA_Pin( portB, 3, Port::Out  ); // LD3 (green)
 Port::Pin  ledB_Pin( portB, 1, Port::Out  ); // LED (ext)
 Port::Pin  btnA_Pin( portA, 9, Port::InPU ); // BTN (ext)
@@ -144,7 +143,6 @@ ExtInt_Mcu extInt( Port_Mcu::PA, 9 ); // External Interrupt on btnA_Pin
 //-------------------------------------------------------------------
 // SPI
 //-------------------------------------------------------------------
-
 SPImaster_Mcu     spi2      ( SPImaster_Mcu::SPI_1,
                               SPImaster_Mcu::CR_312kHz,
                               SPImaster_Mcu::CPOL_H_CPHA_H,
@@ -163,7 +161,7 @@ SPImaster::Device &spiENC28J60 = spiDisplay;
 
 #elif USE_MEMORY_TYPE == 'F'
 
-Memory_Flash    memFlash( 0x3f800,   // Offset
+Memory_Flash    memFlash( 0x3f800, // Offset
                           0x800 ); // Size
 
 #else

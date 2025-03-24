@@ -29,11 +29,13 @@ int main(void)
 {
   uart.set( "\r\n\nHwAdc," __DATE__ "," __TIME__ "\r\n\n" );
 
+  const BYTE ch_max = (BYTE)sizeof( AdcChannelList );
+
   WORD value;
   BYTE ch = 0;
   char str[30];
 
-  for( BYTE i = 0; i < sizeof( AdcChannelList ); i++ )
+  for( BYTE i = 0; i < ch_max; i++ )
   {
     adc.enable( AdcChannelList[i] );
   }
@@ -48,8 +50,8 @@ int main(void)
     // select channel
     switch( uart.get() )
     {
-      case 'n': if( ch+1 < sizeof( AdcChannelList ) ) ch++; break;
-      case 'p': if( ch   > 0                        ) ch--; break;
+      case 'n': if( ch+1 < ch_max ) ch++; break;
+      case 'p': if( ch   > 0      ) ch--; break;
     }
   }
 }
