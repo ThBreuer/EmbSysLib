@@ -378,9 +378,11 @@ foreach( $OUT->CONFIGURATION AS &$c )
     {
       $I->IAD[0]->bLength          = 8;
       $I->IAD[0]->bFirstInterface  = $I->bInterfaceNumber;
-      $I->IAD[0]->iFunction        = addString( $I->IAD[0]->Name );
       $I->IAD[0]->Count            = max( 1,$I->IAD[0]->Count );
-      $I->IAD[0]->bInterfaceClass  = "Interface::".$I->IAD[0]->Class;
+      $I->IAD[0]->bInterfaceClass  = $I->bInterfaceClass;
+      $I->IAD[0]->SubClass         = $I->SubClass;
+      $I->IAD[0]->Protocol         = $I->Protocol;
+      $I->IAD[0]->iFunction        = $I->iInterface;
 
       $c->wTotalLength += $I->IAD[0]->bLength;
     }

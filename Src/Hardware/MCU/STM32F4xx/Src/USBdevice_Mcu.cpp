@@ -149,8 +149,8 @@ void USBdevice_Mcu::EndpointIN::writeToFifo( void )
   {
     DWORD *src = (DWORD *)&txBuf.data[0];
 
-    txBuf.size = 0;
-    txBuf.flag = false;
+    txBuf.size -= len;
+    txBuf.flag = txBuf.size?true:false;
 
     for( WORD i = 0; i < cnt; i++, src ++)
     {
@@ -623,14 +623,17 @@ inline void USBdevice_Mcu::isr(void)
         if( interruptType & USB_OTG_DIEPINT_XFRC )
         {
           // USB_DEVICE->DIEPEMPMSK = ~(0x1 << epNum);
-          epIN[epNum].clrInterrupt( USB_OTG_DIEPINT_XFRC );
+          //epIN[epNum].clrInterrupt( USB_OTG_DIEPINT_XFRC );
           epOUT[epNum].receiveZLP();
           eventHandler( epNum | 0x80, true );
 
           // todo interrupt handling not correct for interrupt or ctrl transfers
           // workaround:
           if( epNum > 0 )
-            epIN[epNum].transmit( false );
+          {
+              epIN[epNum].transmit( false );
+              epIN[epNum].writeToFifo();
+          }
           epIN[epNum].clrInterrupt( USB_OTG_DIEPINT_XFRC );
         }
 
