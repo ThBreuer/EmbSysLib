@@ -151,6 +151,11 @@ void NetWinTCP::Socket::flush( void )
 //-------------------------------------------------------------------
 bool NetWinTCP::Socket::onProcess( void )
 {
+  if( state.getUnique() )
+  {
+    app->onEvent( *this, SOCKET_STATE, state.get() );
+  }
+
   if( isServerFlag && s == 0 && sock )
   {
     SOCKADDR_IN saddr;

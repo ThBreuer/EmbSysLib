@@ -118,6 +118,10 @@ class Ethernet_Mcu : public Ethernet
     //---------------------------------------------------------------
     virtual WORD getType( void );
 
+  public:
+    //---------------------------------------------------------------
+    virtual bool isLinked( void );
+
   private:
     //---------------------------------------------------------------
     // Global ETH MAC/DMA functions
@@ -128,8 +132,12 @@ class Ethernet_Mcu : public Ethernet
        \return false: Ethernet initialization failed\n
                true:  Ethernet successfully initialized
     */
-    bool Init( uint16_t PHY_Id );
+    bool InitEth( void );
 
+  public:
+    virtual bool Init( void );
+
+  private:
     //---------------------------------------------------------------
     /* Enables ENET MAC and DMA reception/transmission
     */
@@ -207,9 +215,15 @@ class Ethernet_Mcu : public Ethernet
 
   private:
     //---------------------------------------------------------------
+    BYTE     PhyAddr;
     bool     isAutoNegotiation;
     uint32_t speed;
     uint32_t mode;
+
+    //---------------------------------------------------------------
+    Std::Flag<LinkState>  linkState; //!< Connection state
+
+
 
     //---------------------------------------------------------------
     /* Global pointers on Tx and Rx descriptor used to track transmit and receive descriptors */

@@ -47,6 +47,16 @@ class NetSocket : protected Net::Task
       ERROR_STATE    //!< Socket error
     } State;
 
+    //-----------------------------------------------------------
+    /*! \enum Event
+        \brief ...
+    */
+    typedef enum
+    {
+      SOCKET_STATE = 0, //!< Socket state changed
+      LINK_STATE,       //!< Link (e.g. ethernet) state changed
+    } Event;
+
   public:
     //***************************************************************
     /*!
@@ -62,6 +72,12 @@ class NetSocket : protected Net::Task
             The application has to override this method.
         */
         virtual void onReceive( NetSocket &socket ) = 0;
+
+        //-----------------------------------------------------------
+        /*! Method called by NetSocket, if a socket state is changed.
+            The application has to override this method.
+        */
+        virtual void onEvent( NetSocket &socket, Event event, WORD param ) = 0;
 
     }; //class NetSocket::Handler
 
@@ -119,6 +135,14 @@ class NetSocket : protected Net::Task
     /*! Close a connection
     */
     virtual void close( void ) = 0;
+
+    //---------------------------------------------------------------
+    /*! ...
+    */
+    virtual State getState( void )
+    {
+      return( state.get() );
+    }
 
     //---------------------------------------------------------------
     /*! Clear I/O buffer
@@ -218,7 +242,7 @@ class NetSocket : protected Net::Task
     bool        isServerFlag;
     Handler    *app;
 
-  public:
+  protected:
     //---------------------------------------------------------------
     Std::Flag<State> state; //!< Connection state
 

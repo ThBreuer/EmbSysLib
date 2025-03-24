@@ -167,6 +167,12 @@ bool NetWinUDP::Socket::onProcess( void )
     }
   }
   net.bufIdx = 0;
+  
+  if( state.getUnique() )
+  {
+    app->onEvent( *this, SOCKET_STATE, state.get() );
+  }
+
   return( false );
 }
 

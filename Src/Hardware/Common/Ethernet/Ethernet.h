@@ -15,6 +15,8 @@ License: See file "LICENSE"
 #include "Hardware/Common/Net/NetStd.h"
 #include "Hardware/Common/Net/Net.h"
 
+#include "Std/Flag.h"
+
 //*******************************************************************
 namespace EmbSysLib {
 namespace Hw {
@@ -66,11 +68,27 @@ class Ethernet : public Net
       TYPE_UNDEF = 0
     };
 
+    //-----------------------------------------------------------
+    /*! \enum LinkState
+        \brief Link state
+    */
+    typedef enum
+    {
+      UNDEFINED = 0, //!< State undefined
+      DISCONNECTED,  //!< Ethernet disconnected
+      CONNECTED,     //!< Ethernet connected
+    } LinkState;
+
   public:
     //---------------------------------------------------------------
     /*! ...
     */
     Ethernet( const NetAddr<6> &addrPhy, Timer &timer );
+
+    //---------------------------------------------------------------
+    /*! ...
+    */
+    virtual bool Init() = 0;
 
     //---------------------------------------------------------------
     /*! ...
@@ -98,6 +116,11 @@ class Ethernet : public Net
     /*! ...
     */
     virtual WORD getType( void ) = 0;
+
+    //---------------------------------------------------------------
+    /*! ...
+    */
+    virtual bool isLinked( void ) = 0;
 
     //---------------------------------------------------------------
     /*! ...
@@ -132,6 +155,10 @@ class Ethernet : public Net
 
     NetEthARP   *arp;
     NetEthIP    *ip;
+
+  private:
+    //---------------------------------------------------------------
+    Flag<Ethernet::LinkState>  linkState; //!< Connection state
 
 }; //class Ethernet
 

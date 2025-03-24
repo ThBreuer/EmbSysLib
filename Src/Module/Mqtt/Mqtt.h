@@ -232,22 +232,13 @@ class MqttInterf : protected Net::Task, public NetSocket::Handler
     */
     void close();
 
-   //---------------------------------------------------------------
-    /*! Get socket state (change event)
-        \return New state, if changed since last call, UNDEFINED (0) otherwise
-    */
-    NetSocket::State getSocketStateUnique( void )
-    {
-      return( sock.state.getUnique() );
-    }
-
     //---------------------------------------------------------------
     /*! Get actual socket state
         \return Socket state
     */
     NetSocket::State getSocketState( void )
     {
-      return( sock.state.get() );
+      return( sock.getState() );
     }
 
     //---------------------------------------------------------------
@@ -384,6 +375,12 @@ class MqttInterf : protected Net::Task, public NetSocket::Handler
     // Override NetSocket::Handler
     */
     virtual void onReceive( NetSocket &socketLocal );
+
+    //---------------------------------------------------------------
+    /*!
+    // Override NetSocket::Handler
+    */
+    virtual void onEvent( NetSocket &socketLocal, NetSocket::Event event, WORD param );
 
     //---------------------------------------------------------------
     // Override Net::Task

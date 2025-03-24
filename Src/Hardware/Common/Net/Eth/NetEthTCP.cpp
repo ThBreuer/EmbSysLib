@@ -213,11 +213,13 @@ void NetEthTCP::Socket::flush( void )
 
   if( stateLocal == ESTABLISHED )
   {
+    BYTE temp = flags;
     flags = FLAG_ACK;
     tcp.create( *this, tcp.ip.eth.plen );
     seqNum += tcp.ip.eth.plen;
     setTimeout( 3 );
     ackNumExpected = seqNum;
+    flags = temp;
   }
   else
   {
@@ -296,7 +298,7 @@ bool NetEthTCP::Socket::onProcess( void )
 
   isDataFlag = true;
 
-  //DWORD ackNumMsg  = msg.tcp.acknowledgeNumber;
+  DWORD ackNumMsg  = msg.tcp.acknowledgeNumber;
   DWORD seqNumMsg  = msg.tcp.sequenceNumber;
 
    dataLen =   msg.ip.packetLength
@@ -484,9 +486,19 @@ void NetEthTCP::Socket::update( void )
     //---------------
       /// ... communication ....
 
+      if( /*isDataFlag || */isFlag( FLAG_ACK|FLAG_SYN ) )
+      {
+        setTimeout(0);
+      }
+
       if( closeReq )
       {
         sendFlags( FLAG_FIN|FLAG_ACK );
+        nextState( FIN_WAIT_1 );
+      }
+      else if( timeoutReq )
+      {
+        sendFlags( FLAG_FIN );
         nextState( FIN_WAIT_1 );
       }
       else if( isFlag( FLAG_FIN ) )
@@ -639,11 +651,17 @@ void NetEthTCP::Socket::update( void )
 // todo timout ?
 void NetEthTCP::Socket::onTrigger( void )
 {
-    if( timeOutTic && !(--timeOutTic) )
-    {
-      timeoutReq = true;
-    }
-    update();
+  linkState = tcp.ip.eth.isLinked()?Ethernet::CONNECTED:Ethernet::DISCONNECTED;
+  if( linkState.getUnique() )
+  {
+    app->onEvent( *this, LINK_STATE, linkState.get() );
+  }
+
+  if( timeOutTic && !(--timeOutTic) )
+  {
+    timeoutReq = true;
+  }
+  update();
 }
 
 //-------------------------------------------------------------------
@@ -693,6 +711,11 @@ void NetEthTCP::Socket::nextState( BYTE newState )
     case LISTEN:      state = NetSocket::LISTENING;   break;
     case ESTABLISHED: state = NetSocket::CONNECTED;   break;
     case ERROR_STATE: state = NetSocket::ERROR_STATE; break;
+  }
+
+  if( state.getUnique() )
+  {
+    app->onEvent(*this, SOCKET_STATE, state.get() );
   }
 }
 

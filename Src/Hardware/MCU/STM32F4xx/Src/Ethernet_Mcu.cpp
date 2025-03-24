@@ -149,9 +149,9 @@ Ethernet DMA descriptors registers bits definition
 /* The Speed and Duplex mask values change from a PHY to another, so the user
    have to update this value depending on the used external PHY */
 #define PHY_DUPLEX_SPEED_STATUS_MASK  (0b111<<2)
-#define PHY_10M_HALF									(0b001<<2)
-#define PHY_10M_FULL									(0b101<<2)
-#define PHY_100BTX_HALF								(0b010<<2)
+#define PHY_10M_HALF                  (0b001<<2)
+#define PHY_10M_FULL                  (0b101<<2)
+#define PHY_100BTX_HALF               (0b010<<2)
 #define PHY_100BTX_FULL               (0b110<<2)
 
 //-------------------------------------------------------------------
@@ -262,7 +262,7 @@ Ethernet_Mcu::Ethernet_Mcu( const NetAddr<6> &addrPhyIn, Timer &timer )
   }
   System::delayMilliSec(10);
 
-  BYTE PhyAddr = 0;
+  PhyAddr = 0;
   while( 32 > PhyAddr )
   {
     DWORD id =   ((DWORD)ReadPHYRegister(PhyAddr,2)<<16)
@@ -287,18 +287,12 @@ Ethernet_Mcu::Ethernet_Mcu( const NetAddr<6> &addrPhyIn, Timer &timer )
   }
 
   // Configure Ethernet
-  if ( !Init( PhyAddr) )
+  if ( !InitEth() )
   {
     // \todo reportError
     while(1);
   }
 
-  MACAddressConfig( addrPhy ); // initialize MAC address in ethernet MAC
-
-  DMATxDescChainInit(); // Initialize Tx Descriptors list: Chain Mode
-  DMARxDescChainInit(); // Initialize Rx Descriptors list: Chain Mode
-
-  Start();/* Enable MAC and DMA transmission and reception */
 }
 
 //-------------------------------------------------------------------
@@ -318,6 +312,12 @@ WORD Ethernet_Mcu::getType( )
   {
     return( TYPE_UNDEF );
   }
+}
+
+//-------------------------------------------------------------------
+bool Ethernet_Mcu::isLinked( void )
+{
+  return( ReadPHYRegister(PhyAddr, PHY_BSR) & PHY_Linked_Status );
 }
 
 //-------------------------------------------------------------------
@@ -527,7 +527,7 @@ void Ethernet_Mcu::DMATxDescChainInit( void )
 // Global ETH MAC/DMA functions
 //-------------------------------------------------------------------
 //-------------------------------------------------------------------
-bool Ethernet_Mcu::Init( uint16_t PHY_Id )
+bool Ethernet_Mcu::InitEth( void )
 {
   uint32_t tmpreg = 0;
 
@@ -551,80 +551,9 @@ bool Ethernet_Mcu::Init( uint16_t PHY_Id )
   //-----------------------------------------------------------------
   // PHY initialization and configuration
   //-----------------------------------------------------------------
-//  if( !WritePHYRegister(PHY_Id, PHY_BCR, PHY_Reset) ) // Put the PHY in reset mode
-//  {
-//    return false;  // Return ERROR in case of write timeout
-//  }
 
   System::delayMilliSec(10);  // Delay to assure PHY reset
 
-  if( isAutoNegotiation )
-  {
-    // We wait for linked status...
-    for( uint32_t timeout = 0; !(ReadPHYRegister(PHY_Id, PHY_BSR) & PHY_Linked_Status); timeout++ )
-    {
-      if( timeout >= TIMEOUT )
-      {
-        return false;  // Return ERROR in case of timeout
-      }
-    }
-
-    // Enable Auto-Negotiation
-    if( !WritePHYRegister(PHY_Id, PHY_BCR, PHY_AutoNegotiation) )
-    {
-      return false; // Return ERROR in case of write timeout
-    }
-
-    // Wait until the auto-negotiation will be completed
-    for( uint32_t timeout = 0; !(ReadPHYRegister(PHY_Id, PHY_BSR) & PHY_AutoNego_Complete); timeout++ )
-    {
-      if( timeout >= TIMEOUT )
-      {
-        return false;
-      }
-    }
-
-		switch( ReadPHYRegister(PHY_Id, PHY_SR) & PHY_DUPLEX_SPEED_STATUS_MASK )  //Read the result of the auto-negotiation
-		{
-		  case PHY_100BTX_FULL:
-			  mode  = ETH_MACCR_DM; // full duplex mode
-				speed = ETH_MACCR_FES; // fast mode (100M) = true
-			  break;
-
-		  case PHY_100BTX_HALF:
-			  mode  = !ETH_MACCR_DM; // full duplex mode = false
-				speed = ETH_MACCR_FES; // fast mode (100M) = true
-  			break;
-
-		  case PHY_10M_FULL:
-			  mode  = ETH_MACCR_DM; // full duplex mode
-				speed = !ETH_MACCR_FES;// fast mode (100M) = false
-			  break;
-
-		  case PHY_10M_HALF:
-			  mode  = !ETH_MACCR_DM; // full duplex mode = false
-				speed = !ETH_MACCR_FES;// fast mode (100M) = false
-			  break;
-
-		  default:
-			  break;
-		}
-  }
-  else
-  {
-    // \todo magic bit shifting, sped and mode bit positions differ in PHY BCR and ETH MACCR
-/*
-       ETH MACCR    PHY BCR   both
-speed  bit 14       bit 13    0=10Mbps, 1=100Mbps
-mode   bit 11       bit 8     0=half, 1=full duplex
-*/
-
-    if( !WritePHYRegister( PHY_Id, PHY_BCR, (mode>>3)|(speed>>1) ) )
-    {
-      return false;  // Return ERROR in case of write timeout
-    }
-    System::delayMilliSec(100); // Delay to assure PHY configuration
-  }
 
   //-----------------------------------------------------------------
   tmpreg  = ETH->MACCR;
@@ -736,7 +665,89 @@ mode   bit 11       bit 8     0=half, 1=full duplex
                   | !ETH_DMABMR_DA          // DMA arbitration scheme, RxPriorTx = false
                   |  ETH_DMABMR_USP );      // Enable use of separate PBL for Rx and Tx
 
+
+  MACAddressConfig( addrPhy ); // initialize MAC address in ethernet MAC
+
+  DMATxDescChainInit(); // Initialize Tx Descriptors list: Chain Mode
+  DMARxDescChainInit(); // Initialize Rx Descriptors list: Chain Mode
+
+  Start();/* Enable MAC and DMA transmission and reception */
+
   return true; // Return Ethernet configuration success
+}
+
+//-------------------------------------------------------------------
+bool Ethernet_Mcu::Init()
+{
+  if( isAutoNegotiation )
+  {
+    // We wait for linked status...
+    //    for( uint32_t timeout = 0; !(ReadPHYRegister(PhyAddr, PHY_BSR) & PHY_Linked_Status); timeout++ )
+    //    {
+    //      if( timeout >= TIMEOUT )
+    //      {
+    //        return false;  // Return ERROR in case of timeout
+    //      }
+    //    }
+
+    // Enable Auto-Negotiation
+    if( !WritePHYRegister(PhyAddr, PHY_BCR, PHY_AutoNegotiation) )
+    {
+    return false; // Return ERROR in case of write timeout
+    }
+
+    // Wait until the auto-negotiation will be completed
+    for( uint32_t timeout = 0; !(ReadPHYRegister(PhyAddr, PHY_BSR) & PHY_AutoNego_Complete); timeout++ )
+    {
+      if( timeout >= TIMEOUT )
+      {
+        return false;
+      }
+    }
+    
+    uint16_t r = ReadPHYRegister(PhyAddr, PHY_SR) ;
+    switch( r& PHY_DUPLEX_SPEED_STATUS_MASK )  //Read the result of the auto-negotiation
+    {
+      case PHY_100BTX_FULL:
+        mode  = ETH_MACCR_DM; // full duplex mode
+        speed = ETH_MACCR_FES; // fast mode (100M) = true
+        break;
+
+      case PHY_100BTX_HALF:
+        mode  = !ETH_MACCR_DM; // full duplex mode = false
+        speed = ETH_MACCR_FES; // fast mode (100M) = true
+      break;
+
+      case PHY_10M_FULL:
+        mode  = ETH_MACCR_DM; // full duplex mode
+        speed = !ETH_MACCR_FES;// fast mode (100M) = false
+        break;
+
+      case PHY_10M_HALF:
+        mode  = !ETH_MACCR_DM; // full duplex mode = false
+        speed = !ETH_MACCR_FES;// fast mode (100M) = false
+        break;
+
+      default:
+        break;
+    }
+  }
+  else
+  {
+    // \todo magic bit shifting, sped and mode bit positions differ in PHY BCR and ETH MACCR
+  /*
+     ETH MACCR    PHY BCR   both
+  speed  bit 14       bit 13    0=10Mbps, 1=100Mbps
+  mode   bit 11       bit 8     0=half, 1=full duplex
+  */
+
+    if( !WritePHYRegister( PhyAddr, PHY_BCR, (mode>>3)|(speed>>1) ) )
+    {
+      return false;  // Return ERROR in case of write timeout
+    }
+    System::delayMilliSec(100); // Delay to assure PHY configuration
+  }
+  return( true );
 }
 
 //-------------------------------------------------------------------

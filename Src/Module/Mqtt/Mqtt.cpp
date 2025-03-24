@@ -351,6 +351,17 @@ void MqttInterf::onReceive( NetSocket &socketLocal )
   }
 }
 
+
+//-------------------------------------------------------------------
+void MqttInterf::onEvent( NetSocket &socketLocal, NetSocket::Event event, WORD param )
+{
+// todo
+//  if( event == NetSocket::SOCKET_STATE )
+//  {
+//	  socketState = param;
+//  }
+}
+
 //-------------------------------------------------------------------
 bool MqttInterf::onProcess( void )
 {

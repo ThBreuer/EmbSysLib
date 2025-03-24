@@ -279,6 +279,17 @@ void NetEthUDP::Socket::onTrigger( void )
     state = NetSocket::CONNECTED;
   }
 
+  if( state.getUnique() )
+  {
+    app->onEvent( *this, SOCKET_STATE, state.get() );
+  }
+
+  linkState = udp.ip.eth.isLinked()?Ethernet::CONNECTED:Ethernet::DISCONNECTED;
+  if( linkState.getUnique() )
+  {
+    app->onEvent( *this, LINK_STATE, linkState.get() );
+  }
+
   if( timeOutTic && !(--timeOutTic) )
   {
     switch( stateLocal )

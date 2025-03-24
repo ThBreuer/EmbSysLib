@@ -103,6 +103,7 @@ int main(void)
   int pid = 1;
   int cnt = 0;
   char content[128];
+  Flag<NetSocket::State> state;
 
   while(1)
   {
@@ -171,7 +172,8 @@ int main(void)
     }
 
     // print TCP connection state
-    switch( mqtt.getSocketStateUnique() )
+    state = mqtt.getSocketState();
+    switch( state.getUnique() )
     {
       case NetSocket::UNDEFINED:                                      break;
       case NetSocket::CLOSED:      uart.set("tcp: CLOSED\r\n"      ); break;

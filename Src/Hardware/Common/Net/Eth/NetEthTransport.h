@@ -60,6 +60,8 @@ class NetEthTransport
         NetAddr<6>  remoteAddrPhy;
         DWORD       timeOutTic;
 
+        Std::Flag<Ethernet::LinkState> linkState;
+
       //-----------------------------------------------------------------
       friend class NetEthTransport;
 

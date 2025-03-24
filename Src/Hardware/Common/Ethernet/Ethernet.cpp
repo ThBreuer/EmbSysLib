@@ -27,14 +27,22 @@ Ethernet::Ethernet( const NetAddr<6> &addrPhyIn, Timer &timer )
 : Net( timer )
 , addrPhy( addrPhyIn )
 {
-  plen    = 0;
-  arp = NULL;
-  ip  = NULL;
+  linkState = DISCONNECTED;
+  plen      = 0;
+  arp       = NULL;
+  ip        = NULL;
 }
 
 //-------------------------------------------------------------------
 void Ethernet::process( void )
 {
+  linkState = isLinked()?CONNECTED:DISCONNECTED;
+
+  if( linkState.getUnique() == CONNECTED )
+  {
+    Init();
+  }
+
   if( PacketReceive( ) )
   {
     switch( getType() )

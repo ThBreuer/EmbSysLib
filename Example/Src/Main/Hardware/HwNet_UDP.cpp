@@ -65,6 +65,31 @@ class Application : public NetSocket::Handler
       }
     }
 
+    //---------------------------------------------------------------
+    virtual void onEvent( NetSocket &socketLocal, NetSocket::Event event, WORD param )
+    {
+      if( event == NetSocket::SOCKET_STATE )
+      {
+        switch( param )
+        {
+          case NetSocket::UNDEFINED:                                    break;
+          case NetSocket::CLOSED:      uart.set("\r\nCLOSED\r\n");      break;
+          case NetSocket::LISTENING:   uart.set("\r\nLISTENING\r\n");   break;
+          case NetSocket::CONNECTED:   uart.set("\r\nCONNECTED\r\n");   break;
+          case NetSocket::ERROR_STATE: uart.set("\r\nERROR_STATE\r\n"); break;
+          default:                     uart.set("\r\nstate unkown\r\n");break;
+        }
+      }
+
+      if( event == NetSocket::Event::LINK_STATE)
+      {
+        if( param == Ethernet::CONNECTED )
+           uart.set( "\r\nLink:connected\r\n" );
+        else
+           uart.set( "\r\nLink:disconnected\r\n" );
+      }
+    }
+
   public:
     //---------------------------------------------------------------
     virtual void send()
@@ -88,7 +113,7 @@ WORD cnt = 0;
 //*******************************************************************
 int main(void)
 {
-  uart.set( "\r\n\ncHwNet_Server," __DATE__ "," __TIME__ "\r\n\n" );
+  uart.set( "\r\n\ncHwNet_UDP," __DATE__ "," __TIME__ "\r\n\n" );
 //System::delayMilliSec(1000);
   while( net.getIP().addr[0] == 0)
   {
@@ -125,15 +150,6 @@ int main(void)
                 app.socket->open(addr, PORT); break;
     }
 
-    switch( app.socket->state.getUnique() )
-    {
-      case NetSocket::UNDEFINED:                                    break;
-      case NetSocket::CLOSED:      uart.set("\r\nCLOSED\r\n");      break;
-      case NetSocket::LISTENING:   uart.set("\r\nLISTENING\r\n");   break;
-      case NetSocket::CONNECTED:   uart.set("\r\nCONNECTED\r\n");   break;
-      case NetSocket::ERROR_STATE: uart.set("\r\nERROR_STATE\r\n"); break;
-      default:                     uart.set("\r\nstate unkown\r\n");break;
-    }
 
 //     bool value = (btnPort.get() & btnPinMask)?true:false;
 

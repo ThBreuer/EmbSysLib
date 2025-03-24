@@ -32,9 +32,9 @@ Ethernet_ENC28J60::Ethernet_ENC28J60( const NetAddr<6>  &addrPhyIn,
 , addrPhy ( addrPhyIn )
 
 {
-  Init( addrPhyIn );
+  InitEth( addrPhyIn );
   System::delayMilliSec( 10 );
-  InitPhy();
+  Init();
 }
 
 //-------------------------------------------------------------------
@@ -161,7 +161,7 @@ void Ethernet_ENC28J60::PhyWrite( BYTE address, WORD data )
 
 //-------------------------------------------------------------------
 // Flash the 2 RJ45 LEDs twice to show that the interface works
-void Ethernet_ENC28J60::InitPhy( void )
+bool Ethernet_ENC28J60::Init( void )
 {
 	// Magjack leds configuration, see enc28j60 datasheet, page 11
 	// LEDA=green LEDB=yellow
@@ -185,10 +185,12 @@ void Ethernet_ENC28J60::InitPhy( void )
 	// 0x476 is PHLCON LEDA=links status, LEDB=receive/transmit
   // enc28j60PhyWrite(PHLCON,0b0000 0100 0111 01 10);
   PhyWrite( PHLCON, 0x476 );
+
+  return( true );
 }
 
 //-------------------------------------------------------------------
-void Ethernet_ENC28J60::Init( const NetAddr<6> &addrPhyIn )
+void Ethernet_ENC28J60::InitEth( const NetAddr<6> &addrPhyIn )
 {
   // perform system reset
   WriteOp( ENC28J60_SOFT_RESET, 0, ENC28J60_SOFT_RESET );
@@ -306,9 +308,9 @@ void Ethernet_ENC28J60::PacketSend( BYTE* packet, WORD len )
 	if( (Read( EIR ) & EIR_TXERIF) )
 	{
 	  //! /todo Workaround on transmit error
-	  Init( addrPhy );
+	  InitEth( addrPhy );
 	  System::delayMilliSec( 10 );
-	  InitPhy();
+	  Init();
 	  //    WriteOp(ENC28J60_BIT_FIELD_CLR, ECON1, ECON1_TXRTS);
 	}
 }

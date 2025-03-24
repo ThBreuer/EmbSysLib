@@ -69,6 +69,12 @@ class NetEthDHCP : protected NetSocket::Handler, protected Net::Task
     virtual void onReceive( NetSocket &socketLocal );
 
     //---------------------------------------------------------------
+    // Override NetSocket::Handler
+    virtual void onEvent( NetSocket &socketLocal, NetSocket::Event event, WORD param )
+    {
+    }
+
+    //---------------------------------------------------------------
     // Override Net::Task
     virtual bool onProcess( void )
     {

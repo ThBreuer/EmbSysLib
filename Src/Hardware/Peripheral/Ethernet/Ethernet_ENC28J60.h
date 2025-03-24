@@ -317,6 +317,14 @@ class Ethernet_ENC28J60 : public Ethernet
 
     //---------------------------------------------------------------
     // override
+    virtual bool isLinked( void )
+    {
+        // todo
+        return( true );
+    };
+
+    //---------------------------------------------------------------
+    // override
     virtual void PacketSend( BYTE* packet, WORD len );
 
     //---------------------------------------------------------------
@@ -329,10 +337,10 @@ class Ethernet_ENC28J60 : public Ethernet
 
   private:
     //---------------------------------------------------------------
-		void Init(const NetAddr<6>  &addrPhy);
+    void InitEth(const NetAddr<6>  &addrPhy);
 
     //---------------------------------------------------------------
-    void InitPhy (void);
+    virtual bool Init (void);
 
     //---------------------------------------------------------------
 	  BYTE ReadOp( BYTE op, BYTE address );
