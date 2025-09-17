@@ -64,9 +64,10 @@ bool Clock::timeout( void )
     if(getTics() - startTime >= timeToGo )
     {
       stop();
+      return( true );
     }
   }
-  return( !running );
+  return( false );
 }
 
 //-------------------------------------------------------------------
