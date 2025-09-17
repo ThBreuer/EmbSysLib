@@ -344,7 +344,7 @@ void SystemInit( void )
   // calculate clock divider PLLSAI
   const DWORD pllsai_P = 4; // {2,4,6,8}  -> f_pllsaip = 192/4 MHz = 48 MHz (USB)
   const DWORD pllsai_Q = 2; // {2,...,15} -> f_pllsaiq = 192/2 MHz = 96 MHz (default)
-  const DWORD pllsai_R = 4; // {2,...,7}  -> f_pllsaip = 192/4 MHz = 48 MHz (LCD-TFT)
+  const DWORD pllsai_R = 7; // {2,...,7}  -> f_pllsaip = 192/4 MHz = 48 MHz (LCD-TFT)
 
   RCC->CR &= ~RCC_CR_PLLSAION;         // PLLSAI disable   ???
   while( RCC->CR & RCC_CR_PLLSAIRDY ); // Wait until disabled ????
@@ -354,7 +354,7 @@ void SystemInit( void )
                      | ( pllsai_Q      << 24)
                      | ( pllsai_R      << 28);
 
-  RCC->DCKCFGR1 = (RCC->DCKCFGR1 & ~RCC_DCKCFGR1_PLLSAIDIVR)  | 0/*RCC_PLLSAIDIVR_2*/;
+  RCC->DCKCFGR1 = (RCC->DCKCFGR1 & ~RCC_DCKCFGR1_PLLSAIDIVR)  | (2<<16);
   RCC->DCKCFGR2 |= RCC_DCKCFGR2_CK48MSEL; // PLLSAI is 48Mhz-USB clock source
 
   /* Enable PLLSAI Clock */

@@ -62,6 +62,7 @@ class ReportID_Hw
         static const WORD  DISPLAY_GRAPHIC_VIRTUAL  = 0x00B0; //!< DisplayGraphic_Virtual
         static const WORD  DISPLAY_GRAPHIC_SSD2119  = 0x00B1; //!< DisplayGraphic SSD2119
         static const WORD  DISPLAY_GRAPHIC_OTM8009A = 0x00B2; //!< DisplayGraphic OTM8009A
+        static const WORD  DISPLAY_GRAPHIC_NT35510  = 0x00B3; //!< DisplayGraphic NT35510
         static const WORD  TOUCH_VIRTUAL            = 0x00C0; //!< Touch_Virtual
         static const WORD  TOUCH_STMPE811           = 0x00C1; //!< Touch_STMPE811
         static const WORD  TOUCH_FT6206             = 0x00C2; //!< Touch_FT6206    

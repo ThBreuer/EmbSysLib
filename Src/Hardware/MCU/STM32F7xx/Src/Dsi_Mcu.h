@@ -86,9 +86,9 @@ class Dsi_Mcu
       // PHI 31,25 to 500MHz
 
       const DWORD pll_ODF  = 0;
-      const DWORD pll_IDF  = 2;
+      const DWORD pll_IDF  = 5;
       const DWORD pll_NDIV = RANGE( (DWORD)250000*pll_IDF/System_GetDSIclock(), (DWORD)10, (DWORD)125 );
-      const double F_PHI   = 500E6; /*Hz*/
+      const double F_PHI   = 400E6; //500E6; /*Hz*/
 
       DSI->WRPCR &= ~( DSI_WRPCR_PLL_NDIV
                      | DSI_WRPCR_PLL_IDF
@@ -138,7 +138,7 @@ class Dsi_Mcu
                     | !DSI_WCFGR_TEPOL  // TE Polarity: rising edge
                     | !DSI_WCFGR_AR     // Automatic Refresh: disable
                     | !DSI_WCFGR_VSPOL  // VSync Polarity: fallig edge
-                    | (0x05<<1) );      // Color multiplexing used by DSI Host: 24 bit
+                    | (0x00<<1) );      // Color multiplexing used by DSI Host: 24 bit
 
       // Host LTDC VCID Register
       DSI->LVCIDR = 0;                // Virtual Channel ID
@@ -150,7 +150,7 @@ class Dsi_Mcu
 
       // Host LTDC Color Coding Register
       DSI->LCOLCR = ( !DSI_LCOLCR_LPE  // Loosely Packet Enable: disable
-                    | 0x05           );// Color Coding: 24 bit
+                    | 0x00           );// Color Coding: 24 bit
 
       // Host LTDC Command Configuration Register
       DSI->LCCR = Hsize; // Command Size, max size for LTDC write memory command (pixel)

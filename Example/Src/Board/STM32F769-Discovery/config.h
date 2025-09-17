@@ -18,6 +18,12 @@ Board:    STM32F769-Discovery
 // SETUP:
 // ======
 
+/// Select revision of LCD board MB1166:
+#define A02	2  // OTM8009A + FT6206
+#define A09	9  // NT35510  + FT6306
+
+#define MB1166_REV  A02
+
 /// Select encoder type:
 ///---------------------
 #define USE_ROTARY_KNOB  false
@@ -32,7 +38,13 @@ Board:    STM32F769-Discovery
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 //*******************************************************************
-#include "Hardware/Peripheral/Display/DisplayGraphic_OTM8009A.cpp"
+#if MB1166_REV == A02
+  #include "Hardware/Peripheral/Display/DisplayGraphic_OTM8009A.cpp"
+#endif
+#if MB1166_REV == A09
+  #include "Hardware/Peripheral/Display/DisplayGraphic_NT35510.cpp"
+#endif
+
 #include "Hardware/Peripheral/Touch/Touch_FT6206.cpp"
 
 //*******************************************************************
@@ -166,11 +178,20 @@ Bitmap  bitmapBitmap_32x32  ( MemoryImage( image, "Bitmap_32x32"   ).getPtr() );
 Port::Pin     lcdResetPin( portJ, 15 );
 Fmc_Mcu       fmc        ( Fmc_Mcu::SDRAM_Bank1, Fmc_Mcu::BusConfig_type::DATA_BUS_WIDTH_32BIT );  
 Dsi_Mcu       hwDSI      ( fmc.startAddr() );
-                        
-DisplayGraphic_OTM8009Aram dispGraphic( hwDSI,lcdResetPin, 
-                                        DisplayGraphic_OTM8009A::LANDSCAPE_90, 
-                                        fontFont_8x12, 
-                                        2 );
+
+#if MB1166_REV == A02
+	DisplayGraphic_OTM8009Aram dispGraphic( hwDSI,lcdResetPin,
+											DisplayGraphic_OTM8009A::LANDSCAPE_90,
+											fontFont_8x12,
+											2 );
+#endif
+
+#if MB1166_REV == A09
+  DisplayGraphic_NT35510ram dispGraphic( hwDSI,lcdResetPin,
+                                         DisplayGraphic_NT35510::LANDSCAPE_90,
+	                                     fontFont_8x12,
+                                         2 );
+#endif
 
 ScreenChar    screenChar   ( dispGraphic );
 ScreenGraphic screenGraphic( dispGraphic );
@@ -186,7 +207,14 @@ ScreenGraphic screenGraphic( dispGraphic );
 //-------------------------------------------------------------------
 // Touch
 //-------------------------------------------------------------------
-Touch_FT6206 touch( i2cBusTouch, 480, 800, Touch::ROTATION_90 );
+
+#if MB1166_REV == A02
+  Touch_FT6206 touch( i2cBusTouch, 480, 800, Touch::ROTATION_90 );
+#endif
+
+#if MB1166_REV == A09
+  Touch_FT6206 touch( i2cBusTouch, 480, 800, Touch::ROTATION_90, Touch_FT6206::VARIANT_FT6306 );
+#endif
 
 Pointer        pointer( touch );
 

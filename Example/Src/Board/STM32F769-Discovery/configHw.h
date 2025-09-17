@@ -18,6 +18,13 @@ Board:    STM32F769-Discovery
 // SETUP:
 // ======
 
+/// Select revision of LCD board MB1166:
+///-------------------------------------
+/// Rev A02: OTM8009A + FT6206
+/// Rev A09: NT35510  + FT6306
+
+#define MB1166_REV  2  // use '2' (Rev A02) or '9' (Rev A09)
+
 /// Select I2C emulation (bit banging):
 ///-----------------------------------
 #define USE_I2C_MASTER_EMUL  false
@@ -37,7 +44,13 @@ Board:    STM32F769-Discovery
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 //*******************************************************************
-#include "Hardware/Peripheral/Display/DisplayGraphic_OTM8009A.cpp"
+#if MB1166_REV == 2
+  #include "Hardware/Peripheral/Display/DisplayGraphic_OTM8009A.cpp"
+#endif
+#if MB1166_REV == 9
+  #include "Hardware/Peripheral/Display/DisplayGraphic_NT35510.cpp"
+#endif
+
 #include "Hardware/Peripheral/Touch/Touch_FT6206.cpp"
 
 //*******************************************************************
@@ -273,11 +286,19 @@ Port::Pin     lcdResetPin( portJ, 15 );
 Fmc_Mcu       fmc        ( Fmc_Mcu::SDRAM_Bank1, Fmc_Mcu::BusConfig_type::DATA_BUS_WIDTH_32BIT );
 Dsi_Mcu       hwDSI      ( fmc.startAddr() );
 
-DisplayGraphic_OTM8009Aram dispGraphic( hwDSI,lcdResetPin,
-                                        DisplayGraphic_OTM8009A::LANDSCAPE_90,
+#if MB1166_REV == 2
+	DisplayGraphic_OTM8009Aram dispGraphic( hwDSI,lcdResetPin,
+											DisplayGraphic_OTM8009A::LANDSCAPE_90,
+											fontFont_16x24,
+											1 );
+#endif
+
+#if MB1166_REV == 9
+  DisplayGraphic_NT35510ram dispGraphic( hwDSI,lcdResetPin,
+                                        DisplayGraphic_NT35510::LANDSCAPE_90,
                                         fontFont_16x24,
                                         1 );
-
+#endif
 // Variante:
 // DisplayGraphic_OTM8009Acmd
 
@@ -286,7 +307,13 @@ DisplayChar &disp = dispGraphic; // reuse as character display if needed
 //-------------------------------------------------------------------
 // Touch
 //-------------------------------------------------------------------
-Touch_FT6206 touch( i2cBusTouch, 480, 800, Touch::ROTATION_0 );
+#if MB1166_REV == 2
+  Touch_FT6206 touch( i2cBusTouch, 480, 800, Touch::ROTATION_0 );
+#endif
+
+#if MB1166_REV == 9
+  Touch_FT6206 touch( i2cBusTouch, 480, 800, Touch::ROTATION_0, Touch_FT6206::VARIANT_FT6306 );
+#endif
 
 //-------------------------------------------------------------------
 // USB
