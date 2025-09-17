@@ -47,11 +47,13 @@ class Touch_FT6206 : public Touch
         \param width  Display width [pixel]
         \param height Display height [pixel]
         \param orientation Screen orientation
+        \param variant Alternativ hardware variant
     */
     Touch_FT6206( I2Cmaster  &i2c,
                   WORD        width,
                   WORD        height,
-                  Orientation orientation );
+                  Orientation orientation,
+                  BYTE        variant = VARIANT_FT6206 );
 
     //---------------------------------------------------------------
     /*! Update coordinates and flags. This method must be called to
@@ -76,7 +78,11 @@ class Touch_FT6206 : public Touch
     //---------------------------------------------------------------
     I2Cmaster::Device i2c;
 
-    static const BYTE hwAddr = 0x54;
+  public:
+    //---------------------------------------------------------------
+    // I2C hardware addresses:
+    static const BYTE VARIANT_FT6206 = 0x54;
+    static const BYTE VARIANT_FT6306 = 0x70;
 
 }; //class Touch_FT6206;
 

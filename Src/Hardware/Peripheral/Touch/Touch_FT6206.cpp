@@ -23,14 +23,15 @@ namespace Hw {
 Touch_FT6206::Touch_FT6206( I2Cmaster  &i2cBus,
                             WORD        width,
                             WORD        height,
-                            Orientation orientation )
+                            Orientation orientation,
+                            BYTE        variant )
 
 : Touch( ReportID_Hw::Module::TOUCH_FT6206, 
          width, 
          height,
          orientation ),
 
-  i2c( i2cBus, hwAddr )
+  i2c( i2cBus, variant /* variant I2C addr */ )
 {
 }
 
