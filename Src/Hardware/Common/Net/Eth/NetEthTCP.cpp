@@ -652,7 +652,7 @@ void NetEthTCP::Socket::update( void )
 void NetEthTCP::Socket::onTrigger( void )
 {
   linkState = tcp.ip.eth.isLinked()?Ethernet::CONNECTED:Ethernet::DISCONNECTED;
-  if( linkState.getUnique() )
+  if( app && linkState.getUnique() )
   {
     app->onEvent( *this, LINK_STATE, linkState.get() );
   }
@@ -713,7 +713,7 @@ void NetEthTCP::Socket::nextState( BYTE newState )
     case ERROR_STATE: state = NetSocket::ERROR_STATE; break;
   }
 
-  if( state.getUnique() )
+  if( app && state.getUnique() )
   {
     app->onEvent(*this, SOCKET_STATE, state.get() );
   }
