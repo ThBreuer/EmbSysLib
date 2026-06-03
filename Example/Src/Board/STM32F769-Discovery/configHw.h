@@ -271,7 +271,7 @@ Uart_Mcu  uart( Uart_Mcu::USART_1,
 
 #elif USE_RESOURCE == 'I'
 
-  Memory_Flash image( 10 ); // Size: 256k
+  Memory_Flash image( 8,11 ); // Size: 4x256k
   Font    fontFont_10x20      ( MemoryImage( image, "Font_10x20"     ).getPtr() );
   Font    fontFont_16x24      ( MemoryImage( image, "Font_16x24"     ).getPtr() );
   Font    fontFont_8x12       ( MemoryImage( image, "Font_8x12"      ).getPtr() );
