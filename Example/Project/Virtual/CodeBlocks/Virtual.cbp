@@ -14,6 +14,7 @@
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="0" />
 				<Compiler>
+					<Add option="-std=gnu++17" />
 					<Add option="-m64" />
 					<Add option="-g" />
 				</Compiler>
@@ -40,6 +41,7 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-std=c++11" />
 			<Add option="-m64" />
 			<Add option="-ffunction-sections" />
 			<Add option="-fdata-sections" />
