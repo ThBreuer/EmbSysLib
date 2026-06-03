@@ -337,7 +337,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-exceptions</MiscControls>
+              <MiscControls>-ffunction-sections -fdata-sections -fno-exceptions -Wno-pragma-pack</MiscControls>
               <Define>COMPILER_KEIL, MCU_STM32L100xC, OSCSRC=HSE_BYPASS, OSCFREQ=8000</Define>
               <Undefine></Undefine>
               <IncludePath>.\..\..\..\Src;.\..\..\..\Src\Board\STM32L100-Discovery;{EMBSYSLIB}\Src;{EMBSYSLIB}\Src\Hardware\MCU\STM32L1xx;{EMBSYSLIB}\Src\Hardware\MCU\STM32L1xx\Sys\Keil</IncludePath>

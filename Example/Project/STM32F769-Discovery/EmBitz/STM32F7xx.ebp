@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <EmBitz_project_file>
-	<EmBitzVersion release="2.50" revision="0" />
+	<EmBitzVersion release="2.60" revision="0" />
 	<FileVersion major="2" minor="0" />
 	<Project>
 		<Option title="STM32F7xx" />
@@ -38,6 +38,8 @@
 					<Add option="-Wa,--gdwarf-2" />
 				</Assembler>
 				<Linker>
+					<Add option="-u _scanf_float" />
+					<Add option="-u _printf_float" />
 					<Add option="-eb_lib=n" />
 					<Add option="-lstdc++" />
 					<Add option="-eb_start_files" />
@@ -77,10 +79,10 @@
 		<Assembler>
 			<Add option="-I ${EMBSYSLIB}\Src\Hardware\MCU\STM32F7xx\Sys\GCC" />
 		</Assembler>
-		<Unit filename="..\..\..\Src\Board\STM32F769-Discovery\board_pinout.txt" />
 		<Unit filename="startup.S">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\..\Src\Board\STM32F769-Discovery\board_pinout.txt" />
 		<Unit filename="..\..\..\Src\Board\STM32F769-Discovery\ReportHandler.h" />
 		<Unit filename="..\..\..\Src\lib.cpp">
 			<Option compilerVar="CC" />
@@ -90,12 +92,17 @@
 		</Unit>
 		<Extensions>
 			<code_completion />
-			<debugger>
-				<target_debugging_settings target="Debug">
-					<debug_interface description="STM32F7x9.svd" options="2" reg_filter="0" probe="STlink" device="stm32-auto" speed="" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="4" unwind="2" rstType="0" use_jtag="false" disable_cache="false" enable_semi="false" close_eblink="false" gdb_reset="" gdb_reset_remote="reset;" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="" ip_port="" path="" executable="" start_server="false" arguments="" flash_verify="false" flash_run="false" />
-				</target_debugging_settings>
-			</debugger>
+			<debugger />
 			<envvars />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
 		</Extensions>
 	</Project>
 </EmBitz_project_file>
