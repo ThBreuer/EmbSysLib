@@ -43,6 +43,18 @@ void Clock::start( void )
 }
 
 //-------------------------------------------------------------------
+void Clock::stop( void )
+{
+  running = false;
+}
+
+//-------------------------------------------------------------------
+LWORD Clock::get( void )
+{
+  return( (getTics() - startTime ) * getTimeOfTic() );
+}
+
+//-------------------------------------------------------------------
 bool Clock::trigger( void )
 {
   if( running )
@@ -68,18 +80,6 @@ bool Clock::timeout( void )
     }
   }
   return( false );
-}
-
-//-------------------------------------------------------------------
-void Clock::stop( void )
-{
-  running = false;
-}
-
-//-------------------------------------------------------------------
-LWORD Clock::get( void )
-{
-  return( (getTics() - startTime ) * getTimeOfTic() );
 }
 
 //-------------------------------------------------------------------

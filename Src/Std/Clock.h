@@ -23,7 +23,7 @@ namespace Std {
 
 The clock uses the timer tics, which are provided by a task object.
 
-Pay attention:
+\remark Pay attention:
 Waiting for timeout like
 'while( !timeout() );'
 doesn't work within a Timer:Task!
@@ -52,36 +52,11 @@ class Clock
     void start( void );
 
     //---------------------------------------------------------------
-    /*! Check timeout\n
-
-        The behaviour depends on the run state of the timer:
-        - Timer is running: If an timeout occures, the timer will be
-                            stopped. All parameters are ignored
-        - Timer is NOT running: The timer will be restarted with given
-                                parameters
-        \param timeToWait_msec Timer-Laufzeit (ms)
-        \param timeToWait_usec Timer-Laufzeit (us)
-        \return timer state:
-                 - true: timeout
-                 - false: timer is still running
+    /*! Provides runtime since last start of the timer
+    
+        \return runtime in microseconds (us)
     */
-//    BYTE timeout( WORD timeToWait_msec,
-//                  WORD timeToWait_usec = 0 );
-
-    //--------------------------------------------------------------
-    // todo review comment
-    /*! \see \a timeout(), but reuse the stored runtime
-        \return timer state:
-                 - true: timeout
-                 - false: timer is still running
-    */
-    bool trigger( void );
-
-    //---------------------------------------------------------------
-    // todo add comment
-    /*!
-    */
-    bool timeout( void );
+    LWORD get( void );
 
     //---------------------------------------------------------------
     /*! Stop the timer
@@ -89,8 +64,29 @@ class Clock
     */
     void stop( void );
 
-    // todo comment
-    LWORD get( void );
+    //---------------------------------------------------------------
+    /*! Check trigger\n
+
+        This method checks if the timer has expired. If so, the timer
+        will be \b restarted.
+        \return trigger event:
+                 - true: A timeout occurs
+                 - false: Neither a timeout event nor the timer is 
+                          running
+    */
+    bool trigger( void );
+
+    //---------------------------------------------------------------
+    /*! Check timeout\n
+
+        This method checks if the timer has expired. If so, the timer
+        will be \b stopped.
+        \return timer event:
+                 - true: A timeout occurs
+                 - false: Neither a timeout event nor the timer is 
+                          running
+    */
+    bool timeout( void );
 
   protected:
     //---------------------------------------------------------------
