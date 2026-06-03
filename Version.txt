@@ -1,3 +1,14 @@
+ver-01.05.07
+============
+* Bug fix
+    - Documentation updated
+    - Link printf_float
+    - Flash Image (Bitmap, Font) resized
+
+* New feature
+    - Flashing procedere reorganized
+    - New peripheral device: DAC7578
+    
 ver-01.05.06
 ============
 * Bug fix
@@ -7,6 +18,7 @@ ver-01.05.05
 ============
 * Bug fix
     - Clock::timeout() returns true continously when timer not running
+    - HTML.zip: Subdirectory moved up
 
 * New feature:
     - Display-Driver NT35510 (variant of OTM8009A) added.
