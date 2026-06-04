@@ -57,7 +57,7 @@ USBdevice_Mcu::USBdevice_Mcu( USBdeviceDescriptor &desc )
 : USBdevice( ReportID_Hw::Module::USB_DEVICE_MCU, desc )
 {
   SystemInit_48MHzClock();
-    
+
   PinConfig::set( PinConfig::USB_DP, PinConfig::NO_PUPD
                                     |PinConfig::HIGH_SPEED
                                     |PinConfig::PUSH_PULL );
@@ -124,7 +124,7 @@ void USBdevice_Mcu::reset (void)
 {
   RCC->APB1ENR1 |= RCC_APB1ENR1_USBFSEN;
   RCC->APB2ENR  |= RCC_APB2ENR_SYSCFGEN;
-  
+
   PWR->CR2 |= PWR_CR2_USV;
 
   // power on
@@ -173,7 +173,7 @@ void USBdevice_Mcu::configure (BYTE flag)
 //-------------------------------------------------------------------
 void USBdevice_Mcu::setAddress( BYTE adr )
 {
-  writeEP( 0x80, NULL, 0 );
+  writeEP( 0x80, NULL, 0, 0 );
 
   System::delayMilliSec(1);
 
@@ -198,7 +198,7 @@ void USBdevice_Mcu::configEP (BYTE epAddr, WORD epMaxPacketSize, BYTE epType)
     }
     else
       EP[num].setSTAT_TX( (epType==2)?EPconfig::NAK : EPconfig::VALID );
-      
+
     //                              ^^^  Bulk:2, Interrupt 3
     //<! \todo anders loesen!!!
   }
@@ -275,10 +275,13 @@ WORD USBdevice_Mcu::readEP( BYTE  epAddr,
 //-------------------------------------------------------------------
 WORD USBdevice_Mcu::writeEP( BYTE  epAddr,
                              BYTE *pData,
-                             WORD  cnt )
+                             WORD  cnt,
+                             WORD  maxPacketSize )
 {
   BYTE  num = epAddr & 0x07;
   WORD *ptr = EP[num].txPtr;
+
+  cnt = MIN(cnt,maxPacketSize);
 
   if( (epAddr & 0x80) && ptr)
   {
@@ -291,7 +294,7 @@ WORD USBdevice_Mcu::writeEP( BYTE  epAddr,
     USB_BUF->bufDesc[2*num].count = cnt & 0x3FF; // count lesen
 
     EP[num].setSTAT_TX( EPconfig::VALID );
-      
+
     return( cnt );
   }
   return( 0 );

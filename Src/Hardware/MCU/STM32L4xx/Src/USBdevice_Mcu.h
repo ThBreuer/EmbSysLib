@@ -57,7 +57,7 @@ class USBdevice_Mcu : public USBdevice
           NAK      = 2,
           VALID    = 3
         } State;
-        
+
       public:
         //-----------------------------------------------------------
         EPconfig()
@@ -136,7 +136,8 @@ class USBdevice_Mcu : public USBdevice
     //---------------------------------------------------------------
     virtual WORD writeEP( BYTE  epAddr,
                           BYTE *pData,
-                          WORD  cnt );
+                          WORD  cnt,
+                          WORD  maxPacketSize );
 
   private:
     //---------------------------------------------------------------

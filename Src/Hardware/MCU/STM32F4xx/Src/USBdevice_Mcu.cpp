@@ -135,8 +135,15 @@ WORD USBdevice_Mcu::EndpointIN::write( BYTE *dataPtr, WORD len )
   }
   txBuf.size = len;
   txBuf.flag = true;
+  txBuf.ridx = 0;
 
   return( len );
+}
+
+//-------------------------------------------------------------------
+bool USBdevice_Mcu::EndpointIN::isDiptsizEmpty()
+{
+  return( (inep->DIEPTSIZ & USB_OTG_DIEPTSIZ_PKTCNT) == 0 );
 }
 
 //-------------------------------------------------------------------
@@ -145,12 +152,18 @@ void USBdevice_Mcu::EndpointIN::writeToFifo( void )
   WORD len = MIN( txBuf.size, txBuf.maxpacket );
   WORD cnt = (len + 3) / 4;
 
+  if( txBuf.ridx > 0 && txBuf.size > 0) /// Folgepaket
+  {
+    transmit(false);
+  }
+
   if( (inep->DTXFSTS & USB_OTG_DTXFSTS_INEPTFSAV) >= cnt )
   {
-    DWORD *src = (DWORD *)&txBuf.data[0];
+    DWORD *src = (DWORD *)&txBuf.data[txBuf.ridx];
 
     txBuf.size -= len;
     txBuf.flag = txBuf.size?true:false;
+    txBuf.ridx += len;
 
     for( WORD i = 0; i < cnt; i++, src ++)
     {
@@ -185,12 +198,12 @@ void USBdevice_Mcu::EndpointIN::transmit( bool flag )
   }
   else
   {
-    BYTE pktCnt =  ((len + mps -1)/ mps);
+    BYTE pktCnt =  ((txBuf.size + mps -1)/ mps);
 
-    inep->DIEPTSIZ &= ~(   USB_OTG_DIEPTSIZ_PKTCNT
-                         | USB_OTG_DIEPTSIZ_XFRSIZ );
+   // inep->DIEPTSIZ &= ~(   USB_OTG_DIEPTSIZ_PKTCNT
+   //                      | USB_OTG_DIEPTSIZ_XFRSIZ );
 
-    inep->DIEPTSIZ |=  (  (USB_OTG_DIEPTSIZ_PKTCNT & (pktCnt << 19))
+    inep->DIEPTSIZ =  (  (USB_OTG_DIEPTSIZ_PKTCNT & (pktCnt << 19))
                          |(USB_OTG_DIEPTSIZ_XFRSIZ & len) );
 
     USB_DEVICE->DIEPEMPMSK |= 1 << num; // Enable Tx FIFO Empty Interrupt
@@ -223,7 +236,7 @@ DWORD USBdevice_Mcu::EndpointIN::getInterrupt( void )
 //-------------------------------------------------------------------
 void USBdevice_Mcu::EndpointIN::clrInterrupt( DWORD interruptID )
 {
-  inep->DIEPINT |= interruptID; 
+  inep->DIEPINT |= interruptID;
 }
 
 //*******************************************************************
@@ -482,7 +495,7 @@ void USBdevice_Mcu::start(void)
   CoreReset();                                      // Reset after a PHY select
                                                     // and set Host mode
   USB_OTG_FS->GCCFG    = USB_OTG_GCCFG_PWRDWN;      // Deactivate the power down
-                         
+
 //  USB_OTG_FS->GOTGCTL |=   USB_OTG_GOTGCTL_BVALOEN
 //                         | USB_OTG_GOTGCTL_BVALOVAL;
 
@@ -664,7 +677,11 @@ inline void USBdevice_Mcu::isr(void)
 
         if( interruptType & USB_OTG_DIEPINT_TXFE )
         {
-          epIN[epNum].writeToFifo();
+          ///
+          if(  epIN[epNum].isDiptsizEmpty() )
+          {
+                epIN[epNum].writeToFifo();
+          }
           epIN[epNum].clrInterrupt( USB_OTG_DIEPINT_TXFE );
         }
       }
@@ -892,8 +909,11 @@ WORD USBdevice_Mcu::readEP( BYTE  epAddr,
 //-------------------------------------------------------------------
 WORD USBdevice_Mcu::writeEP( BYTE  epAddr,
                         BYTE *dataPtr,
-                        WORD  len )
+                        WORD  len,
+                        WORD  maxPacketLen )
 {
+  // todo Here we ignore maxPacketLen because data are buffered internal. Is this correct for all EPs?
+
   BYTE epNum = epAddr&0x7F;
 
   if( epNum < NUM_OF_ENDPOINTS )

@@ -44,7 +44,7 @@ class USBdevice
     //---------------------------------------------------------------
     // Handle an interrupt (IN, OUT or SETUP) on endpoint EPnum
     // EPnum:   endpoint identifier
-    // isSetup: true, if setup message received 
+    // isSetup: true, if setup message received
     //
     virtual void eventHandler( BYTE EPnum,
                                BYTE isSetup );
@@ -53,7 +53,7 @@ class USBdevice
     // Handle a suspend interrupt
     // This method calls the onStop() method of all USBdeviceInterface
     // objects
-    //    
+    //
     virtual void suspend( void );
 
   public:
@@ -98,7 +98,8 @@ class USBdevice
     //---------------------------------------------------------------
     virtual WORD writeEP( BYTE  epAddr,
                           BYTE *dataPtr,
-                          WORD  len     ) = 0;
+                          WORD  len,
+                          WORD  max     ) = 0;
 
   public:
     //---------------------------------------------------------------

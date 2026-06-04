@@ -31,7 +31,7 @@ namespace Hw {
 */
 class USBdevice_Mcu : public USBdevice
 {
-  private:  
+  private:
     //*****************************************************************
     class Buffer
     {
@@ -40,17 +40,19 @@ class USBdevice_Mcu : public USBdevice
         BYTE data[128];
         BYTE size;
         BYTE flag;
+        BYTE ridx;
         BYTE maxpacket;
-      
+
         //-----------------------------------------------------------
         Buffer( void )
         {
           size      = 0;
           flag      = false;
+          ridx      = 0;
           maxpacket = 0;
         }
     };
-    
+
   private:
     //***************************************************************
     class EndpointIN
@@ -58,7 +60,7 @@ class USBdevice_Mcu : public USBdevice
       public:
         //-----------------------------------------------------------
         EndpointIN( void );
-        
+
         //-----------------------------------------------------------
         void  init    ( BYTE numIn );
         void  config  ( WORD epMPS, BYTE epType = 0 ); // default: control EP
@@ -69,13 +71,14 @@ class USBdevice_Mcu : public USBdevice
         void  clrStall( void );
         void  setNAK  ( void );
         void  clrNAK  ( void );
-        
+
         //-----------------------------------------------------------
         WORD  write      ( BYTE *dataPtr, WORD len );
+        bool  isDiptsizEmpty();
         void  writeToFifo( void );
         void  transmit   ( bool flag );
         void  transmitZLP( void );
-        
+
         //-----------------------------------------------------------
         DWORD getInterrupt( void );
         void  clrInterrupt( DWORD interruptID );
@@ -87,17 +90,17 @@ class USBdevice_Mcu : public USBdevice
         Buffer                      txBuf;
         USB_OTG_INEndpointTypeDef  *inep;
         __IO DWORD                 *fifo;
-        
+
     }; // EndpointIN
     //***************************************************************
-  
+
   private:
     //***************************************************************
     class EndpointOUT
     {
       public:
         EndpointOUT( void );
-        
+
         //-----------------------------------------------------------
         void init    ( BYTE numIn );
         void config  ( WORD epMPS, BYTE epType = 0 ); // default: control EP
@@ -108,7 +111,7 @@ class USBdevice_Mcu : public USBdevice
         void clrStall( void );
         void setNAK  ( void );
         void clrNAK  ( void );
-      
+
         //-----------------------------------------------------------
         WORD read        ( BYTE *dataPtr, WORD len );
         void readFromFifo( WORD  len);
@@ -118,14 +121,14 @@ class USBdevice_Mcu : public USBdevice
         //-----------------------------------------------------------
         DWORD getInterrupt( void );
         void  clrInterrupt( DWORD interruptID );
-        
+
       private:
         //-----------------------------------------------------------
         BYTE                        num;
         Buffer                      rxBuf;
         USB_OTG_OUTEndpointTypeDef *outep;
         __IO DWORD                 *fifo;
-        
+
     }; // EndpointOUT
     //***************************************************************
 
@@ -181,7 +184,8 @@ class USBdevice_Mcu : public USBdevice
     //---------------------------------------------------------------
     virtual WORD writeEP( BYTE  epAddr,
                           BYTE *dataPtr,
-                          WORD  len );
+                          WORD  len,
+                          WORD  maxPacketLen );
 
   private:
     //---------------------------------------------------------------

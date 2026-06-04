@@ -155,8 +155,8 @@ void USBdeviceEndpoint::writeData( void )
 {
   WORD cnt = usb.writeEP( id,
                           epData.getPtr(),
-                          MIN( epData.getSize(),
-                          maxPacketSize ) );
+                          epData.getSize() ,
+                          maxPacketSize );
 
   epData.shift( cnt );
 }
@@ -181,7 +181,7 @@ void USBdeviceEndpoint::writeDataLen( const DataPointer &epDataIn,
 //-------------------------------------------------------------------
 void USBdeviceEndpoint::writeAcknowledge( void )
 {
-  usb.writeEP( id, NULL, 0 );
+  usb.writeEP( id, NULL, 0, 0 );
 }
 
 //-------------------------------------------------------------------
